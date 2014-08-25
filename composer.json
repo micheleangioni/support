@@ -1,0 +1,30 @@
+{
+    "name": "top-games/support",
+    "description": "A Laravel support package.",
+    "authors": [
+        {
+            "name":         "Top Games",
+            "email":        "info@topgames.com"
+        },
+        {
+            "name":         "Michele Angioni",
+            "email":        "michele.angioni@gmail.com",
+            "role":         "Genius"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.2.*"
+    },
+    "require-dev": {
+        "fzaninotto/faker": "1.4.*",
+        "mockery/mockery": "dev-master",
+        "phpunit/phpunit": "4.1.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "TopGames\\Support\\": "src"
+        }
+    },
+    "minimum-stability": "stable"
+}
