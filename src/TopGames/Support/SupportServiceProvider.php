@@ -3,6 +3,7 @@
 namespace TopGames\Support;
 
 use Illuminate\Support\ServiceProvider;
+use App;
 
 class SupportServiceProvider extends ServiceProvider {
 
