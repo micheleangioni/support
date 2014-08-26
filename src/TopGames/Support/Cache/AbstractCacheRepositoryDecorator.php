@@ -2,8 +2,7 @@
 
 namespace TopGames\Support\Cache;
 
-use TopGames\Libraries\Tough\Repos\RepositoryCacheableQueriesInterface;
-
+use TopGames\Support\Repos\RepositoryCacheableQueriesInterface;
 use BadMethodCallException;
 
 abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQueriesInterface {
@@ -156,7 +155,7 @@ abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQu
      *
      * @return string
      */
-    protected function getKey($id = FALSE, array $array = array())
+    protected function getKey($id = false, array $array = array())
     {
         $string = $this->getString($id, $array);
 
@@ -173,7 +172,7 @@ abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQu
      *
      * @return string
      */
-    protected function getString($id = FALSE, array $array = array())
+    protected function getString($id = false, array $array = array())
     {
         $string = $this->section.$this->modelClass;
 
@@ -201,7 +200,7 @@ abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQu
      *
      * @return array
      */
-    protected function getTags($id = FALSE, array $array = array())
+    protected function getTags($id = false, array $array = array())
     {
         $tags = [$this->section, $this->modelClass];
 
@@ -235,7 +234,7 @@ abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQu
      *
      * @return string
      */
-    public function getCustomMethodKey($customName = FALSE, $id = FALSE, array $array = array())
+    public function getCustomMethodKey($customName = false, $id = false, array $array = array())
     {
         if( !$customName ) {
             $customName=debug_backtrace()[1]['function'];
@@ -260,7 +259,7 @@ abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQu
      *
      * @return array
      */
-    public function getCustomMethodTags($customName = FALSE, $id = FALSE, array $array = array())
+    public function getCustomMethodTags($customName = false, $id = false, array $array = array())
     {
         if( !$customName ) {
             $customName=debug_backtrace()[1]['function'];

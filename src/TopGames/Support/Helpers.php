@@ -9,45 +9,43 @@ use InvalidArgumentException;
 class Helpers {
 
     /**
-     *  Check if input value is integer: return TRUE on success, FALSE otherwise.
-     *  int(4), string '4', float(4), 0x7FFFFFFF return TRUE
-     *  int(4.1), string '1.2', string '0x8', float(1.2) return FALSE.
+     *  Check if input value is integer: return true on success, false otherwise.
+     *  int(4), string '4', float(4), 0x7FFFFFFF return true
+     *  int(4.1), string '1.2', string '0x8', float(1.2) return false.
      *  min and max allowed values can be inserted
      *
      * @param  int $int
-     * @param bool|int $min = FALSE
-     * @param bool|int $max = FALSE
+     * @param  bool|int $min = false
+     * @param  bool|int $max = false
+     *
      * @return bool
      */
-	static function isInt($int, $min = FALSE, $max = FALSE)
+	static function isInt($int, $min = false, $max = false)
 	{
-		if($min!= FALSE){
+		if($min!= false){
 			if(is_numeric($min) && (int)$min == $min){
 				if($int < $min){
-					return FALSE;
+					return false;
 				}
 			}
 			else{
-				return FALSE;
+				return false;
 			}
 		}
 		
-		if($max!= FALSE){
+		if($max!= false){
 			if(is_numeric($max) && (int)$max == $max){
 				if($int > $max){
-					return FALSE;
+					return false;
 				}
 			}
 			else{
-				return FALSE;
+				return false;
 			}
 		}
 		
 		return is_numeric($int) && (int)$int == $int;
 	}
-
-
-
 
 
     /**
@@ -62,15 +60,8 @@ class Helpers {
     }
 
 
-
-
-
-
-
-
-	
 	/**
-	 *  Check date validity. Return TRUE on success or FALSE on failure.
+	 *  Check date validity. Return true on success or false on failure.
 	 *
 	 * @param  string  $date
 	 * @param  string  $format = 'Y-m-d'
@@ -84,7 +75,7 @@ class Helpers {
 	
 
 	/**
-	 *  Check datetime 'Y-m-d H:i:s' validity. Returns TRUE if ok or FALSE if it fails.
+	 *  Check datetime 'Y-m-d H:i:s' validity. Returns true if ok or false if it fails.
 	 *
 	 * @param  string  $datetime
 	 * @return bool
@@ -98,25 +89,25 @@ class Helpers {
 	}
 	
 	
-	
 	/**
-	 *  Split two 'Y-m-d'-format dates into an array of dates. Returns FALSE if it fails.
+	 *  Split two 'Y-m-d'-format dates into an array of dates. Returns false if it fails.
 	 *  $first_date must be < than $second_date
 	 *  Third optional parameter indicates max days difference allowed (0 = no limits).
 	 *
 	 * @param  $first_date
 	 * @param  $second_date
 	 * @param  int $max_difference = 0
+     *
 	 * @return array
 	 */
 	static function splitDates($first_date, $second_date, $max_difference = 0)
 	{
 		if( !self::checkDate($first_date) || !self::checkDate($second_date)){
-			return FALSE;
+			return false;
 		}
 
 		if (!self::isInt($max_difference, 0)){
-			return FALSE;
+			return false;
 		}
 		
 		$date1 = new DateTime($first_date);
@@ -124,12 +115,12 @@ class Helpers {
 		$interval = $date1->diff($date2, $absolute = false);
 		
 		if((int)$interval->format('%R%a') < 0){
-			return FALSE;
+			return false;
 		}
 		
 		if($max_difference != 0){
 			if((int)$interval->format('%R%a') > $max_difference){
-				return FALSE;
+				return false;
 			}
 		}
 		
@@ -150,15 +141,14 @@ class Helpers {
 	}
 
 
-
-
 	/**
 	 * Return the number of days between the two input 'Y-m-d' or 'Y-m-d X' (X is some text) dates
 	 * $date2 must be >= than $date1.
-	 * Returns FALSE on failure.
+	 * Returns false on failure.
 	 *
 	 * @param  $date1
 	 * @param  $date2
+     *
 	 * @return int
 	 */
 	static function daysBetweenDates($date1, $date2)
@@ -168,24 +158,22 @@ class Helpers {
 		list($d2) = array_pad(explode(' ',$date2), 1, 0);
 		
 		if( !self::checkDate($d1) || !self::checkDate($d2)){
-			return FALSE;
+			return false;
 		}
 		
 		if( !($dates = self::splitDates($d1, $d2)) ) {
-			return FALSE;
+			return false;
 		}
 		
 		return (count($dates) - 1);
 	}
 
 
-
-
     /**
      * Split a Collection into groups of equal numbers. $groupsNumber must be a multiplier of 2.
      *
-     * @param Collection $collection
-     * @param int $groupsNumber = 2
+     * @param  Collection $collection
+     * @param  int $groupsNumber = 2
      * @throws InvalidArgumentException
      *
      * @return array
@@ -193,7 +181,7 @@ class Helpers {
     static function divideCollectionIntoGroups(Collection $collection, $groupsNumber = 2)
     {
         if( !(Helpers::isInt($groupsNumber,2) && !($groupsNumber % 2)) ) {
-            return FALSE;
+            return false;
         }
 
         $elementsPerGroup = (int)ceil(count($collection) / $groupsNumber);
@@ -211,14 +199,7 @@ class Helpers {
 
 
 
-
-
     // <<<--- NON STATIC METHODS METHODS --->>>
-
-
-
-
-
 
 
     // <<<--- DATETIME METHODS --->>>
@@ -239,47 +220,30 @@ class Helpers {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     // <<<--- PSEUDO-RANDOM NUMBERS METHODS --->>>
 
 
-
-	//TODO Da testare/completare
-	
 	/**
-	 * Return a random value between input $min and $max values.
+	 * Return a random value between input $min and $max values by using the MCRYPT_DEV_URANDOM source.
+     * N.B. Use only on Linux servers!
 	 *
 	 * @param  int  $min = 0
 	 * @param  int  $max
+     *
 	 * @return int
 	 */
 	static function getRandomValueUrandom($min = 0, $max = 0x7FFFFFFF)
 	{
-		if( !self::isInt($min) || !self::isInt($max) || $max < $min || ($max - $min) > 0x7FFFFFFF )
-		{
-			return FALSE;
+		if( !self::isInt($min) || !self::isInt($max) || $max < $min || ($max - $min) > 0x7FFFFFFF ) {
+			return false;
 		}
 		
 		$diff = $max - $min;
 		 
 		$bytes = mcrypt_create_iv(4, MCRYPT_DEV_URANDOM);
 		 
-		if ($bytes === false || strlen($bytes) != 4)
-		{
-			//throw new RuntimeException("Unable to get 4 bytes");
-			return FALSE;
+		if ($bytes === false || strlen($bytes) != 4) {
+			return false;
 		}
 		 
 		$ary = unpack("Nint", $bytes);
@@ -289,8 +253,6 @@ class Helpers {
 		return round($fp * $diff) + $min;
 	}
 	
-	
-
 
 	/**
 	 * Return $quantity UNIQUE random value between $min and $max.
@@ -299,18 +261,18 @@ class Helpers {
 	 * @param  int  $min = 0
 	 * @param  int  $max
 	 * @param  int  $quantity = 1
+     *
 	 * @return array
 	 */
 	function getUniqueRandomValues($min = 0, $max, $quantity = 1)
 	{
 		if( !self::isInt($min) || !self::isInt($max) || !self::isInt($quantity) || $quantity < 1) {
-			return FALSE;
+			return false;
 		}
 	
 		$rand = array();
 	
-		while (count($rand) < $quantity)
-		{
+		while (count($rand) < $quantity) {
 			$r = mt_rand($min,$max);
 			if (!in_array($r,$rand)) $rand[] = $r;
 		}

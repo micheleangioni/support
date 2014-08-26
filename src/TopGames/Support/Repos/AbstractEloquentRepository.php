@@ -25,6 +25,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
 
 
 
+
     // <--- QUERYING METHODS --->
 
 
@@ -150,13 +151,12 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     }
 
 
-
     /**
      * Return firstOrFail result that have a required relationship,
      *
-     * @param $relation
-     * @param array $where
-     * @param array $with
+     * @param  string  $relation
+     * @param  array   $where
+     * @param  array   $with
      *
      * @return \Illuminate\Support\Collection
      */
@@ -173,14 +173,13 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     }
 
 
-
     /**
      * Get Results by Page.
      *
-     * @param int $page
-     * @param int $limit
-     * @param array $where
-     * @param array $with
+     * @param  int  $page
+     * @param  int  $limit
+     * @param  array  $where
+     * @param  array  $with
      *
      * @return \Illuminate\Support\Collection
      */
@@ -197,12 +196,6 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
                      ->take($limit)
                      ->get();
     }
-
-
-
-
-
-
 
 
 
@@ -298,11 +291,6 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
 
 
 
-
-
-
-
-
     // <--- COUNT METHODS --->
 
 
@@ -310,7 +298,6 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     {
         return $this->model->count();
     }
-
 
 
     public function countBy(array $where = array())
@@ -324,15 +311,6 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
 
         return $query->count();
     }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -354,9 +332,6 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
 
         return $inputs;
     }
-
-
-
 
 
 }
