@@ -1,6 +1,7 @@
 {
     "name": "top-games/support",
     "description": "A Laravel support package.",
+    "keywords": ["topgames", "support", "cache", "repos", "helpers"],
     "authors": [
         {
             "name":         "Top Games",

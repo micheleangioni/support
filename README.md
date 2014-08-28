@@ -16,7 +16,7 @@ Achievements can be installed through Composer. Actually it is a private repo, s
 
 Once Achievements has been installed, add `'TopGames\Support\SupportServiceProvider',` to the app.php file.
 
-Add   to the facade list.
+In order to use the Helpers:: facade, you can add `'Helpers' => 'TopGames\Support\Facades\Helpers', to the aliases array.
 
 ## Usage
 
