@@ -105,17 +105,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     }
 
 
-
-    /**
-     * Return all results that have a required relationship
-     *
-     * @param $relation
-     * @param array $where
-     * @param array $with
-     *
-     * @return \Illuminate\Support\Collection
-     */
-    public function has($relation, array $where = array(), array $with = array())
+    public function getByOrder($orderBy, array $where = array(), array $with = array(), $order = 'desc', $limit = 0)
     {
         $query = $this->make($with);
 
@@ -124,7 +114,36 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
             $query = $query->where($key, '=', $value);
         }
 
-        return $query->has($relation)->get();
+        $query = $query->orderBy($orderBy, $order);
+
+        if($limit) {
+            $query = $query->take($limit);
+        }
+
+        return $query->get();
+    }
+
+
+    /**
+     * Return all results that have a required relationship
+     *
+     * @param $relation
+     * @param array $where
+     * @param array $with
+     * @param int $hasAtLeast = 1
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function has($relation, array $where = array(), array $with = array(), $hasAtLeast = 1)
+    {
+        $query = $this->make($with);
+
+        foreach($where as $key => $value)
+        {
+            $query = $query->where($key, '=', $value);
+        }
+
+        return $query->has($relation, '>=', $hasAtLeast)->get();
     }
 
 
@@ -135,10 +154,11 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
      * @param $relation
      * @param array $where
      * @param array $with
+     * @param int $hasAtLeast = 1
      *
      * @return \Illuminate\Support\Collection
      */
-    public function hasFirst($relation, array $where = array(), array $with = array())
+    public function hasFirst($relation, array $where = array(), array $with = array(), $hasAtLeast = 1)
     {
         $query = $this->make($with);
 
@@ -147,7 +167,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
             $query = $query->where($key, '=', $value);
         }
 
-        return $query->has($relation)->first();
+        return $query->has($relation, '>=', $hasAtLeast)->first();
     }
 
 
@@ -157,10 +177,11 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
      * @param  string  $relation
      * @param  array   $where
      * @param  array   $with
+     * @param int $hasAtLeast = 1
      *
      * @return \Illuminate\Support\Collection
      */
-    public function hasFirstOrFail($relation, array $where = array(), array $with = array())
+    public function hasFirstOrFail($relation, array $where = array(), array $with = array(), $hasAtLeast = 1)
     {
         $query = $this->make($with);
 
@@ -169,7 +190,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
             $query = $query->where($key, '=', $value);
         }
 
-        return $query->has($relation)->firstOrFail();
+        return $query->has($relation, '>=', $hasAtLeast)->firstOrFail();
     }
 
 
