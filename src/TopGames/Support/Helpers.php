@@ -170,6 +170,25 @@ class Helpers {
 
 
     /**
+     * Compare $date with $referenceDate. Return true if $date is older, false otherwise (included if the two dates are identical).
+     *
+     * @param $date
+     * @param $referenceDate
+     * @return bool
+     */
+    static function compareDates($date, $referenceDate)
+    {
+        $dateTimestamp = strtotime($date);
+        $referenceDateTimestamp = strtotime($referenceDate);
+
+        if ($dateTimestamp > $referenceDateTimestamp)
+            return true;
+        else
+            return false;
+    }
+
+
+    /**
      * Split a Collection into groups of equal numbers. $groupsNumber must be a multiplier of 2.
      *
      * @param  Collection $collection
@@ -279,6 +298,5 @@ class Helpers {
 	
 		return $rand;
 	}
-	
 	
 }
