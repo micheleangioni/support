@@ -5,7 +5,6 @@ namespace TopGames\Support\Repos;
 class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
 {
 
-
     public function all()
     {
         return $this->model->all();
@@ -145,7 +144,6 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
 
         return $query->has($relation, '>=', $hasAtLeast)->get();
     }
-
 
 
     /**
@@ -335,8 +333,6 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
 
 
 
-
-
     /**
      * Remove keys from the $inputs array beginning with '_' .
      *
@@ -353,6 +349,5 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
 
         return $inputs;
     }
-
 
 }

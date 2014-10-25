@@ -170,7 +170,7 @@ class Helpers {
 
 
     /**
-     * Compare $date with $referenceDate. Return true if $date is older, false otherwise (included if the two dates are identical).
+     * Compare $date with $referenceDate. Return true if $date is newer, false otherwise (included if the two dates are identical).
      *
      * @param $date
      * @param $referenceDate
