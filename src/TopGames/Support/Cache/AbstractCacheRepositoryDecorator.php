@@ -43,9 +43,9 @@ abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQu
      *
      * @param  RepositoryCacheableQueriesInterface $repo
      * @param  CacheInterface $cache
-     * @param  KeyManager $keyManager
+     * @param  KeyManagerInterface $keyManager
      */
-    public function __construct(RepositoryCacheableQueriesInterface $repo, CacheInterface $cache, KeyManager $keyManager)
+    public function __construct(RepositoryCacheableQueriesInterface $repo, CacheInterface $cache, KeyManagerInterface $keyManager)
     {
         $this->repo = $repo;
         $this->cache = $cache;
@@ -53,7 +53,7 @@ abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQu
 
         $reflection = new \ReflectionClass($repo);
         $constructor = $reflection->getConstructor();
-        $this->modelClass =$constructor->getParameters()[0]->getClass()->name;
+        $this->modelClass = $constructor->getParameters()[0]->getClass()->name;
     }
 
 
@@ -161,20 +161,7 @@ abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQu
      */
     function getKey($id = false, array $array = array())
     {
-        return $this->keyManager->getKey($id, $array);
-    }
-
-    /**
-     * Call the Key Manager to get the ready-to-be-encrypted-string key.
-     *
-     * @param bool $id
-     * @param array $array
-     *
-     * @return string
-     */
-    function getString($id = false, array $array = array())
-    {
-        return $this->keyManager->getString($id, $array, $this->section, $this->modelClass);
+        return $this->keyManager->getKey($id, $array, $this->section, $this->modelClass);
     }
 
 
@@ -189,7 +176,7 @@ abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQu
      */
     function getTags($id = false, array $array = array())
     {
-        return $this->keyManager->getTags($id, $array);
+        return $this->keyManager->getTags($id, $array, $this->section, $this->modelClass);
     }
 
 
@@ -205,7 +192,7 @@ abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQu
      */
     function getCustomMethodKey($customName = false, $id = false, array $array = array())
     {
-        return $this->keyManager->getCustomMethodKey($customName, $id, $array);
+        return $this->keyManager->getCustomMethodKey($customName, $id, $array, $this->modelClass);
     }
 
 
@@ -221,7 +208,7 @@ abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQu
      */
     function getCustomMethodTags($customName = false, $id = false, array $array = array())
     {
-        return $this->keyManager->getCustomMethodTags($customName, $id, $array);
+        return $this->keyManager->getCustomMethodTags($customName, $id, $array, $this->modelClass);
     }
 
 }
