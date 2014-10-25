@@ -16,7 +16,7 @@ class KeyManager implements KeyManagerInterface {
      */
     public function getKey($id = false, array $array = array(), $section, $modelClass)
     {
-        $string = $this->getString($id, $array);
+        $string = $this->getString($id, $array, $section, $modelClass);
 
         return md5($string);
     }
