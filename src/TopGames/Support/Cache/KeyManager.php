@@ -85,17 +85,18 @@ class KeyManager implements KeyManagerInterface {
      * @param  bool|string  $customName
      * @param  bool|int     $id
      * @param  array        $array
+     * @param  string       $section
      * @param  string       $modelClass
      *
      * @return string
      */
-    public function getCustomMethodKey($customName = false, $id = false, array $array = array(), $modelClass)
+    public function getCustomMethodKey($customName = false, $id = false, array $array = array(), $section, $modelClass)
     {
         if( !$customName ) {
             $customName=debug_backtrace()[2]['function'];
         }
 
-        $string = $this->getString($id, $array).$modelClass.$customName;
+        $string = $this->getString($id, $array, $section, $modelClass).$modelClass.$customName;
 
         return md5($string);
     }
@@ -109,17 +110,18 @@ class KeyManager implements KeyManagerInterface {
      * @param  bool|string  $customName
      * @param  bool|int     $id
      * @param  array        $array
+     * @param  string       $section
      * @param  string       $modelClass
      *
      * @return array
      */
-    public function getCustomMethodTags($customName = false, $id = false, array $array = array(), $modelClass)
+    public function getCustomMethodTags($customName = false, $id = false, array $array = array(), $section, $modelClass)
     {
         if( !$customName ) {
             $customName=debug_backtrace()[2]['function'];
         }
 
-        $tags = $this->getTags($id, $array);
+        $tags = $this->getTags($id, $array, $section, $modelClass);
         $tags[] = $modelClass.$customName;
 
         return $tags;

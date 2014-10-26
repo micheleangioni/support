@@ -123,7 +123,6 @@ abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQu
     }
 
 
-
     /**
      * Find or throws exception
      *
@@ -150,7 +149,6 @@ abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQu
     }
 
 
-
     /**
      * Call the Key Manager to get the Cache key.
      *
@@ -163,7 +161,6 @@ abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQu
     {
         return $this->keyManager->getKey($id, $array, $this->section, $this->modelClass);
     }
-
 
 
     /**
@@ -180,7 +177,6 @@ abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQu
     }
 
 
-
     /**
      * Call the Key Manager method to the Custom Method Key.
      *
@@ -192,9 +188,8 @@ abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQu
      */
     function getCustomMethodKey($customName = false, $id = false, array $array = array())
     {
-        return $this->keyManager->getCustomMethodKey($customName, $id, $array, $this->modelClass);
+        return $this->keyManager->getCustomMethodKey($customName, $id, $array, $this->section, $this->modelClass);
     }
-
 
 
     /**
@@ -208,7 +203,7 @@ abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQu
      */
     function getCustomMethodTags($customName = false, $id = false, array $array = array())
     {
-        return $this->keyManager->getCustomMethodTags($customName, $id, $array, $this->modelClass);
+        return $this->keyManager->getCustomMethodTags($customName, $id, $array, $this->section, $this->modelClass);
     }
 
 }
