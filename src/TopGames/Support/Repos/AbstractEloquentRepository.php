@@ -222,6 +222,16 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     // <--- CREATING / UPDATING / DELETING METHODS --->
 
 
+    public function insert(array $collection)
+    {
+        foreach($collection as $key => $inputs) {
+            $collection[$key] = $this->purifyInputs($inputs);
+        }
+
+        return $this->model->insert($collection);
+    }
+
+
     public function create(array $inputs)
     {
         $inputs = $this->purifyInputs($inputs);
