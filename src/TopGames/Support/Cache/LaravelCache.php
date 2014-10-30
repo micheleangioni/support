@@ -31,8 +31,8 @@ class LaravelCache implements CacheInterface {
     /**
      * Get
      *
-     * @param string $key
-     * @param array $tags
+     * @param  string  $key
+     * @param  array   $tags
      * @return mixed
      */
     public function get($key, array $tags)
@@ -43,10 +43,10 @@ class LaravelCache implements CacheInterface {
     /**
      * Put
      *
-     * @param string $key
-     * @param mixed $value
-     * @param array $tags
-     * @param integer $minutes
+     * @param  string  $key
+     * @param  mixed   $value
+     * @param  array   $tags
+     * @param  integer $minutes
      * @return mixed
      */
     public function put($key, $value, array $tags, $minutes = null)
@@ -62,8 +62,8 @@ class LaravelCache implements CacheInterface {
     /**
      * Has
      *
-     * @param string $key
-     * @param array $tags
+     * @param  string  $key
+     * @param  array   $tags
      * @return bool
      */
     public function has($key, array $tags)

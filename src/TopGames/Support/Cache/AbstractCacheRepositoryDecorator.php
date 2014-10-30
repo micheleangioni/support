@@ -15,7 +15,7 @@ abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQu
     /**
      * Key manager object.
      *
-     * @var KeyManager
+     * @var KeyManagerInterface
      */
     protected $keyManager;
 
