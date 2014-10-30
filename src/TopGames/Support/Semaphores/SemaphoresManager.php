@@ -75,7 +75,7 @@ class SemaphoresManager {
      * @param  string    $section
      * @return string
      */
-    public function getSemaphoreId($id, $section)
+    public function getSemaphoreKey($id, $section)
     {
         return $this->keyManager->getKey($id, [], $section, $this->modelClass);
     }
@@ -83,12 +83,14 @@ class SemaphoresManager {
     /**
      * Check if a semaphore is locked or free. Return 1 if locked or 0 if unlocked.
      *
-     * @param  int     $key
+     * @param  int     $id
      * @param  string  $section
      * @return int
      */
-    public function checkIfSemaphoreIsLocked($key, $section)
+    public function checkIfSemaphoreIsLocked($id, $section)
     {
+        $key = $this->getSemaphoreKey($id, $section);
+
         if(!$this->cache->has($key, ['semaphore', $section])) {
             return 0;
         }
@@ -99,22 +101,26 @@ class SemaphoresManager {
     /**
      * Lock the semaphore with input key and section.
      *
-     * @param  int     $key
+     * @param  int     $id
      * @param  string  $section
      */
-    public function lockSemaphore($key, $section)
+    public function lockSemaphore($id, $section)
     {
+        $key = $this->getSemaphoreKey($id, $section);
+
         $this->cache->put($key, 1, ['semaphore', $section], $this->lockingTime);
     }
 
     /**
      * Unlock the semaphore with input key and section.
      *
-     * @param  int     $key
+     * @param  int     $id
      * @param  string  $section
      */
-    public function unlockSemaphore($key, $section)
+    public function unlockSemaphore($id, $section)
     {
+        $key = $this->getSemaphoreKey($id, $section);
+
         $this->cache->put($key, 0, ['semaphore', $section], $this->lockingTime);
     }
 
