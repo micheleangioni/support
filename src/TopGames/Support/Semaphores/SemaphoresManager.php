@@ -95,7 +95,7 @@ class SemaphoresManager {
             return 0;
         }
 
-        return $this->cache->get($key, ['semaphore', $section]);
+        return (int)$this->cache->get($key, ['semaphore', $section]);
     }
 
     /**
