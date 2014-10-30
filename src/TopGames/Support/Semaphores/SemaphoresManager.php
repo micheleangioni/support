@@ -27,13 +27,6 @@ class SemaphoresManager {
     protected $lockingTime = 2;
 
     /**
-     * Name of the class instantiating the SemaphoresManager
-     *
-     * @var string
-     */
-    protected $modelClass;
-
-    /**
      * Construct
      *
      * @param  CacheInterface $cache
@@ -43,8 +36,6 @@ class SemaphoresManager {
     {
         $this->cache = $cache;
         $this->keyManager = $keyManager;
-
-        $this->modelClass = debug_backtrace()[1]['function'];
     }
 
     /**
@@ -77,7 +68,7 @@ class SemaphoresManager {
      */
     public function getSemaphoreKey($id, $section)
     {
-        return $this->keyManager->getKey($id, [], $section, $this->modelClass);
+        return $this->keyManager->getKey($id, [], $section);
     }
 
     /**
