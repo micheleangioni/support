@@ -244,7 +244,7 @@ class Helpers {
      * @param  int  $offset = 0
      * @return string
      */
-    function getTodayDate($offset = 0)
+    function getDate($offset = 0)
     {
         return date("Y-m-d", strtotime($offset.' day'));
     }
@@ -255,7 +255,7 @@ class Helpers {
      * @param  int  $offset = 0
      * @return string
      */
-    function getTodayTime($offset = 0)
+    function getTime($offset = 0)
     {
         return date("H:i:s", strtotime($offset.' minutes'));
     }
