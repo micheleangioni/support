@@ -221,10 +221,10 @@ class Helpers {
     // <<<--- NON STATIC METHODS METHODS --->>>
 
 
-    // <<<--- DATETIME METHODS --->>>
+    // <<<--- DATE TIME METHODS --->>>
 
     /*
-     * These DateTime methods are thought in order to allow DateTime mocking in tests.
+     * These DateTime methods are thought in order to allow Date / Time mocking in tests and other useful uses.
      */
 
     /**
@@ -236,6 +236,28 @@ class Helpers {
     {
         $datetime = new \DateTime("now");
         return $datetime->format("D");
+    }
+
+    /**
+     * Return today's day in format Y-m-d. Offset in days.
+     *
+     * @param  int  $offset = 0
+     * @return string
+     */
+    function getTodayDate($offset = 0)
+    {
+        return date("Y-m-d", strtotime($offset.' day'));
+    }
+
+    /**
+     * Return today's time in format H:i:s. Offset in minutes.
+     *
+     * @param  int  $offset = 0
+     * @return string
+     */
+    function getTodayTime($offset = 0)
+    {
+        return date("H:i:s", strtotime($offset.' minutes'));
     }
 
 
