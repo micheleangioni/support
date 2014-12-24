@@ -1,24 +1,20 @@
 {
     "name": "top-games/support",
-    "description": "A Laravel support package.",
-    "keywords": ["topgames", "support", "cache", "repos", "helpers"],
+    "description": "Support is a Laravel package which promotes the use of best practices and design patterns.",
+    "keywords": ["laravel", "support", "cache", "repos", "helpers", "semaphores"],
+    "license": "MIT",
     "authors": [
-        {
-            "name":         "Top Games",
-            "email":        "info@topgames.com"
-        },
         {
             "name":         "Michele Angioni",
             "email":        "michele.angioni@gmail.com",
-            "role":         "Genius"
+            "role":         "Author"
         }
     ],
     "require": {
         "php": ">=5.4.0",
-        "illuminate/support": "4.2.*"
+        "laravel/framework": "4.2.*"
     },
     "require-dev": {
-        "fzaninotto/faker": "1.4.*",
         "mockery/mockery": "dev-master",
         "phpunit/phpunit": "4.1.*"
     },

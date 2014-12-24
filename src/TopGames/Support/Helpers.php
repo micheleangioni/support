@@ -14,9 +14,9 @@ class Helpers {
      *  int(4.1), string '1.2', string '0x8', float(1.2) return false.
      *  min and max allowed values can be inserted
      *
-     * @param  int $int
-     * @param  bool|int $min = false
-     * @param  bool|int $max = false
+     * @param  int       $int
+     * @param  bool|int  $min = false
+     * @param  bool|int  $max = false
      *
      * @return bool
      */
@@ -47,18 +47,16 @@ class Helpers {
 		return is_numeric($int) && (int)$int == $int;
 	}
 
-
     /**
      * Return a random value out of an array
      *
-     * @param array $array
+     * @param  array  $array
      * @return mixed
      */
     static function RandInArray(array $array)
     {
         return $array[mt_rand(0, count($array) - 1)];
     }
-
 
 	/**
 	 *  Check date validity. Return true on success or false on failure.
@@ -72,7 +70,6 @@ class Helpers {
 		$d = DateTime::createFromFormat($format, $date);
 		return $d && $d->format($format) == $date;
 	}
-	
 
 	/**
 	 *  Check datetime 'Y-m-d H:i:s' validity. Returns true if ok or false if it fails.
@@ -87,16 +84,15 @@ class Helpers {
 		$d = DateTime::createFromFormat($format, $datetime);
 		return $d && $d->format($format) == $datetime;
 	}
-	
-	
+
 	/**
-	 *  Split two 'Y-m-d'-format dates into an array of dates. Returns false if it fails.
+	 *  Split two 'Y-m-d'-format dates into an array of dates. Returns false on failure.
 	 *  $first_date must be < than $second_date
 	 *  Third optional parameter indicates max days difference allowed (0 = no limits).
 	 *
-	 * @param  $first_date
-	 * @param  $second_date
-	 * @param  int $max_difference = 0
+	 * @param  string  $first_date
+	 * @param  string  $second_date
+	 * @param  int     $max_difference = 0
      *
 	 * @return array
 	 */
@@ -140,14 +136,13 @@ class Helpers {
 		return $dates;
 	}
 
-
 	/**
-	 * Return the number of days between the two input 'Y-m-d' or 'Y-m-d X' (X is some text) dates
+	 * Return the number of days between the two input 'Y-m-d' or 'Y-m-d X' (X is some text) dates.
 	 * $date2 must be >= than $date1.
 	 * Returns false on failure.
 	 *
-	 * @param  $date1
-	 * @param  $date2
+	 * @param  string  $date1
+	 * @param  string  $date2
      *
 	 * @return int
 	 */
@@ -168,12 +163,12 @@ class Helpers {
 		return (count($dates) - 1);
 	}
 
-
     /**
-     * Compare $date with $referenceDate. Return true if $date is newer, false otherwise (included if the two dates are identical).
+     * Compare $date with $referenceDate. Return true if $date is more recent, false otherwise (included if the two dates are identical).
      *
-     * @param $date
-     * @param $referenceDate
+     * @param  string  $date
+     * @param  string  $referenceDate
+     *
      * @return bool
      */
     static function compareDates($date, $referenceDate)
@@ -187,12 +182,11 @@ class Helpers {
             return false;
     }
 
-
     /**
      * Split a Collection into groups of equal numbers. $groupsNumber must be a multiplier of 2.
      *
-     * @param  Collection $collection
-     * @param  int $groupsNumber = 2
+     * @param  Collection  $collection
+     * @param  int         $groupsNumber = 2
      * @throws InvalidArgumentException
      *
      * @return array
@@ -215,12 +209,6 @@ class Helpers {
     }
 
 
-
-
-
-    // <<<--- NON STATIC METHODS METHODS --->>>
-
-
     // <<<--- DATE TIME METHODS --->>>
 
     /*
@@ -228,7 +216,7 @@ class Helpers {
      */
 
     /**
-     * Return today's day
+     * Return today's day.
      *
      * @return string
      */
@@ -266,7 +254,7 @@ class Helpers {
 
 	/**
 	 * Return a random value between input $min and $max values by using the MCRYPT_DEV_URANDOM source.
-     * N.B. Use only on Linux servers!
+     * N.B. Use only on *nix servers!
 	 *
 	 * @param  int  $min = 0
 	 * @param  int  $max
@@ -294,7 +282,6 @@ class Helpers {
 		return round($fp * $diff) + $min;
 	}
 	
-
 	/**
 	 * Return $quantity UNIQUE random value between $min and $max.
 	 * Return false on failure.

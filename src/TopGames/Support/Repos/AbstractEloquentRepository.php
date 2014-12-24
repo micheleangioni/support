@@ -2,6 +2,8 @@
 
 namespace TopGames\Support\Repos;
 
+use Illuminate\Support\Collection;
+
 class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
 {
 
@@ -9,7 +11,6 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     {
         return $this->model->all();
     }
-
 
     /**
      * Make a new instance of the entity to query on
@@ -20,9 +21,6 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     {
         return $this->model->with($with);
     }
-
-
-
 
 
     // <--- QUERYING METHODS --->
@@ -41,6 +39,14 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         $query = $this->make($with);
 
         return $query->findOrFail($id);
+    }
+
+
+    public function first()
+    {
+        $query = $this->make();
+
+        return $query->first();
     }
 
 
@@ -122,16 +128,15 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $query->get();
     }
 
-
     /**
      * Return all results that have a required relationship
      *
-     * @param $relation
-     * @param array $where
-     * @param array $with
-     * @param int $hasAtLeast = 1
+     * @param  string  $relation
+     * @param  array   $where
+     * @param  array   $with
+     * @param  int     $hasAtLeast = 1
      *
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public function has($relation, array $where = array(), array $with = array(), $hasAtLeast = 1)
     {
@@ -145,16 +150,15 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $query->has($relation, '>=', $hasAtLeast)->get();
     }
 
-
     /**
      * Return first results that have a required relationship
      *
-     * @param $relation
-     * @param array $where
-     * @param array $with
-     * @param int $hasAtLeast = 1
+     * @param  string  $relation
+     * @param  array   $where
+     * @param  array   $with
+     * @param  int     $hasAtLeast = 1
      *
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public function hasFirst($relation, array $where = array(), array $with = array(), $hasAtLeast = 1)
     {
@@ -168,16 +172,15 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $query->has($relation, '>=', $hasAtLeast)->first();
     }
 
-
     /**
      * Return firstOrFail result that have a required relationship,
      *
      * @param  string  $relation
      * @param  array   $where
      * @param  array   $with
-     * @param int $hasAtLeast = 1
+     * @param  int     $hasAtLeast = 1
      *
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public function hasFirstOrFail($relation, array $where = array(), array $with = array(), $hasAtLeast = 1)
     {
@@ -191,16 +194,15 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $query->has($relation, '>=', $hasAtLeast)->firstOrFail();
     }
 
-
     /**
      * Get Results by Page.
      *
-     * @param  int  $page
-     * @param  int  $limit
+     * @param  int    $page
+     * @param  int    $limit
      * @param  array  $where
      * @param  array  $with
      *
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public function getByPage($page = 1, $limit = 10, array $where = array(), $with = array())
     {
@@ -215,8 +217,6 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
                      ->take($limit)
                      ->get();
     }
-
-
 
 
     // <--- CREATING / UPDATING / DELETING METHODS --->
@@ -289,9 +289,8 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
             $model->update($inputs);
         }
         else {
-            return $this->model->create(array_merge($where, $inputs));
+            return $this->model->create($inputs);
         }
-
     }
 
 
@@ -317,9 +316,6 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     }
 
 
-
-
-
     // <--- COUNT METHODS --->
 
 
@@ -342,11 +338,13 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     }
 
 
+    // <--- INTERNALLY USED METHODS --->
+
 
     /**
      * Remove keys from the $inputs array beginning with '_' .
      *
-     * @param array $inputs
+     * @param  array  $inputs
      * @return array
      */
     protected function purifyInputs(array $inputs)

@@ -56,7 +56,6 @@ abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQu
         $this->modelClass = $constructor->getParameters()[0]->getClass()->name;
     }
 
-
     public function __call($method, $parameters)
     {
         if(method_exists($this, $method))
@@ -71,7 +70,6 @@ abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQu
 
         throw new BadMethodCallException('RuntimeException in '.__METHOD__.' at line '.__LINE__.": Called not existent method $method by class ".get_class($this));
     }
-
 
     /**
      * All
@@ -96,12 +94,12 @@ abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQu
         return $collection;
     }
 
-
     /**
      * Find
      *
-     * @param int $id
-     * @param array $with
+     * @param  string  $id
+     * @param  array   $with
+     *
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function find($id, array $with = array())
@@ -122,12 +120,12 @@ abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQu
         return $model;
     }
 
-
     /**
      * Find or throws exception
      *
-     * @param  int    $id
-     * @param  array  $with
+     * @param  string  $id
+     * @param  array   $with
+     *
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function findOrFail($id, array $with = array())
@@ -148,12 +146,11 @@ abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQu
         return $model;
     }
 
-
     /**
      * Call the Key Manager to get the Cache key.
      *
-     * @param bool $id
-     * @param array $array
+     * @param  string|bool   $id
+     * @param  array         $array
      *
      * @return string
      */
@@ -162,12 +159,11 @@ abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQu
         return $this->keyManager->getKey($id, $array, $this->section, $this->modelClass);
     }
 
-
     /**
      * Call the Key Manager to get the Cache tags.
      *
-     * @param bool $id
-     * @param array $array
+     * @param  string|bool  $id
+     * @param  array        $array
      *
      * @return array
      */
@@ -176,13 +172,12 @@ abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQu
         return $this->keyManager->getTags($id, $array, $this->section, $this->modelClass);
     }
 
-
     /**
      * Call the Key Manager method to the Custom Method Key.
      *
-     * @param bool|string $customName
-     * @param bool $id
-     * @param array $array
+     * @param  string|bool  $customName
+     * @param  string|bool  $id
+     * @param  array        $array
      *
      * @return string
      */
@@ -191,13 +186,12 @@ abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQu
         return $this->keyManager->getCustomMethodKey($customName, $id, $array, $this->section, $this->modelClass);
     }
 
-
     /**
      * Call the Key Manager method to get the Custom Method Tags.
      *
-     * @param bool|string $customName
-     * @param bool $id
-     * @param array $array
+     * @param  string|bool  $customName
+     * @param  string|bool  $id
+     * @param  array        $array
      *
      * @return array
      */

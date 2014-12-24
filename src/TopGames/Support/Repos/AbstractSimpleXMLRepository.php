@@ -11,7 +11,7 @@ class AbstractSimpleXMLRepository implements XMLRepositoryInterface
      *
      * @var bool
      */
-    protected $autoload = TRUE;
+    protected $autoload = true;
 
     protected $xmlFile;
 
@@ -21,7 +21,6 @@ class AbstractSimpleXMLRepository implements XMLRepositoryInterface
      * @var string
      */
     protected $xmlPath;
-
 
 
     public function __construct()
@@ -34,7 +33,6 @@ class AbstractSimpleXMLRepository implements XMLRepositoryInterface
         }
     }
 
-
     /*
      * Return file path.
      *
@@ -44,7 +42,6 @@ class AbstractSimpleXMLRepository implements XMLRepositoryInterface
     {
         return $this->xmlPath;
     }
-
 
     /**
      * Return the xml file as an instance of SimpleXML
@@ -60,7 +57,6 @@ class AbstractSimpleXMLRepository implements XMLRepositoryInterface
 
         return $this->xmlFile;
     }
-
 
     /**
      * Load the file and save it into the class var

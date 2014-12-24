@@ -2,38 +2,37 @@
 
 namespace TopGames\Support\Cache;
 
-use \Illuminate\Cache\CacheManager;
+use Illuminate\Cache\CacheManager;
 
 class LaravelCache implements CacheInterface {
 
     /**
-     * @var \Illuminate\Cache\CacheManager
+     * @var CacheManager
      */
     protected $cache;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $minutes;
 
     /**
      * Construct
      *
-     * @param \Illuminate\Cache\CacheManager $cache
-     * @param integer $minutes
+     * @param CacheManager  $cache
      */
-    public function __construct(CacheManager $cache, $minutes = 1) //TODO minutes = 15
+    public function __construct(CacheManager $cache)
     {
         $this->cache = $cache;
-        $this->minutes = $minutes;
+        $this->minutes = app()['config']->get('support::cache_time');
     }
 
     /**
      * Get
      *
-     * @param  string  $key
-     * @param  array   $tags
-     * @return mixed
+     * @param   string  $key
+     * @param   array   $tags
+     * @return  mixed
      */
     public function get($key, array $tags)
     {
@@ -46,7 +45,8 @@ class LaravelCache implements CacheInterface {
      * @param  string  $key
      * @param  mixed   $value
      * @param  array   $tags
-     * @param  integer $minutes
+     * @param  int     $minutes
+     *
      * @return mixed
      */
     public function put($key, $value, array $tags, $minutes = null)
@@ -64,6 +64,7 @@ class LaravelCache implements CacheInterface {
      *
      * @param  string  $key
      * @param  array   $tags
+     * 
      * @return bool
      */
     public function has($key, array $tags)
