@@ -3,7 +3,8 @@
 ## Introduction
 
 Support consists of a series of useful classes to easy development and the use of best practices and design patterns with Laravel 5.
-Part of this package is highly inspired by the culttt.com blog, which I highly recommend to both new and experienced developers since it focuses on a wide range of aspects with always interesting point of views and discussions. I have personally learned much from it.
+
+Part of this package is highly inspired by the [culttt.com](http://culttt.com/) blog, which I highly recommend to both new and experienced developers since it focuses on a wide range of aspects with always interesting point of views and discussions. I have personally learned much from it.
 
 ## Installation
 
@@ -16,12 +17,14 @@ Support consists of the following modules: Cache, Repositories, Semaphore and a 
 ## Configuration
 
 Support does not need any configuration to work. However, you may publish Support files through the artisan command `php artisan config:publish angioni/support`.
+
 You can than edit the config.php file in your `app/config/packages/angioni/support` directory to customize the support behaviour.
 
 ## Repositories Usage
 
 The abstract class `AbstractEloquentRepository` consists for a wrapper with a series of useful standard queries to be performed over the Laravel models.
 This way implementing the repository pattern becomes straightforward.
+
 As an example let's take a `Post` model. First of all we shall create a repository interface which will be injected in the constructor of the classes where we need the repo.
 We then define the `PostRepositoryInterface` as
 
