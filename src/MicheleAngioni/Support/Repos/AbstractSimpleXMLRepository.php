@@ -1,6 +1,6 @@
 <?php
 
-namespace TopGames\Support\Repos;
+namespace MicheleAngioni\Support\Repos;
 
 use UnexpectedValueException;
 

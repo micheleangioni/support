@@ -1,6 +1,6 @@
 <?php
 
-namespace TopGames\Support\Cache;
+namespace MicheleAngioni\Support\Cache;
 
 interface KeyManagerInterface {
 

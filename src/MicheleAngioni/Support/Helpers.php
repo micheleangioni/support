@@ -1,6 +1,6 @@
 <?php
 
-namespace TopGames\Support;
+namespace MicheleAngioni\Support;
 
 use DateTime;
 use Illuminate\Support\Collection;

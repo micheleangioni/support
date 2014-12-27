@@ -6,10 +6,10 @@ class SemaphoreTest extends TestCase {
 	{
         $lockingTime = 12;
 
-        $cacheInterface = $this->mock('TopGames\Support\Cache\CacheInterface');
-        $keyManagerInterface = $this->mock('TopGames\Support\Cache\KeyManagerInterface');
+        $cacheInterface = $this->mock('MicheleAngioni\Support\Cache\CacheInterface');
+        $keyManagerInterface = $this->mock('MicheleAngioni\Support\Cache\KeyManagerInterface');
 
-        $semaphoreManager = new TopGames\Support\Semaphores\SemaphoresManager($cacheInterface, $keyManagerInterface);
+        $semaphoreManager = new MicheleAngioni\Support\Semaphores\SemaphoresManager($cacheInterface, $keyManagerInterface);
 
         $semaphoreManager->setLockingTime($lockingTime);
 
@@ -18,23 +18,23 @@ class SemaphoreTest extends TestCase {
 
     public function testGetSemaphoreKey()
     {
-        $cacheInterface = $this->mock('TopGames\Support\Cache\CacheInterface');
-        $keyManagerInterface = $this->mock('TopGames\Support\Cache\KeyManagerInterface');
+        $cacheInterface = $this->mock('MicheleAngioni\Support\Cache\CacheInterface');
+        $keyManagerInterface = $this->mock('MicheleAngioni\Support\Cache\KeyManagerInterface');
 
         $keyManagerInterface->shouldReceive('getKey')
             ->andReturn(true);
 
-        $semaphoreManager = new TopGames\Support\Semaphores\SemaphoresManager($cacheInterface, $keyManagerInterface);
+        $semaphoreManager = new MicheleAngioni\Support\Semaphores\SemaphoresManager($cacheInterface, $keyManagerInterface);
 
         $semaphoreManager->getSemaphoreKey('id', 'section');
     }
 
     public function testLockSemaphore()
     {
-        $cacheInterface = $this->mock('TopGames\Support\Cache\CacheInterface');
-        $keyManagerInterface = $this->mock('TopGames\Support\Cache\KeyManagerInterface');
+        $cacheInterface = $this->mock('MicheleAngioni\Support\Cache\CacheInterface');
+        $keyManagerInterface = $this->mock('MicheleAngioni\Support\Cache\KeyManagerInterface');
 
-        $semaphoreManager = Mockery::mock('TopGames\Support\Semaphores\SemaphoresManager[getSemaphoreKey]', array($cacheInterface, $keyManagerInterface));
+        $semaphoreManager = Mockery::mock('MicheleAngioni\Support\Semaphores\SemaphoresManager[getSemaphoreKey]', array($cacheInterface, $keyManagerInterface));
 
         $semaphoreManager->shouldReceive('getSemaphoreKey')
                          ->andReturn('string');
@@ -47,10 +47,10 @@ class SemaphoreTest extends TestCase {
 
     public function testUnlockSemaphore()
     {
-        $cacheInterface = $this->mock('TopGames\Support\Cache\CacheInterface');
-        $keyManagerInterface = $this->mock('TopGames\Support\Cache\KeyManagerInterface');
+        $cacheInterface = $this->mock('MicheleAngioni\Support\Cache\CacheInterface');
+        $keyManagerInterface = $this->mock('MicheleAngioni\Support\Cache\KeyManagerInterface');
 
-        $semaphoreManager = Mockery::mock('TopGames\Support\Semaphores\SemaphoresManager[getSemaphoreKey]', array($cacheInterface, $keyManagerInterface));
+        $semaphoreManager = Mockery::mock('MicheleAngioni\Support\Semaphores\SemaphoresManager[getSemaphoreKey]', array($cacheInterface, $keyManagerInterface));
 
         $semaphoreManager->shouldReceive('getSemaphoreKey')
             ->andReturn('string');
@@ -66,10 +66,10 @@ class SemaphoreTest extends TestCase {
         $id = 10;
         $section = 'section';
 
-        $cache = App::make('TopGames\Support\Cache\LaravelCache');
-        $keyManager = App::make('TopGames\Support\Cache\KeyManager');
+        $cache = App::make('MicheleAngioni\Support\Cache\LaravelCache');
+        $keyManager = App::make('MicheleAngioni\Support\Cache\KeyManager');
 
-        $semaphoreManager = new TopGames\Support\Semaphores\SemaphoresManager($cache, $keyManager);
+        $semaphoreManager = new MicheleAngioni\Support\Semaphores\SemaphoresManager($cache, $keyManager);
 
         $semaphoreManager->lockSemaphore($id, $section);
         $this->assertEquals(1, $semaphoreManager->checkIfSemaphoreIsLocked($id, $section));

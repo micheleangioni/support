@@ -1,6 +1,6 @@
 <?php
 
-use TopGames\Support\Helpers as H;
+use MicheleAngioni\Support\Helpers as H;
 
 class HelpersTest extends TestCase {
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace TopGames\Support\Facades;
+namespace MicheleAngioni\Support\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

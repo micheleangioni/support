@@ -1,8 +1,8 @@
 <?php
 
-namespace TopGames\Support\Cache;
+namespace MicheleAngioni\Support\Cache;
 
-use TopGames\Support\Repos\XMLRepositoryInterface;
+use MicheleAngioni\Support\Repos\XMLRepositoryInterface;
 use BadMethodCallException;
 
 abstract class AbstractCacheSimpleXMLRepositoryDecorator {

@@ -1,9 +1,9 @@
 <?php
 
-namespace TopGames\Support\Semaphores;
+namespace MicheleAngioni\Support\Semaphores;
 
-use TopGames\Support\Cache\CacheInterface;
-use TopGames\Support\Cache\KeyManagerInterface;
+use MicheleAngioni\Support\Cache\CacheInterface;
+use MicheleAngioni\Support\Cache\KeyManagerInterface;
 
 class SemaphoresManager {
 

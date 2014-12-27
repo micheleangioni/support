@@ -1,8 +1,8 @@
 <?php
 
-namespace TopGames\Support\Cache;
+namespace MicheleAngioni\Support\Cache;
 
-use TopGames\Support\Repos\RepositoryCacheableQueriesInterface;
+use MicheleAngioni\Support\Repos\RepositoryCacheableQueriesInterface;
 use BadMethodCallException;
 
 abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQueriesInterface {

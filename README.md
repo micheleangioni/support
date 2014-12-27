@@ -2,13 +2,13 @@
 
 ## Introduction
 
-Support consists of a series of useful classes to easy development and the use of best practices and design patterns with Laravel 5.
+Support consists of a series of useful classes to easy development and the use of best practices and design patterns with [Laravel 4](http://laravel.com).
 
 Part of this package is highly inspired by the [culttt.com](http://culttt.com/) blog, which I highly recommend to both new and experienced developers since it focuses on a wide range of aspects with always interesting point of views and discussions. I have personally learned much from it.
 
 ## Installation
 
-Support can be installed through Composer, just include `"angioni/support": "dev-master"` to your composer.json.
+Support can be installed through Composer, just include `"michele-angioni/support": "dev-master"` to your composer.json.
 
 ## Module summary
 
@@ -16,9 +16,9 @@ Support consists of the following modules: Cache, Repositories, Semaphore and a 
 
 ## Configuration
 
-Support does not need any configuration to work. However, you may publish Support files through the artisan command `php artisan config:publish angioni/support`.
+Support does not need any configuration to work. However, you may publish Support files through the artisan command `php artisan config:publish michele-angioni/support`.
 
-You can than edit the config.php file in your `app/config/packages/angioni/support` directory to customize the support behaviour.
+You can than edit the config.php file in your `app/config/packages/michele-angioni/support` directory to customize the support behaviour.
 
 ## Repositories Usage
 
@@ -36,7 +36,7 @@ We need now an implementation. The easiest way to create a Post repository is to
 
     <?php
 
-    use TopGames\Support\Repos\AbstractEloquentRepository;
+    use MicheleAngioni\Support\Repos\AbstractEloquentRepository;
     use Post;
 
     class EloquentPostRepository extends AbstractEloquentRepository implements PostRepositoryInterface
@@ -138,7 +138,7 @@ then we can create our xml repository as follows
 
     <?php
 
-    use TopGames\Support\Repos\AbstractSimpleXMLRepository;
+    use MicheleAngioni\Support\Repos\AbstractSimpleXMLRepository;
 
     class SimpleXMLStaffRepository extends AbstractSimpleXMLRepository implements StaffXMLRepositoryInterface
     {
@@ -186,10 +186,10 @@ We define a `CachePostRepoDecorator` as follows
 
     <?php
 
-    use TopGames\Support\Cache\CacheInterface;
-    use TopGames\Support\Cache\KeyManager;
-    use TopGames\Support\Cache\AbstractCacheRepositoryDecorator;
-    use TopGames\Support\Repos\RepositoryCacheableQueriesInterface;
+    use MicheleAngioni\Support\Cache\CacheInterface;
+    use MicheleAngioni\Support\Cache\KeyManager;
+    use MicheleAngioni\Support\Cache\AbstractCacheRepositoryDecorator;
+    use MicheleAngioni\Support\Repos\RepositoryCacheableQueriesInterface;
 
     class CachePostRepoDecorator extends AbstractCacheRepositoryDecorator implements PostRepositoryInterface {
 
@@ -228,8 +228,8 @@ In fact, all you need to use the Cache is to edit your RepositoryServiceProvider
     <?php
 
     use Illuminate\Support\ServiceProvider;
-    use TopGames\Support\Cache\KeyManager;
-    use TopGames\Support\Cache\LaravelCache;
+    use MicheleAngioni\Support\Cache\KeyManager;
+    use MicheleAngioni\Support\Cache\LaravelCache;
 
     class RepositoryServiceProvider extends ServiceProvider {
 
@@ -266,9 +266,9 @@ The Cache module comes with xml cache handlers too. Let's take the staff.xml cla
 
     namespace TopGames\Libraries\TopPlayer\CacheXML;
 
-    use TopGames\Support\Cache\CacheInterface;
-    use TopGames\Support\Cache\AbstractCacheSimpleXMLRepositoryDecorator;
-    use TopGames\Support\Repos\XMLRepositoryInterface;
+    use MicheleAngioni\Support\Cache\CacheInterface;
+    use MicheleAngioni\Support\Cache\AbstractCacheSimpleXMLRepositoryDecorator;
+    use MicheleAngioni\Support\Repos\XMLRepositoryInterface;
     use StaffXMLRepositoryInterface;
 
     class CacheSimpleXMLStaffRepoDecorator extends AbstractCacheSimpleXMLRepositoryDecorator implements StaffXMLRepositoryInterface {
@@ -298,7 +298,7 @@ and update the `XMLRepositoryServiceProvider`
 
     use Illuminate\Support\ServiceProvider;
     use CacheSimpleXMLStaffRepoDecorator;
-    use TopGames\Support\Cache\LaravelCache;
+    use MicheleAngioni\Support\Cache\LaravelCache;
 
     class XMLRepositoryServiceProvider extends ServiceProvider {
 
@@ -325,14 +325,14 @@ The Support package provides both of them, so we can bind them to the Semaphores
     namespace TopGames\Libraries\TopPlayer;
 
     use Illuminate\Support\ServiceProvider;
-    use TopGames\Support\Cache\KeyManager;
-    use TopGames\Support\Cache\LaravelCache;
-    use TopGames\Support\Semaphores\SemaphoresManager;
+    use MicheleAngioni\Support\Cache\KeyManager;
+    use MicheleAngioni\Support\Cache\LaravelCache;
+    use MicheleAngioni\Support\Semaphores\SemaphoresManager;
 
     class SemaphoresServiceProviders extends ServiceProvider {
 
         $this->app->bind(
-            'TopGames\Support\Semaphores\SemaphoresManager', function($app)
+            'MicheleAngioni\Support\Semaphores\SemaphoresManager', function($app)
             {
                 return new SemaphoresManager(new LaravelCache($app['cache']), new KeyManager);
             });
@@ -351,7 +351,7 @@ We can them simply inject the SemaphoresManager in a constructor to be resolver 
 
 The helpers class provides several useful methods which simplify php development. Support has also an Helpers facade which can be registered in the app.php file under the aliases array as
 
-    'Helpers' => 'TopGames\Support\Facades\Helpers'
+    'Helpers' => 'MicheleAngioni\Support\Facades\Helpers'
 
 The main available methods are:
 

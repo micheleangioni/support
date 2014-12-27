@@ -1,5 +1,5 @@
 {
-    "name": "top-games/support",
+    "name": "michele-angioni/support",
     "description": "Support is a Laravel package which promotes the use of best practices and design patterns.",
     "keywords": ["laravel", "support", "cache", "repos", "helpers", "semaphores"],
     "license": "MIT",
@@ -20,7 +20,7 @@
     },
     "autoload": {
         "psr-4": {
-            "TopGames\\Support\\": "src"
+            "MicheleAngioni\\Support\\": "src/MicheleAngioni/Support"
         }
     },
     "minimum-stability": "stable"

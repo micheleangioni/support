@@ -1,6 +1,6 @@
 <?php
 
-namespace TopGames\Support;
+namespace MicheleAngioni\Support;
 
 use Illuminate\Support\ServiceProvider;
 use App;
@@ -21,7 +21,7 @@ class SupportServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->package('top-games/support');
+		$this->package('michele-angioni/support');
 	}
 
 	/**
