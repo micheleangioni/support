@@ -2,9 +2,9 @@
 
 ## Introduction
 
-Support consists of a series of useful classes to easy development and the use of best practices and design patterns with [Laravel 4](http://laravel.com).
+Support consists of a series of useful classes to ease development and the use of best practices and design patterns with [Laravel 4](http://laravel.com).
 
-Part of this package is highly inspired by the [culttt.com](http://culttt.com/) blog, which I highly recommend to both new and experienced developers since it focuses on a wide range of aspects with always interesting point of views and discussions. I have personally learned much from it.
+Part of this package has been highly inspired by the [culttt.com](http://culttt.com/) blog, which I highly recommend to both new and experienced developers since it focuses on a wide range of aspects with always interesting point of views and discussions. I have personally learned much from it.
 
 ## Installation
 
@@ -12,27 +12,27 @@ Support can be installed through Composer, just include `"michele-angioni/suppor
 
 ## Module summary
 
-Support consists of the following modules: Cache, Repositories, Semaphore and a Helpers class. In addition, Support comes with several new custom exceptions.
+Support consists of the following features: Cache, Repositories, Semaphore and a Helpers class. In addition, Support comes with several new custom exceptions.
 
 ## Configuration
 
-Support does not need any configuration to work. However, you may publish Support files through the artisan command `php artisan config:publish michele-angioni/support`.
+Support does not need any configuration to work. However, you may publish the configuration file through the artisan command `php artisan config:publish michele-angioni/support`.
 
-You can than edit the config.php file in your `app/config/packages/michele-angioni/support` directory to customize the support behaviour.
+You can than edit the config.php file in your `app/config/packages/michele-angioni/support` directory to customize Support behaviour.
 
 ## Repositories Usage
 
-The abstract class `AbstractEloquentRepository` consists for a wrapper with a series of useful standard queries to be performed over the Laravel models.
+The abstract class `AbstractEloquentRepository` consists for a model wrapper with a series of useful standard queries to be performed over the Laravel models.
 This way implementing the repository pattern becomes straightforward.
 
-As an example let's take a `Post` model. First of all we shall create a repository interface which will be injected in the constructor of the classes where we need the repo.
-We then define the `PostRepositoryInterface` as
+As an example let's take a `Post` model. First of all we shall create a repository interface which will be injected in the constructor of the classes we need.
+First of all we must define the `PostRepositoryInterface` as
 
      <?php
 
      interface PostRepositoryInterface {}
 
-We need now an implementation. The easiest way to create a Post repository is to define the following class
+We need now an implementation. The easiest way to create a Post repository is to define a class as such
 
     <?php
 
@@ -56,7 +56,7 @@ Now we need to bind the implementation to the interface, which can be done by ad
         'EloquentPostRepository'
     );
 
-to an existing Laravel Service Provider. Or we can create a new one
+to an existing Laravel Service Provider. Or we can create a brand new one
 
     <?php
 
@@ -147,14 +147,14 @@ then we can create our xml repository as follows
         protected $xmlPath = '/assets/xml/staff.xml';
     }
 
-the $xmlPath property define the path to the xml file (base path is the /app folder) while the $autoload property defines if the xml file is automatically loaded when instantiating the class.
+the $xmlPath property defines the path to the xml file (base path is the /app folder) while the $autoload property defines whether the xml file is automatically loaded when instantiating the class.
 The `AbstractSimpleXMLRepository` contains the methods we need:
 
 - getFilePath() : return the xml file path
-- loadFile() : load the xml file for further use
+- loadFile() : load the xml file for later use
 - getFile() : load the xml file if not previously loaded and return it as an SimpleXMLElement instance
 
-As done with "standard" repos, we need to instruct the IoC Container and we can achieve that by defining XMLRepositoryServiceProvider
+As done with "standard" repos, we need to instruct the IoC Container and we can achieve that by defining the following XMLRepositoryServiceProvider
 
     <?php
 
@@ -181,8 +181,8 @@ The `AbstractEloquentRepository` and `AbstractSimpleXMLRepository` classes do NO
 
 ## Cache Usage
 
-The Cache module can be used to give Cache capabilities to our repos. We can then continue our previous example of a Post model and its repo.
-We define a `CachePostRepoDecorator` as follows
+The Cache module can be used to give Cache capabilities to our repos, through the use of the decorator pattern.
+We can then continue our previous example of a Post model and its repo. We define a `CachePostRepoDecorator` as follows
 
     <?php
 
@@ -216,12 +216,12 @@ We define a `CachePostRepoDecorator` as follows
 
 The section property can be used to define a Cache section and it is used when generating the Cache keys.
 This class implements the `PostRepositoryInterface`, so that it is recognized as the Post repo, of which it is nothing but a wrapper. It also extends the `AbstractCacheRepositoryDecorator` where all magic happens.
-The AbstractCacheRepositoryDecorator implements the `RepositoryCacheableQueriesInterface`, which is a very basic interface which instructs our system to what repo methods are going to be cached.
+The AbstractCacheRepositoryDecorator implements the `RepositoryCacheableQueriesInterface`, which is a very basic interface which instructs our system which repo methods are going to be cached.
 Default methods are all(), find() and findOrFail(), but you can define your own interface and abstract cache decorator with more methods.
 
 The `AbstractCacheRepositoryDecorator` constructor needs a repository implementing the `RepositoryCacheableQueriesInterface`, a Cache manager implementing the `CacheInterface` and a Key Manager implementing the `KeyManagerInterface`.
-Laravel owns a very good Cache manager, so the package `LaravelCache` class can be used as Cache Manager.
-This package comes with the `KeyManager` class as the default Key Manager. It supports a solid Cache key generator, but you can define your own.
+Laravel has out of the box a very good Cache manager, so the `LaravelCache` class can be used as Cache Manager.
+This package comes with a `KeyManager` class as the default Key Manager. It supports a solid Cache key generator, but you can define your own.
 
 In fact, all you need to use the Cache is to edit your RepositoryServiceProvider instructing the Laravel IoC Container to use the caching repo
 
@@ -246,7 +246,7 @@ In fact, all you need to use the Cache is to edit your RepositoryServiceProvider
         }
     }
 
-Now you can use the Post repo as before, but when calling the all(), find() or findOrFail() methods the result will be cached for 10 minutes.
+Now you can use the Post repo as before, but when calling the all(), find() or findOrFail() methods the result will be cached (default time: 10 minutes It can be modified in the configuration file).
 
 ### Hint
 
@@ -260,7 +260,7 @@ In your Post model define a flush() method as follows
 
 You can then call it when editing or deleting a Post model you that your clients don't get outdated results.
 
-The Cache module comes with xml cache handlers too. Let's take the staff.xml class we used before. All we need if to define the caching xml repo
+The Cache module comes with xml handlers too. Let's take the staff.xml class we used before. All we need to provide cache is to define the caching xml repo as follows
 
     <?php
 
@@ -318,7 +318,7 @@ and update the `XMLRepositoryServiceProvider`
 ## Semaphores Usage
 
 The semaphores module consists of a single class, the `SemaphoresManager`. Its constructor needs a Cache Manager and a Key Manager.
-The Support package provides both of them, so we can bind them to the SemaphoresManager in a service provider as follow
+The Support package provides both of them, so we can bind them to the SemaphoresManager in a service provider
 
     <?php
 
@@ -374,7 +374,7 @@ min and max allowed values can be inserted.
 
 ## Contribution guidelines
 
-Pull requests are welcome. More unit tests are very welcome. Breaking changes won't be merged.
+Pull requests are welcome. More unit tests are welcome as well. Breaking changes won't be merged.
 
 ## License
 
