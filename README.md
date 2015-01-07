@@ -115,6 +115,7 @@ The `AbstractEloquentRepository` empowers automatically our repositories of the 
 - has($relation, array $where = array(), array $with = array(), $hasAtLeast = 1)
 - hasFirst($relation, array $where = array(), array $with = array(), $hasAtLeast = 1)
 - hasFirstOrFail($relation, array $where = array(), array $with = array(), $hasAtLeast = 1)
+- whereHas($relation, array $where = array(), array $whereHas = array(), array $with = array())
 - getByPage($page = 1, $limit = 10, array $where = array(), $with = array())
 - insert(array $collection)
 - create(array $inputs)

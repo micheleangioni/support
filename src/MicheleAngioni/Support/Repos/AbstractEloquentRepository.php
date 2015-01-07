@@ -173,7 +173,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     }
 
     /**
-     * Return firstOrFail result that have a required relationship,
+     * Return firstOrFail result that have a required relationship
      *
      * @param  string  $relation
      * @param  array   $where
@@ -192,6 +192,36 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         }
 
         return $query->has($relation, '>=', $hasAtLeast)->firstOrFail();
+    }
+
+    /**
+     * Return all results that have a required relationship with input constraints
+     *
+     * @param  string  $relation
+     * @param  array   $where
+     * @param  array   $whereHas
+     * @param  array   $with
+     *
+     * @return Collection
+     */
+    public function whereHas($relation, array $where = array(), array $whereHas = array(), array $with = array())
+    {
+        $query = $this->make($with);
+
+        foreach($where as $key => $value)
+        {
+            $query = $query->where($key, '=', $value);
+        }
+
+        $query = $query->whereHas($relation, function($q) use($whereHas)
+        {
+            foreach($whereHas as $key => $value)
+            {
+                $q = $q->where($key, '=', $value);
+            }
+        });
+
+        return $query->get();
     }
 
     /**

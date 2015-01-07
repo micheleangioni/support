@@ -67,6 +67,7 @@ class Helpers {
 	 */
 	static function checkDate($date, $format = 'Y-m-d')
 	{
+		date_default_timezone_set('UTC');
 		$d = DateTime::createFromFormat($format, $date);
 		return $d && $d->format($format) == $date;
 	}
@@ -79,6 +80,7 @@ class Helpers {
 	 */
 	static function checkDatetime($datetime)
 	{
+		date_default_timezone_set('UTC');
 		$format = 'Y-m-d H:i:s';
 		
 		$d = DateTime::createFromFormat($format, $datetime);
@@ -98,6 +100,7 @@ class Helpers {
 	 */
 	static function splitDates($first_date, $second_date, $max_difference = 0)
 	{
+		date_default_timezone_set('UTC');
 		if( !self::checkDate($first_date) || !self::checkDate($second_date)){
 			return false;
 		}

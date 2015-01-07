@@ -1,6 +1,6 @@
 <?php
 
-class SemaphoreTest extends TestCase {
+class SemaphoreTest extends PHPUnit_Framework_TestCase {
 
 	public function testLockingTime()
 	{
@@ -61,29 +61,10 @@ class SemaphoreTest extends TestCase {
         $semaphoreManager->unlockSemaphore('id', 'section');
     }
 
-    public function testCacheIntegration()
-    {
-        $id = 10;
-        $section = 'section';
-
-        $cache = App::make('MicheleAngioni\Support\Cache\LaravelCache');
-        $keyManager = App::make('MicheleAngioni\Support\Cache\KeyManager');
-
-        $semaphoreManager = new MicheleAngioni\Support\Semaphores\SemaphoresManager($cache, $keyManager);
-
-        $semaphoreManager->lockSemaphore($id, $section);
-        $this->assertEquals(1, $semaphoreManager->checkIfSemaphoreIsLocked($id, $section));
-
-        $semaphoreManager->unlockSemaphore($id, $section);
-        $this->assertEquals(0, $semaphoreManager->checkIfSemaphoreIsLocked($id, $section));
-    }
-
 
     public function mock($class)
     {
         $mock = Mockery::mock($class);
-
-        $this->app->instance($class, $mock);
 
         return $mock;
     }

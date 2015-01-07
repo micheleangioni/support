@@ -2,7 +2,7 @@
 
 use MicheleAngioni\Support\Helpers as H;
 
-class HelpersTest extends TestCase {
+class HelpersTest extends PHPUnit_Framework_TestCase {
 
 	public function testIsInt()
     {
