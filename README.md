@@ -1,5 +1,8 @@
 # SUPPORT
 
+[![Build Status](https://travis-ci.org/micheleangioni/support.svg)](https://travis-ci.org/micheleangioni/support)
+[![License](https://poser.pugx.org/michele-angioni/support/license.svg)](https://packagist.org/packages/michele-angioni/support)
+
 ## Introduction
 
 Support consists of a series of useful classes to ease development and the use of best practices and design patterns with [Laravel 4](http://laravel.com).
