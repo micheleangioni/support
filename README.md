@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/micheleangioni/support.svg)](https://travis-ci.org/micheleangioni/support)
 [![License](https://poser.pugx.org/michele-angioni/support/license.svg)](https://packagist.org/packages/michele-angioni/support)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/8af14b44-cf82-4028-8a89-438fcb133ba6/small.png)](https://insight.sensiolabs.com/projects/8af14b44-cf82-4028-8a89-438fcb133ba6)
 
 ## Introduction
 
