@@ -1,6 +1,4 @@
-<?php
-
-namespace MicheleAngioni\Support\Cache;
+<?php namespace MicheleAngioni\Support\Cache;
 
 interface KeyManagerInterface {
 

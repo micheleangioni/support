@@ -19,7 +19,7 @@ class HelpersTest extends PHPUnit_Framework_TestCase {
     {
         $array = ['1', 1, 2, 3, '5'];
 
-        $value = H::RandInArray($array);
+        $value = H::randInArray($array);
 
         $this->assertTrue(in_array($value, $array));
     }

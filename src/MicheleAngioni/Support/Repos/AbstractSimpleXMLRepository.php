@@ -1,6 +1,4 @@
-<?php
-
-namespace MicheleAngioni\Support\Repos;
+<?php namespace MicheleAngioni\Support\Repos;
 
 use UnexpectedValueException;
 

@@ -1,6 +1,4 @@
-<?php
-
-namespace MicheleAngioni\Support;
+<?php namespace MicheleAngioni\Support;
 
 use DateTime;
 use Illuminate\Support\Collection;
@@ -22,7 +20,7 @@ class Helpers {
      */
 	static function isInt($int, $min = false, $max = false)
 	{
-		if($min!= false){
+		if($min !== false){
 			if(is_numeric($min) && (int)$min == $min){
 				if($int < $min){
 					return false;
@@ -33,7 +31,7 @@ class Helpers {
 			}
 		}
 		
-		if($max!= false){
+		if($max !== false){
 			if(is_numeric($max) && (int)$max == $max){
 				if($int > $max){
 					return false;
@@ -53,7 +51,7 @@ class Helpers {
      * @param  array  $array
      * @return mixed
      */
-    static function RandInArray(array $array)
+    static function randInArray(array $array)
     {
         return $array[mt_rand(0, count($array) - 1)];
     }
@@ -111,7 +109,7 @@ class Helpers {
 		
 		$date1 = new DateTime($first_date);
 		$date2 = new DateTime($second_date);
-		$interval = $date1->diff($date2, $absolute = false);
+		$interval = $date1->diff($date2, false);
 		
 		if((int)$interval->format('%R%a') < 0){
 			return false;

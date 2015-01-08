@@ -1,6 +1,4 @@
-<?php
-
-namespace MicheleAngioni\Support\Repos;
+<?php namespace MicheleAngioni\Support\Repos;
 
 interface RepositoryCacheableQueriesInterface
 {
@@ -10,4 +8,3 @@ interface RepositoryCacheableQueriesInterface
 
     public function findOrFail($id, array $with = array());
 }
-

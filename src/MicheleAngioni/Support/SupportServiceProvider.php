@@ -1,6 +1,4 @@
-<?php
-
-namespace MicheleAngioni\Support;
+<?php namespace MicheleAngioni\Support;
 
 use Illuminate\Support\ServiceProvider;
 use App;

@@ -1,6 +1,4 @@
-<?php
-
-namespace MicheleAngioni\Support\Semaphores;
+<?php namespace MicheleAngioni\Support\Semaphores;
 
 use MicheleAngioni\Support\Cache\CacheInterface;
 use MicheleAngioni\Support\Cache\KeyManagerInterface;

@@ -359,11 +359,11 @@ The helpers class provides several useful methods which simplify php development
 
 The main available methods are:
 
-- Helpers::isInt($int, $min = false, $max = false) : check if input $int is an integer. Examples:
+- isInt($int, $min = false, $max = false) : check if input $int is an integer. Examples:
 int(4), string '4', float(4), 0x7FFFFFFF return true.
 int(4.1), string '1.2', string '0x8', float(1.2) return false.
 min and max allowed values can be inserted.
-- Helpers::RandInArray(array $array) : return a random value out of an array
+- randInArray(array $array) : return a random value out of an array
 - checkDate($date, $format = 'Y-m-d') : check if input date is a valid date based of input format
 - checkDatetime($datetime) : check if input datetime is a valid 'Y-m-d H:m:s' datetime
 - splitDates($first_date, $second_date, $max_difference = 0) : split two 'Y-m-d'-format dates into an array of dates
