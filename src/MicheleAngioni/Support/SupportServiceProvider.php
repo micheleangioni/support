@@ -2,6 +2,7 @@
 
 use Illuminate\Support\ServiceProvider;
 use App;
+use Validator;
 
 class SupportServiceProvider extends ServiceProvider {
 
@@ -20,6 +21,8 @@ class SupportServiceProvider extends ServiceProvider {
 	public function boot()
 	{
 		$this->package('michele-angioni/support');
+
+		$this->registerCustomValidators();
 	}
 
 	/**
@@ -50,5 +53,20 @@ class SupportServiceProvider extends ServiceProvider {
             return new Helpers;
         });
     }
+
+	public function registerCustomValidators()
+	{
+		Validator::resolver(function($translator, $data, $rules, $messages)
+		{
+			$messages = array(
+				'alpha_complete' => 'Only the following characters are allowed: alphabetic, numbers, spaces, slashes and several punctuation characters.',
+				'alpha_space' => 'Only the following characters are allowed: alphabetic, numbers and spaces.',
+				'alpha_underscore' => 'Only the following characters are allowed: alphabetic, numbers and underscores.',
+				'alpha_names' => 'Only the following characters are allowed: alphabetic, menus, apostrophes, underscores and spaces.',
+			);
+
+			return new CustomValidators($translator, $data, $rules, $messages);
+		});
+	}
 
 }

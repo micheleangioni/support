@@ -16,7 +16,8 @@ Support can be installed through Composer, just include `"michele-angioni/suppor
 
 ## Module summary
 
-Support consists of the following features: Cache, Repositories, Semaphore and a Helpers class. In addition, Support comes with several new custom exceptions.
+Support consists of the following features: Cache, Repositories, Semaphore, an Helpers class and new custom validators.
+In addition Support comes with several new custom exceptions.
 
 ## Configuration
 
@@ -377,9 +378,28 @@ min and max allowed values can be inserted.
 - getRandomValueUrandom($min = 0, $max = 0x7FFFFFFF) : return a random value between input $min and $max values by using the MCRYPT_DEV_URANDOM source
 - getUniqueRandomValues($min = 0, $max, $quantity = 1) : return $quantity UNIQUE random value between $min and $max
 
+## Custom validators
+
+Just after registering the SupportServiceProvider, the following new custom validators will be available:
+
+- alpha_complete : The following characters are allowed: alphabetic, numbers, spaces, slashes and several punctuation characters _ ! . , : / ; ? & ( ) [ ] { }
+- alpha_space : The following characters are allowed: alphabetic, numbers and spaces
+- alpha_underscore : The following characters are allowed: alphabetic, numbers and underscores
+- alpha_names : The following characters are allowed: alphabetic, menus, apostrophes, underscores and spaces
+
+## Custom Exceptions
+
+The following new custom exceptions will be available:
+
+- DatabaseException : thought to be used where a query error arises
+- DbClientRequestException : can be thrown when an entity required by a client is not available
+- PermissionsException : a general permission exception
+
 ## Contribution guidelines
 
-Pull requests are welcome. More unit tests are welcome as well. Breaking changes won't be merged.
+Support follows PSR-1 and PSR-4 PHP coding standards, and semantic versioning.
+
+Pull requests are welcome. More unit tests are welcome as well.
 
 ## License
 
