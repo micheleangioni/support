@@ -12,11 +12,11 @@ Part of this package has been highly inspired by the [culttt.com](http://culttt.
 
 ## Installation
 
-Support can be installed through Composer, just include `"michele-angioni/support": "dev-master"` to your composer.json.
+Support can be installed through Composer, just include `"michele-angioni/support": "~1.2"` to your composer.json and run `composer update` or `composer install`.
 
-## Module summary
+## Modules summary
 
-Support consists of the following features: Cache, Repositories, Semaphore, an Helpers class and new custom validators.
+Support consists of the following features: Repositories, Cache, Presenters, Semaphores, an Helpers class and new custom validators.
 In addition Support comes with several new custom exceptions.
 
 ## Configuration
@@ -187,7 +187,7 @@ The `AbstractEloquentRepository` and `AbstractSimpleXMLRepository` classes do NO
 
 ## Cache Usage
 
-The Cache module can be used to give Cache capabilities to our repos, through the use of the decorator pattern.
+The Cache module can be used to give Cache capabilities to our repos, through the use of the [decorator pattern](http://en.wikipedia.org/wiki/Decorator_pattern).
 We can then continue our previous example of a Post model and its repo. We define a `CachePostRepoDecorator` as follows
 
     <?php
@@ -270,8 +270,6 @@ The Cache module comes with xml handlers too. Let's take the staff.xml class we 
 
     <?php
 
-    namespace TopGames\Libraries\TopPlayer\CacheXML;
-
     use MicheleAngioni\Support\Cache\CacheInterface;
     use MicheleAngioni\Support\Cache\AbstractCacheSimpleXMLRepositoryDecorator;
     use MicheleAngioni\Support\Repos\XMLRepositoryInterface;
@@ -321,15 +319,87 @@ and update the `XMLRepositoryServiceProvider`
         }
     }
 
+## Presenters Usage
+
+A Presenter is a particular kind of [decorator](http://en.wikipedia.org/wiki/Decorator_pattern), used decorate an object before sending it to the view. 
+The most common uses include date and numbers formatting, text validation and formatting, obscuration of sensible data.
+
+Support provide an easy way to decorate Eloquent models. Let's continue to use our `Post` model and suppose we want to escape its `text` attribute before passing the model to the view. 
+First of all define the PostDecorator by extending `MicheleAngioni\Support\Presenters\AbstractPresenter` and implementing `MicheleAngioni\Support\Presenters\PresentableInterface`.
+The AbstractPresenter will allow to access al model's attributes through the use of PHP magic method __GET. 
+It also implements ArrayAccess interface so that we can keep to access our attributes both as an object and as array.  
+ 
+    <?php
+    
+    use MicheleAngioni\Support\Presenters\AbstractPresenter;
+    use MicheleAngioni\Support\Presenters\PresentableInterface;
+    
+    class PostPresenter extends AbstractPresenter implements PresentableInterface {
+        
+        public function text()
+        {
+            return e($this->object->text);
+        }
+    
+        public function capitalText()
+        {
+            return e(strtoupper($this->object->text));
+        }
+    }
+
+Now we have to couple our presenter to the Post model with the help of the `MicheleAngioni\Support\Presenters\Presenter` class, for example directly in the PostController
+
+    <?php
+
+    use MicheleAngioni\Support\Presenters\Presenter;
+    use PostRepositoryInterface as PostRepo;
+
+    class PostController extends BaseController {
+
+        private $postRepo;
+        private $presenter;
+
+        function __construct(PostRepo $postRepo, Presenter $presenter)
+        {
+            $this->postRepo = $postRepo;
+            $this->presenter = $presenter
+        }
+
+        public function index()
+        {
+            $posts = $this->postRepo->all();
+            
+            // Pass the post collection to the presenter
+            $posts = $this->presenter->collection($posts, new PostPresenter();
+
+            // Pass the post collection to the view
+            return View::make('forum')->with('posts', $posts)
+        }
+
+        public function show($idPost)
+        {
+            $post = $this->postRepo->find($idPost);
+            
+            // Pass the post to the presenter
+            $post = $this->presenter->model($post, new PostPresenter();
+
+            // Pass the post to the view
+            return View::make('forum')->with('post', $post)
+        }
+    }
+
+In the above Controller we have decorated a single model in the show method and an entire collection in the index method, thus passed them to the view.
+
+In the view we will have our decorated models, instances of `PostPresenter`, and the text attribute will be already escaped. 
+Through the presenter we can also add brand new functionality to our models: in this example we added a capitalText attribute.
+
 ## Semaphores Usage
 
 The semaphores module consists of a single class, the `SemaphoresManager`. Its constructor needs a Cache Manager and a Key Manager.
 The Support package provides both of them, so we can bind them to the SemaphoresManager in a service provider
 
     <?php
-
-    namespace TopGames\Libraries\TopPlayer;
-
+    
     use Illuminate\Support\ServiceProvider;
     use MicheleAngioni\Support\Cache\KeyManager;
     use MicheleAngioni\Support\Cache\LaravelCache;
