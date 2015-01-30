@@ -465,6 +465,10 @@ The following new custom exceptions will be available:
 - DbClientRequestException : can be thrown when an entity required by a client is not available
 - PermissionsException : a general permission exception
 
+## API Docs
+
+You can browse the Support [API Documentation](http://micheleangioni.github.io/support/master/index.html).
+
 ## Contribution guidelines
 
 Support follows PSR-1 and PSR-4 PHP coding standards, and semantic versioning.
