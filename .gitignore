@@ -1,3 +1,6 @@
+/build
+/cache
+
 /bootstrap/compiled.php
 /vendor
 composer.phar

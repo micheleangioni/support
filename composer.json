@@ -16,7 +16,8 @@
     },
     "require-dev": {
         "mockery/mockery": "dev-master",
-        "phpunit/phpunit": "4.1.*"
+        "phpunit/phpunit": "4.1.*",
+        "sami/sami": "2.0.*"
     },
     "autoload": {
         "psr-4": {
