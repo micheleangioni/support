@@ -6,13 +6,15 @@
 
 ## Introduction
 
-Support consists of a series of useful classes to ease development and the use of best practices and design patterns with [Laravel 4](http://laravel.com).
+Support consists of a series of useful classes to ease development and the use of best practices and design patterns with [Laravel 5](http://laravel.com).
 
 Part of this package has been highly inspired by the [culttt.com](http://culttt.com/) blog, which I highly recommend to both new and experienced developers since it focuses on a wide range of aspects with always interesting point of views and discussions. I have personally learned much from it.
 
 ## Installation
 
-Support can be installed through Composer, just include `"michele-angioni/support": "~1.2"` to your composer.json and run `composer update` or `composer install`.
+Support can be installed through Composer, just include `"michele-angioni/support": "~2.0"` to your composer.json and run `composer update` or `composer install`.
+
+If you are looking for the Laravel 4 version, check the [1.0 branch](https://github.com/micheleangioni/support/tree/1.0) and its documentation.
 
 ## Modules summary
 
@@ -21,9 +23,10 @@ In addition Support comes with several new custom exceptions.
 
 ## Configuration
 
-Support does not need any configuration to work. However, you may publish the configuration file through the artisan command `php artisan config:publish michele-angioni/support`.
+Support does not need any configuration to work. However, you may publish the configuration file through the artisan command `php artisan vendor:publish` that will add a ma_support.php file in your config directory.  
+You can then edit this file to customize Support behaviour.  
 
-You can than edit the config.php file in your `app/config/packages/michele-angioni/support` directory to customize Support behaviour.
+In order to access to the file keys in your code, you can use `config('ma_support.key')`, where key is one of the file keys.
 
 ## Repositories Usage
 

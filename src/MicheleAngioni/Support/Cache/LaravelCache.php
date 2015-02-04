@@ -22,7 +22,7 @@ class LaravelCache implements CacheInterface {
     public function __construct(CacheManager $cache)
     {
         $this->cache = $cache;
-        $this->minutes = app()['config']->get('support::cache_time');
+        $this->minutes = config('ma_support.cache_time');
     }
 
     /**
