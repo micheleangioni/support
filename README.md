@@ -309,9 +309,9 @@ and update the `XMLRepositoryServiceProvider`
         public function register()
         {
             $this->app->bind(
-                'TopGames\Libraries\TopPlayer\XMLRepos\StaffXMLRepositoryInterface', function($app)
+                'StaffXMLRepositoryInterface', function($app)
             {
-                $repo = $app->make('TopGames\Libraries\TopPlayer\XMLRepos\SimpleXMLStaffRepository');
+                $repo = $app->make('SimpleXMLStaffRepository');
 
                 return new CacheSimpleXMLStaffRepoDecorator($repo, new LaravelCache($app['cache'])
                 );
