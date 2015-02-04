@@ -20,7 +20,14 @@ class SupportServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->package('michele-angioni/support');
+		// Publish config files
+		$this->publishes([
+			__DIR__.'/../../config/config.php' => config_path('ma_support.php'),
+		]);
+
+		$this->mergeConfigFrom(
+			__DIR__.'/../../config/config.php', 'ma_support'
+		);
 
 		$this->registerCustomValidators();
 	}
