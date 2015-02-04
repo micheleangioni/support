@@ -12,12 +12,12 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "laravel/framework": "4.2.*"
+        "laravel/framework": "~5.0"
     },
     "require-dev": {
         "mockery/mockery": "dev-master",
         "phpunit/phpunit": "4.1.*",
-        "sami/sami": "2.0.*"
+        "sami/sami": "dev-master"
     },
     "autoload": {
         "psr-4": {
