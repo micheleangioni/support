@@ -23,7 +23,7 @@ In addition Support comes with several new custom exceptions.
 
 ## Configuration
 
-Support does not need any configuration to work. However, you may publish the configuration file through the artisan command `php artisan vendor:publish` that will add a ma_support.php file in your config directory.  
+Support does not need any configuration to work. However, you may publish the configuration file through the artisan command `php artisan vendor:publish` that will add the `ma_support.php` file in your config directory.  
 You can then edit this file to customize Support behaviour.  
 
 In order to access to the file keys in your code, you can use `config('ma_support.key')`, where key is one of the file keys.
