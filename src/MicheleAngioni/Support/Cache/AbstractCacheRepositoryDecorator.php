@@ -148,7 +148,7 @@ abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQu
      * Call the Key Manager to get the Cache key.
      *
      * @param  string|bool   $id
-     * @param  array         $array
+     * @param  array   $array
      *
      * @return string
      */
@@ -161,7 +161,7 @@ abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQu
      * Call the Key Manager to get the Cache tags.
      *
      * @param  string|bool  $id
-     * @param  array        $array
+     * @param  array  $array
      *
      * @return array
      */
@@ -175,7 +175,7 @@ abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQu
      *
      * @param  string|bool  $customName
      * @param  string|bool  $id
-     * @param  array        $array
+     * @param  array  $array
      *
      * @return string
      */
@@ -189,7 +189,7 @@ abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQu
      *
      * @param  string|bool  $customName
      * @param  string|bool  $id
-     * @param  array        $array
+     * @param  array  $array
      *
      * @return array
      */

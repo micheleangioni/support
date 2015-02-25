@@ -7,8 +7,8 @@ class CustomValidators extends \Illuminate\Validation\Validator {
      * N.B. In order to add the '?' the \\ must be used
      * N.B. The final u is a modifier, see http://php.net/manual/en/reference.pcre.pattern.modifiers.php
      *
-     * @param $attribute
-     * @param $value
+     * @param  $attribute
+     * @param  $value
      * @return int
      */
     public function validateAlphaComplete($attribute, $value)
@@ -19,8 +19,8 @@ class CustomValidators extends \Illuminate\Validation\Validator {
     /**
      * alpha_space permits the following UNICODE characters: alphabetic, numbers and spaces
      *
-     * @param $attribute
-     * @param $value
+     * @param  $attribute
+     * @param  $value
      * @return int
      */
     public function validateAlphaSpace($attribute, $value)
@@ -31,8 +31,8 @@ class CustomValidators extends \Illuminate\Validation\Validator {
     /**
      * alpha_underscore permits the following UNICODE characters: alphabetic, numbers and underscores
      *
-     * @param $attribute
-     * @param $value
+     * @param  $attribute
+     * @param  $value
      * @return int
      */
     public function validateAlphaUnderscore($attribute, $value)
@@ -43,8 +43,8 @@ class CustomValidators extends \Illuminate\Validation\Validator {
     /**
      * alpha_names permits the following UNICODE characters: alphabetic, menus, apostrophes, underscores and spaces
      *
-     * @param $attribute
-     * @param $value
+     * @param  $attribute
+     * @param  $value
      * @return int
      */
     public function validateAlphaNames($attribute, $value)

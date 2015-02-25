@@ -27,7 +27,7 @@ class SemaphoresManager {
     /**
      * Construct
      *
-     * @param  CacheInterface       $cache
+     * @param  CacheInterface  $cache
      * @param  KeyManagerInterface  $keyManager
      */
     public function __construct(CacheInterface $cache, KeyManagerInterface $keyManager)
@@ -61,7 +61,7 @@ class SemaphoresManager {
      * Return the key of the semaphore connected with input $id and $section.
      *
      * @param  string|bool  $id
-     * @param  string       $section
+     * @param  string  $section
      * @return string
      */
     public function getSemaphoreKey($id, $section)
