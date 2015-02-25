@@ -110,7 +110,7 @@ Suppose that now we need the Post repo in our PostController. We simply inject o
 
 The `AbstractEloquentRepository` empowers automatically our repositories of the following public methods:
 
-- all()
+- all(array $with = array())
 - find($id, array $array)
 - findOrFail($id, array $with = array())
 - first()

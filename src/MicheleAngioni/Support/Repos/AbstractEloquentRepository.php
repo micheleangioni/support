@@ -5,9 +5,11 @@ use Illuminate\Support\Collection;
 class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
 {
 
-    public function all()
+    public function all(array $with = array())
     {
-        return $this->model->all();
+        $query = $this->make($with);
+
+        return $query->get();
     }
 
     /**
