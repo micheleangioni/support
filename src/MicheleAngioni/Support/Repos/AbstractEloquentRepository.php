@@ -132,9 +132,9 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
      * Return all results that have a required relationship
      *
      * @param  string  $relation
-     * @param  array   $where
-     * @param  array   $with
-     * @param  int     $hasAtLeast = 1
+     * @param  array  $where
+     * @param  array  $with
+     * @param  int   $hasAtLeast = 1
      *
      * @return Collection
      */
@@ -154,9 +154,9 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
      * Return first results that have a required relationship
      *
      * @param  string  $relation
-     * @param  array   $where
-     * @param  array   $with
-     * @param  int     $hasAtLeast = 1
+     * @param  array  $where
+     * @param  array  $with
+     * @param  int   $hasAtLeast = 1
      *
      * @return Collection
      */
@@ -176,9 +176,9 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
      * Return firstOrFail result that have a required relationship
      *
      * @param  string  $relation
-     * @param  array   $where
-     * @param  array   $with
-     * @param  int     $hasAtLeast = 1
+     * @param  array  $where
+     * @param  array  $with
+     * @param  int   $hasAtLeast = 1
      *
      * @return Collection
      */
@@ -198,9 +198,9 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
      * Return all results that have a required relationship with input constraints
      *
      * @param  string  $relation
-     * @param  array   $where
-     * @param  array   $whereHas
-     * @param  array   $with
+     * @param  array  $where
+     * @param  array  $whereHas
+     * @param  array  $with
      *
      * @return Collection
      */
@@ -227,20 +227,27 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     /**
      * Get Results by Page.
      *
-     * @param  int    $page
-     * @param  int    $limit
+     * @param  int  $page
+     * @param  int  $limit
      * @param  array  $where
      * @param  array  $with
+     * @param  string|null  $orderBy
+     * @param  string  $order
      *
      * @return Collection
      */
-    public function getByPage($page = 1, $limit = 10, array $where = array(), $with = array())
+    public function getByPage($page = 1, $limit = 10, array $where = array(), $with = array(), $orderBy = NULL, $order = 'desc')
     {
         $query = $this->make($with);
 
         foreach($where as $key => $value)
         {
             $query = $query->where($key, '=', $value);
+        }
+
+        if($orderBy)
+        {
+            $query = $query->orderBy($orderBy, $order);
         }
 
         return $query->skip($limit * ($page - 1))
@@ -369,7 +376,6 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
 
 
     // <--- INTERNALLY USED METHODS --->
-
 
     /**
      * Remove keys from the $inputs array beginning with '_' .
