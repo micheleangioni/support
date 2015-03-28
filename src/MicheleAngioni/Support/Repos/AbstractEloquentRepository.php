@@ -374,6 +374,35 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $query->count();
     }
 
+    /**
+     * Count all results that have a required relationship with input constraints
+     *
+     * @param  string  $relation
+     * @param  array  $where
+     * @param  array  $whereHas
+     *
+     * @return int
+     */
+    public function countWhereHas($relation, array $where = array(), array $whereHas = array())
+    {
+        $query = $this->make();
+
+        foreach($where as $key => $value)
+        {
+            $query = $query->where($key, '=', $value);
+        }
+
+        $query = $query->whereHas($relation, function($q) use($whereHas)
+        {
+            foreach($whereHas as $key => $value)
+            {
+                $q = $q->where($key, '=', $value);
+            }
+        });
+
+        return $query->count();
+    }
+
 
     // <--- INTERNALLY USED METHODS --->
 

@@ -136,6 +136,7 @@ The `AbstractEloquentRepository` empowers automatically our repositories of the 
 - truncate()
 - count()
 - countBy(array $where = array())
+- countWhereHas($relation, array $where = array(), array $whereHas = array())
 
 The Repos module also supports xml repositories. Suppose we have a staff.xml file. We need to define a `StaffXMLRepositoryInterface`
 
