@@ -10,8 +10,7 @@ abstract class AbstractPresenter implements ArrayAccess {
 	 * @var mixed
 	 */
 	protected $object;
-	
-	
+
 	/**
 	 * Check to see if the offset exists on the current object
 	 *

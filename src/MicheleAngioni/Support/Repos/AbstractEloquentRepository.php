@@ -269,7 +269,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     }
 
 
-    public function create(array $inputs)
+    public function create(array $inputs = [])
     {
         $inputs = $this->purifyInputs($inputs);
 
@@ -309,7 +309,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     }
 
 
-    public function updateOrCreateBy(array $where, array $inputs)
+    public function updateOrCreateBy(array $where, array $inputs = [])
     {
         $inputs = $this->purifyInputs($inputs);
 

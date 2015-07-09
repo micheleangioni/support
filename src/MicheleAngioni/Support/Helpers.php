@@ -12,7 +12,7 @@ class Helpers {
      *  int(4.1), string '1.2', string '0x8', float(1.2) return false.
      *  min and max allowed values can be inserted
      *
-     * @param  int       $int
+     * @param  int  $int
      * @param  bool|int  $min = false
      * @param  bool|int  $max = false
      *
@@ -61,6 +61,7 @@ class Helpers {
 	 *
 	 * @param  string  $date
 	 * @param  string  $format = 'Y-m-d'
+     *
 	 * @return bool
 	 */
 	static function checkDate($date, $format = 'Y-m-d')
@@ -92,7 +93,7 @@ class Helpers {
 	 *
 	 * @param  string  $first_date
 	 * @param  string  $second_date
-	 * @param  int     $max_difference = 0
+	 * @param  int  $max_difference = 0
      *
 	 * @return array
 	 */
@@ -187,7 +188,7 @@ class Helpers {
      * Split a Collection into groups of equal numbers. $groupsNumber must be a multiplier of 2.
      *
      * @param  Collection  $collection
-     * @param  int         $groupsNumber = 2
+     * @param  int  $groupsNumber = 2
      * @throws InvalidArgumentException
      *
      * @return array
