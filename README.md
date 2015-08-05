@@ -447,8 +447,8 @@ min and max allowed values can be inserted.
 - compareDates($date, $referenceDate) : compare $date with $referenceDate. Return true if $date is more recent, false otherwise (included if the two dates are identical)
 - divideCollectionIntoGroups(Collection $collection, $groupsNumber = 2) : split a Collection into groups of equal numbers. $groupsNumber must be a multiplier of 2
 - getTodayDay() : get today day (format("D"))
-- getDate($offset = 0) : return today's day in format Y-m-d. Offset in days
-- getTime($offset = 0) : return today's time in format H:i:s. Offset in minutes
+- getDate($offset = 0, $format = 'Y-m-d') : return today's day in format Y-m-d. Offset in days. Customize $format to receive the wanted date format.
+- getTime($offset = 0, $format = 'H:i:s') : return today's time in format H:i:s. Offset in minutes. Customize $format to receive the wanted time format.
 - getRandomValueUrandom($min = 0, $max = 0x7FFFFFFF) : return a random value between input $min and $max values by using the MCRYPT_DEV_URANDOM source
 - getUniqueRandomValues($min = 0, $max, $quantity = 1) : return $quantity UNIQUE random value between $min and $max
 

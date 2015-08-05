@@ -230,24 +230,30 @@ class Helpers {
 
     /**
      * Return today's day in format Y-m-d. Offset in days.
+     * Customize $format to receive the wanted date format.
      *
      * @param  int  $offset = 0
+     * @param  string  $format = 'Y-m-d'
+     *
      * @return string
      */
-    function getDate($offset = 0)
+    function getDate($offset = 0, $format = 'Y-m-d')
     {
-        return date("Y-m-d", strtotime($offset.' day'));
+        return date($format, strtotime($offset.' day'));
     }
 
     /**
      * Return today's time in format H:i:s. Offset in minutes.
+     * Customize $format to receive the wanted time format.
      *
      * @param  int  $offset = 0
+     * @param  string  $format = 'H:i:s'
+     *
      * @return string
      */
-    function getTime($offset = 0)
+    function getTime($offset = 0, $format = 'H:i:s')
     {
-        return date("H:i:s", strtotime($offset.' minutes'));
+        return date($format, strtotime($offset.' minutes'));
     }
 
 
