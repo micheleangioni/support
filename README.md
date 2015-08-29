@@ -120,6 +120,8 @@ The `AbstractEloquentRepository` empowers automatically our repositories of the 
 - getBy(array $where = array(), array $with = array())
 - getByLimit($limit, array $where = array(), array $with = array())
 - getByOrder($orderBy, array $where = array(), array $with = array(), $order = 'desc', $limit = 0)
+- getIn($whereInKey, array $whereIn = array(), $with = array(), $orderBy = NULL, $order = 'desc', $limit = 0)
+- getNotIn($whereNotInKey, array $whereNotIn = array(), $with = array(), $orderBy = NULL, $order = 'desc', $limit = 0)
 - has($relation, array $where = array(), array $with = array(), $hasAtLeast = 1)
 - hasFirst($relation, array $where = array(), array $with = array(), $hasAtLeast = 1)
 - hasFirstOrFail($relation, array $where = array(), array $with = array(), $hasAtLeast = 1)

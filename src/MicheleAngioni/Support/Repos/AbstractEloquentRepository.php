@@ -128,6 +128,41 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $query->get();
     }
 
+
+    public function getIn($whereInKey, array $whereIn = array(), $with = array(), $orderBy = NULL, $order = 'desc', $limit = 0)
+    {
+        $query = $this->make($with);
+
+        $query = $query->whereIn($whereInKey, $whereIn);
+
+        if($orderBy) {
+            $query = $query->orderBy($orderBy, $order);
+        }
+
+        if($limit) {
+            $query = $query->take($limit);
+        }
+
+        return $query->get();
+    }
+
+    public function getNotIn($whereNotInKey, array $whereNotIn = array(), $with = array(), $orderBy = NULL, $order = 'desc', $limit = 0)
+    {
+        $query = $this->make($with);
+
+        $query = $query->whereNotIn($whereNotInKey, $whereNotIn);
+
+        if($orderBy) {
+            $query = $query->orderBy($orderBy, $order);
+        }
+
+        if($limit) {
+            $query = $query->take($limit);
+        }
+
+        return $query->get();
+    }
+
     /**
      * Return all results that have a required relationship
      *
