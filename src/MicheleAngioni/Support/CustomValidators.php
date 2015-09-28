@@ -39,7 +39,19 @@ class CustomValidators extends \Illuminate\Validation\Validator {
     {
     	return preg_match('/^([\p{L}0-9_])+$/u', $value);
     }
-    
+
+    /**
+     * alphanumeric_names permits the following UNICODE characters: alphabetic, numbers, menus, apostrophes, underscores and spaces
+     *
+     * @param  $attribute
+     * @param  $value
+     * @return int
+     */
+    public function validateAlphanumericNames($attribute, $value)
+    {
+        return preg_match('/^([-\p{L}0-9\'_\s])+$/u', $value);
+    }
+
     /**
      * alpha_names permits the following UNICODE characters: alphabetic, menus, apostrophes, underscores and spaces
      *
