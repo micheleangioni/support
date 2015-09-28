@@ -458,11 +458,11 @@ min and max allowed values can be inserted.
 
 Just after registering the SupportServiceProvider, the following new custom validators will be available:
 
-- alpha_complete : The following characters are allowed: alphabetic, numbers, spaces, slashes and several punctuation characters _ ! . , : / ; ? & ( ) [ ] { }
-- alpha_space : The following characters are allowed: alphabetic, numbers and spaces
-- alpha_underscore : The following characters are allowed: alphabetic, numbers and underscores
-- alpha_names : The following characters are allowed: alphabetic, menus, apostrophes, underscores and spaces
-- alphanumeric_names : The following characters are allowed: alphabetic, numbers, menus, apostrophes, underscores and spaces
+- alpha_complete : The following characters are allowed: letters, numbers, spaces, slashes and several punctuation characters _ ! . , : / ; ? & ( ) [ ] { }
+- alpha_space : The following characters are allowed: letters, numbers and spaces
+- alpha_underscore : The following characters are allowed: letters, numbers and underscores
+- alpha_names : The following characters are allowed: letters, menus, apostrophes, underscores and spaces
+- alphanumeric_names : The following characters are allowed: letters, numbers, menus, apostrophes, underscores and spaces
 
 ## Custom Exceptions
 

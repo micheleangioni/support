@@ -17,7 +17,7 @@ class CustomValidators extends \Illuminate\Validation\Validator {
     }
 
     /**
-     * alpha_space permits the following UNICODE characters: alphabetic, numbers and spaces
+     * alpha_space permits the following UNICODE characters: letters, numbers and spaces
      *
      * @param  $attribute
      * @param  $value
@@ -29,7 +29,7 @@ class CustomValidators extends \Illuminate\Validation\Validator {
     }
 
     /**
-     * alpha_underscore permits the following UNICODE characters: alphabetic, numbers and underscores
+     * alpha_underscore permits the following UNICODE characters: letters, numbers and underscores
      *
      * @param  $attribute
      * @param  $value
@@ -41,7 +41,7 @@ class CustomValidators extends \Illuminate\Validation\Validator {
     }
 
     /**
-     * alphanumeric_names permits the following UNICODE characters: alphabetic, numbers, menus, apostrophes, underscores and spaces
+     * alphanumeric_names permits the following UNICODE characters: letters, numbers, menus, apostrophes, underscores and spaces
      *
      * @param  $attribute
      * @param  $value
@@ -53,7 +53,7 @@ class CustomValidators extends \Illuminate\Validation\Validator {
     }
 
     /**
-     * alpha_names permits the following UNICODE characters: alphabetic, menus, apostrophes, underscores and spaces
+     * alpha_names permits the following UNICODE characters: letters, menus, apostrophes, underscores and spaces
      *
      * @param  $attribute
      * @param  $value
