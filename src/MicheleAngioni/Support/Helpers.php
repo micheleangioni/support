@@ -66,7 +66,6 @@ class Helpers {
 	 */
 	static function checkDate($date, $format = 'Y-m-d')
 	{
-		date_default_timezone_set('UTC');
 		$d = DateTime::createFromFormat($format, $date);
 		return $d && $d->format($format) == $date;
 	}
@@ -79,7 +78,6 @@ class Helpers {
 	 */
 	static function checkDatetime($datetime)
 	{
-		date_default_timezone_set('UTC');
 		$format = 'Y-m-d H:i:s';
 		
 		$d = DateTime::createFromFormat($format, $datetime);
@@ -91,48 +89,46 @@ class Helpers {
 	 *  $first_date must be < than $second_date
 	 *  Third optional parameter indicates max days difference allowed (0 = no limits).
 	 *
-	 * @param  string  $first_date
-	 * @param  string  $second_date
-	 * @param  int  $max_difference = 0
+	 * @param  string  $firstDate
+	 * @param  string  $secondDate
+	 * @param  int  $maxDifference = 0
      *
 	 * @return array
 	 */
-	static function splitDates($first_date, $second_date, $max_difference = 0)
+	static function splitDates($firstDate, $secondDate, $maxDifference = 0)
 	{
-		date_default_timezone_set('UTC');
-		if( !self::checkDate($first_date) || !self::checkDate($second_date)){
+		if( !self::checkDate($firstDate) || !self::checkDate($secondDate)){
 			return false;
 		}
 
-		if (!self::isInt($max_difference, 0)){
+		if (!self::isInt($maxDifference, 0)){
 			return false;
 		}
 		
-		$date1 = new DateTime($first_date);
-		$date2 = new DateTime($second_date);
+		$date1 = new DateTime($firstDate);
+		$date2 = new DateTime($secondDate);
 		$interval = $date1->diff($date2, false);
 		
 		if((int)$interval->format('%R%a') < 0){
 			return false;
 		}
 		
-		if($max_difference != 0){
-			if((int)$interval->format('%R%a') > $max_difference){
+		if($maxDifference != 0){
+			if((int)$interval->format('%R%a') > $maxDifference){
 				return false;
 			}
 		}
 		
-		list($year,$month,$day) = array_pad(explode("-",$first_date), 3, 0);
+		list($year,$month,$day) = array_pad(explode("-",$firstDate), 3, 0);
 			
 		$i = 0;
-		$new_date = $first_date;
+		$newDate = $firstDate;
         $dates = array();
 		
-		while($new_date <= $second_date)
-		{
-			$dates[] = $new_date;
+		while($newDate <= $secondDate) {
+			$dates[] = $newDate;
 			$i++;
-			$new_date = date("Y-m-d",mktime(0,0,0,$month,$day+$i,$year));
+			$newDate = date("Y-m-d",mktime(0,0,0,$month,$day+$i,$year));
 		}
 		
 		return $dates;

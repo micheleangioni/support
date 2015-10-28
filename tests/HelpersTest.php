@@ -26,6 +26,7 @@ class HelpersTest extends PHPUnit_Framework_TestCase {
 
     public function testCheckDate()
     {
+        date_default_timezone_set('UTC');
         $this->assertTrue(H::checkDate('2014-12-24'));
         $this->assertTrue(H::checkDate('2014-24-12', 'Y-d-m'));
         $this->assertFalse(H::checkDate('2014-12-32'));
@@ -36,6 +37,7 @@ class HelpersTest extends PHPUnit_Framework_TestCase {
 
     public function testCheckDateTime()
     {
+        date_default_timezone_set('UTC');
         $this->assertTrue(H::checkDateTime('2014-12-24 18:24:02'));
         $this->assertFalse(H::checkDateTime('2014-12-24 18:24:61'));
         $this->assertFalse(H::checkDateTime('2014-12-24'));
@@ -47,6 +49,7 @@ class HelpersTest extends PHPUnit_Framework_TestCase {
 
     public function testCheckSplitDates()
     {
+        date_default_timezone_set('UTC');
         $dates = H::splitDates('2014-12-24', '2014-12-26');
         $this->assertEquals(3, count($dates));
 
@@ -60,6 +63,7 @@ class HelpersTest extends PHPUnit_Framework_TestCase {
 
     public function testDaysBetweenDates()
     {
+        date_default_timezone_set('UTC');
         $this->assertEquals(2, H::daysBetweenDates('2014-12-24', '2014-12-26'));
         $this->assertEquals(0, H::daysBetweenDates('2014-12-24', '2014-12-24'));
         $this->assertFalse(H::daysBetweenDates('2014-12-24', '2014-12-23'));
@@ -68,6 +72,7 @@ class HelpersTest extends PHPUnit_Framework_TestCase {
 
     public function testCompareDates()
     {
+        date_default_timezone_set('UTC');
         $this->assertTrue(H::compareDates('2014-12-24', '2014-12-22'));
         $this->assertFalse(H::compareDates('2014-12-22', '2014-12-24'));
         $this->assertFalse(H::compareDates('2014-12-24', '2014-12-24'));
