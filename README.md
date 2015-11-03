@@ -463,6 +463,7 @@ Just after registering the SupportServiceProvider, the following new custom vali
 - alpha_underscore : The following characters are allowed: letters, numbers and underscores
 - alpha_names : The following characters are allowed: letters, menus, apostrophes, underscores and spaces
 - alphanumeric_names : The following characters are allowed: letters, numbers, menus, apostrophes, underscores and spaces
+- alphanumeric_dotted_names : The following characters are allowed: letters, numbers, menus, apostrophes, underscores, dots and spaces
 
 ## Custom Exceptions
 

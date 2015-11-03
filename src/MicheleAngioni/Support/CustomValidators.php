@@ -53,6 +53,18 @@ class CustomValidators extends \Illuminate\Validation\Validator {
     }
 
     /**
+     * alphanumeric_dotted_names permits the following UNICODE characters: letters, numbers, menus, apostrophes, underscores, dots and spaces
+     *
+     * @param  $attribute
+     * @param  $value
+     * @return int
+     */
+    public function validateAlphanumericDottedNames($attribute, $value)
+    {
+        return preg_match('/^([-\p{L}0-9.\'_\s])+$/u', $value);
+    }
+
+    /**
      * alpha_names permits the following UNICODE characters: letters, menus, apostrophes, underscores and spaces
      *
      * @param  $attribute
