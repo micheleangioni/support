@@ -6,6 +6,13 @@ class HelpersTest extends PHPUnit_Framework_TestCase {
 
 	public function testIsInt()
     {
+        $object = new stdClass();
+
+        $this->assertFalse(H::isInt($object));
+        $this->assertFalse(H::isInt(['value']));
+        $this->assertFalse(H::isInt(['key' => 'value']));
+        $this->assertFalse(H::isInt(['key' => 10]));
+
         $this->assertTrue(H::isInt(3));
         $this->assertTrue(H::isInt('3'));
         $this->assertFalse(H::isInt(3.2));

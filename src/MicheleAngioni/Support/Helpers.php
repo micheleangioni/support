@@ -20,6 +20,10 @@ class Helpers {
      */
 	static function isInt($int, $min = false, $max = false)
 	{
+		if(is_object($int) || is_array($int)) {
+			return false;
+		}
+
 		if($min !== false){
 			if(is_numeric($min) && (int)$min == $min){
 				if($int < $min){
