@@ -122,7 +122,7 @@ The `AbstractEloquentRepository` empowers automatically our repositories of the 
 - getByOrder($orderBy, array $where = array(), array $with = array(), $order = 'desc', $limit = 0)
 - getIn($whereInKey, array $whereIn = array(), $with = array(), $orderBy = NULL, $order = 'desc', $limit = 0)
 - getNotIn($whereNotInKey, array $whereNotIn = array(), $with = array(), $orderBy = NULL, $order = 'desc', $limit = 0)
-- has($relation, array $where = array(), array $with = array(), $hasAtLeast = 1)
+- getHas($relation, array $where = array(), array $with = array(), $hasAtLeast = 1)
 - hasFirst($relation, array $where = array(), array $with = array(), $hasAtLeast = 1)
 - hasFirstOrFail($relation, array $where = array(), array $with = array(), $hasAtLeast = 1)
 - whereHas($relation, array $where = array(), array $whereHas = array(), array $with = array())
@@ -139,6 +139,10 @@ The `AbstractEloquentRepository` empowers automatically our repositories of the 
 - count()
 - countBy(array $where = array())
 - countWhereHas($relation, array $where = array(), array $whereHas = array())
+
+Decrecated methods:
+- has($relation, array $where = array(), array $with = array(), $hasAtLeast = 1) (synonym of getHas())
+
 
 The Repos module also supports xml repositories. Suppose we have a staff.xml file. We need to define a `StaffXMLRepositoryInterface`
 
