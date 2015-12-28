@@ -135,6 +135,7 @@ The `AbstractEloquentRepository` empowers automatically our repositories of the 
 - updateOrCreateBy(array $where, array $inputs = [])
 - destroy($id)
 - destroyFirstBy(array $where)
+- destroyBy(array $where)
 - truncate()
 - count()
 - countBy(array $where = array())
