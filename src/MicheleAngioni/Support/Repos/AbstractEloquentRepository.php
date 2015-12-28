@@ -360,15 +360,26 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     public function destroy($id)
     {
         $model = $this->model->findOrFail($id);
+
         return $model->delete();
     }
 
     public function destroyFirstBy(array $where)
     {
-        $where = $this->purifyInputs($where);
-
         $model = $this->firstOrFailBy($where);
+
         return $model->delete();
+    }
+
+    public function destroyBy(array $where)
+    {
+        $query = $this->make();
+
+        foreach($where as $key => $value) {
+            $query = $query->where($key, '=', $value);
+        }
+
+        return $query->delete();
     }
 
     public function truncate()
