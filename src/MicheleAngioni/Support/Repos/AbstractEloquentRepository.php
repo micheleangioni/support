@@ -33,14 +33,12 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $query->find($id);
     }
 
-
     public function findOrFail($id, array $with = array())
     {
         $query = $this->make($with);
 
         return $query->findOrFail($id);
     }
-
 
     public function first()
     {
@@ -49,14 +47,12 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $query->first();
     }
 
-
     public function firstOrFail()
     {
         $query = $this->make();
 
         return $query->firstOrFail();
     }
-
 
     public function firstBy(array $where = array(), array $with = array())
     {
@@ -69,7 +65,6 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $query->first();
     }
 
-
     public function firstOrFailBy(array $where = array(), array $with = array())
     {
         $query = $this->make($with);
@@ -80,7 +75,6 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
 
         return $query->firstOrFail();
     }
-
 
     public function getBy(array $where = array(), array $with = array())
     {
@@ -93,7 +87,6 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $query->get();
     }
 
-
     public function getByLimit($limit, array $where = array(), array $with = array())
     {
         $query = $this->make($with);
@@ -104,7 +97,6 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
 
         return $query->take($limit)->get();
     }
-
 
     public function getByOrder($orderBy, array $where = array(), array $with = array(), $order = 'desc', $limit = 0)
     {
@@ -122,7 +114,6 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
 
         return $query->get();
     }
-
 
     public function getIn($whereInKey, array $whereIn = array(), $with = array(), $orderBy = NULL, $order = 'desc', $limit = 0)
     {
@@ -308,7 +299,6 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $this->model->insert($collection);
     }
 
-
     public function create(array $inputs = [])
     {
         $inputs = $this->purifyInputs($inputs);
@@ -316,14 +306,12 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $this->model->create($inputs);
     }
 
-
     public function update(array $inputs)
     {
         $inputs = $this->purifyInputs($inputs);
 
         return $this->model->update($inputs);
     }
-
 
     public function updateById($id, array $inputs)
     {
@@ -333,7 +321,6 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
 
         return $model->update($inputs);
     }
-
 
     public function updateBy(array $where, array $inputs)
     {
@@ -347,7 +334,6 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
 
         return $query->update($inputs);
     }
-
 
     public function updateOrCreateBy(array $where, array $inputs = [])
     {
@@ -363,19 +349,19 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
 
         if($model) {
             $model->update($inputs);
+
+            return $model;
         }
         else {
             return $this->model->create($inputs);
         }
     }
 
-
     public function destroy($id)
     {
         $model = $this->model->findOrFail($id);
         return $model->delete();
     }
-
 
     public function destroyFirstBy(array $where)
     {
@@ -384,7 +370,6 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         $model = $this->firstOrFailBy($where);
         return $model->delete();
     }
-
 
     public function truncate()
     {
@@ -399,7 +384,6 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     {
         return $this->model->count();
     }
-
 
     public function countBy(array $where = array())
     {
