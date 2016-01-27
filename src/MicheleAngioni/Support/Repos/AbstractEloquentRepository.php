@@ -1,5 +1,6 @@
 <?php namespace MicheleAngioni\Support\Repos;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
@@ -58,9 +59,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     {
         $query = $this->make($with);
 
-        foreach($where as $key => $value) {
-            $query = $query->where($key, '=', $value);
-        }
+        $query = $this->applyWhere($query, $where);
 
         return $query->first();
     }
@@ -69,9 +68,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     {
         $query = $this->make($with);
 
-        foreach($where as $key => $value) {
-            $query = $query->where($key, '=', $value);
-        }
+        $query = $this->applyWhere($query, $where);
 
         return $query->firstOrFail();
     }
@@ -80,9 +77,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     {
         $query = $this->make($with);
 
-        foreach($where as $key => $value) {
-            $query = $query->where($key, '=', $value);
-        }
+        $query = $this->applyWhere($query, $where);
 
         return $query->get();
     }
@@ -91,9 +86,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     {
         $query = $this->make($with);
 
-        foreach($where as $key => $value) {
-            $query = $query->where($key, '=', $value);
-        }
+        $query = $this->applyWhere($query, $where);
 
         return $query->take($limit)->get();
     }
@@ -102,9 +95,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     {
         $query = $this->make($with);
 
-        foreach($where as $key => $value) {
-            $query = $query->where($key, '=', $value);
-        }
+        $query = $this->applyWhere($query, $where);
 
         $query = $query->orderBy($orderBy, $order);
 
@@ -180,9 +171,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     {
         $query = $this->make($with);
 
-        foreach($where as $key => $value) {
-            $query = $query->where($key, '=', $value);
-        }
+        $query = $this->applyWhere($query, $where);
 
         return $query->has($relation, '>=', $hasAtLeast)->get();
     }
@@ -201,9 +190,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     {
         $query = $this->make($with);
 
-        foreach($where as $key => $value) {
-            $query = $query->where($key, '=', $value);
-        }
+        $query = $this->applyWhere($query, $where);
 
         return $query->has($relation, '>=', $hasAtLeast)->first();
     }
@@ -222,9 +209,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     {
         $query = $this->make($with);
 
-        foreach($where as $key => $value) {
-            $query = $query->where($key, '=', $value);
-        }
+        $query = $this->applyWhere($query, $where);
 
         return $query->has($relation, '>=', $hasAtLeast)->firstOrFail();
     }
@@ -243,15 +228,11 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     {
         $query = $this->make($with);
 
-        foreach($where as $key => $value) {
-            $query = $query->where($key, '=', $value);
-        }
+        $query = $this->applyWhere($query, $where);
 
         $query = $query->whereHas($relation, function($q) use($whereHas)
         {
-            foreach($whereHas as $key => $value) {
-                $q = $q->where($key, '=', $value);
-            }
+            $this->applyWhere($q, $whereHas);
         });
 
         return $query->get();
@@ -273,17 +254,15 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     {
         $query = $this->make($with);
 
-        foreach($where as $key => $value) {
-            $query = $query->where($key, '=', $value);
-        }
+        $query = $this->applyWhere($query, $where);
 
         if($orderBy) {
             $query = $query->orderBy($orderBy, $order);
         }
 
         return $query->skip($limit * ($page - 1))
-                     ->take($limit)
-                     ->get();
+            ->take($limit)
+            ->get();
     }
 
 
@@ -328,9 +307,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
 
         $query = $this->make();
 
-        foreach($where as $key => $value) {
-            $query = $query->where($key, '=', $value);
-        }
+        $query = $this->applyWhere($query, $where);
 
         return $query->update($inputs);
     }
@@ -341,9 +318,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
 
         $query = $this->make();
 
-        foreach($where as $key => $value) {
-            $query = $query->where($key, '=', $value);
-        }
+        $query = $this->applyWhere($query, $where);
 
         $model = $query->first();
 
@@ -375,9 +350,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     {
         $query = $this->make();
 
-        foreach($where as $key => $value) {
-            $query = $query->where($key, '=', $value);
-        }
+        $query = $this->applyWhere($query, $where);
 
         return $query->delete();
     }
@@ -400,9 +373,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     {
         $query = $this->make();
 
-        foreach($where as $key => $value) {
-            $query = $query->where($key, '=', $value);
-        }
+        $query = $this->applyWhere($query, $where);
 
         return $query->count();
     }
@@ -420,15 +391,11 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     {
         $query = $this->make();
 
-        foreach($where as $key => $value) {
-            $query = $query->where($key, '=', $value);
-        }
+        $query = $this->applyWhere($query, $where);
 
         $query = $query->whereHas($relation, function($q) use($whereHas)
         {
-            foreach($whereHas as $key => $value) {
-                $q = $q->where($key, '=', $value);
-            }
+            $this->applyWhere($q, $whereHas);
         });
 
         return $query->count();
@@ -436,6 +403,28 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
 
 
     // <--- INTERNALLY USED METHODS --->
+
+    /**
+     * Apply the where clauses to input query.
+     *
+     * @param  Builder  $query
+     * @param  array  $where
+     *
+     * @return Builder
+     */
+    protected function applyWhere(Builder $query, array $where)
+    {
+        foreach($where as $key => $value) {
+            if(is_null($value)) {
+                $query = $query->whereNull($key);
+            }
+            else {
+                $query = $query->where($key, '=', $value);
+            }
+        }
+
+        return $query;
+    }
 
     /**
      * Remove keys from the $inputs array beginning with '_' .
