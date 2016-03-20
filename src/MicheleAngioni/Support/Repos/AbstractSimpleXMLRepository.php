@@ -23,10 +23,9 @@ class AbstractSimpleXMLRepository implements XMLRepositoryInterface
 
     public function __construct()
     {
-        $this->xmlPath = app_path().$this->xmlPath;
+        $this->xmlPath = app_path() . $this->xmlPath;
 
-        if( $this->autoload )
-        {
+        if ($this->autoload) {
             $this->loadFile();
         }
     }
@@ -49,7 +48,7 @@ class AbstractSimpleXMLRepository implements XMLRepositoryInterface
      */
     public function getFile()
     {
-        if( !$this->xmlFile ) {
+        if (!$this->xmlFile) {
             $this->loadFile();
         }
 
@@ -61,7 +60,7 @@ class AbstractSimpleXMLRepository implements XMLRepositoryInterface
      */
     public function loadFile()
     {
-        if( !$this->xmlFile  ) {
+        if (!$this->xmlFile) {
             $this->xmlFile = simplexml_load_file($this->xmlPath);
         }
     }

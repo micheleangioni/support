@@ -1,6 +1,7 @@
 <?php namespace MicheleAngioni\Support;
 
-class CustomValidators extends \Illuminate\Validation\Validator {
+class CustomValidators extends \Illuminate\Validation\Validator
+{
 
     /**
      * alpha_complete permits the following UNICODE characters: alphabetic, numbers, spaces, slashes, ed some punctuation characters
@@ -9,6 +10,7 @@ class CustomValidators extends \Illuminate\Validation\Validator {
      *
      * @param  $attribute
      * @param  $value
+     *
      * @return int
      */
     public function validateAlphaComplete($attribute, $value)
@@ -21,11 +23,12 @@ class CustomValidators extends \Illuminate\Validation\Validator {
      *
      * @param  $attribute
      * @param  $value
+     *
      * @return int
      */
     public function validateAlphaSpace($attribute, $value)
     {
-    	return preg_match('/^([\p{L}0-9\s])+$/u', $value);
+        return preg_match('/^([\p{L}0-9\s])+$/u', $value);
     }
 
     /**
@@ -33,11 +36,12 @@ class CustomValidators extends \Illuminate\Validation\Validator {
      *
      * @param  $attribute
      * @param  $value
+     *
      * @return int
      */
     public function validateAlphaUnderscore($attribute, $value)
     {
-    	return preg_match('/^([\p{L}0-9_])+$/u', $value);
+        return preg_match('/^([\p{L}0-9_])+$/u', $value);
     }
 
     /**
@@ -45,6 +49,7 @@ class CustomValidators extends \Illuminate\Validation\Validator {
      *
      * @param  $attribute
      * @param  $value
+     *
      * @return int
      */
     public function validateAlphanumericNames($attribute, $value)
@@ -57,6 +62,7 @@ class CustomValidators extends \Illuminate\Validation\Validator {
      *
      * @param  $attribute
      * @param  $value
+     *
      * @return int
      */
     public function validateAlphanumericDottedNames($attribute, $value)
@@ -69,11 +75,12 @@ class CustomValidators extends \Illuminate\Validation\Validator {
      *
      * @param  $attribute
      * @param  $value
+     *
      * @return int
      */
     public function validateAlphaNames($attribute, $value)
     {
-    	return preg_match('/^([-\p{L}\'_\s])+$/u', $value);
+        return preg_match('/^([-\p{L}\'_\s])+$/u', $value);
     }
-    
+
 }

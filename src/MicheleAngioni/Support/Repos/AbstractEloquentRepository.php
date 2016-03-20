@@ -6,7 +6,7 @@ use Illuminate\Support\Collection;
 class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
 {
 
-    public function all(array $with = array())
+    public function all(array $with = [])
     {
         $query = $this->make($with);
 
@@ -18,7 +18,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
      *
      * @param array $with
      */
-    public function make(array $with = array())
+    public function make(array $with = [])
     {
         return $this->model->with($with);
     }
@@ -27,14 +27,14 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     // <--- QUERYING METHODS --->
 
 
-    public function find($id, array $with = array())
+    public function find($id, array $with = [])
     {
         $query = $this->make($with);
 
         return $query->find($id);
     }
 
-    public function findOrFail($id, array $with = array())
+    public function findOrFail($id, array $with = [])
     {
         $query = $this->make($with);
 
@@ -55,7 +55,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $query->firstOrFail();
     }
 
-    public function firstBy(array $where = array(), array $with = array())
+    public function firstBy(array $where = [], array $with = [])
     {
         $query = $this->make($with);
 
@@ -64,7 +64,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $query->first();
     }
 
-    public function firstOrFailBy(array $where = array(), array $with = array())
+    public function firstOrFailBy(array $where = [], array $with = [])
     {
         $query = $this->make($with);
 
@@ -73,7 +73,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $query->firstOrFail();
     }
 
-    public function getBy(array $where = array(), array $with = array())
+    public function getBy(array $where = [], array $with = [])
     {
         $query = $this->make($with);
 
@@ -82,7 +82,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $query->get();
     }
 
-    public function getByLimit($limit, array $where = array(), array $with = array())
+    public function getByLimit($limit, array $where = [], array $with = [])
     {
         $query = $this->make($with);
 
@@ -91,7 +91,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $query->take($limit)->get();
     }
 
-    public function getByOrder($orderBy, array $where = array(), array $with = array(), $order = 'desc', $limit = 0)
+    public function getByOrder($orderBy, array $where = [], array $with = [], $order = 'desc', $limit = 0)
     {
         $query = $this->make($with);
 
@@ -99,41 +99,47 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
 
         $query = $query->orderBy($orderBy, $order);
 
-        if($limit) {
+        if ($limit) {
             $query = $query->take($limit);
         }
 
         return $query->get();
     }
 
-    public function getIn($whereInKey, array $whereIn = array(), $with = array(), $orderBy = NULL, $order = 'desc', $limit = 0)
+    public function getIn($whereInKey, array $whereIn = [], $with = [], $orderBy = null, $order = 'desc', $limit = 0)
     {
         $query = $this->make($with);
 
         $query = $query->whereIn($whereInKey, $whereIn);
 
-        if($orderBy) {
+        if ($orderBy) {
             $query = $query->orderBy($orderBy, $order);
         }
 
-        if($limit) {
+        if ($limit) {
             $query = $query->take($limit);
         }
 
         return $query->get();
     }
 
-    public function getNotIn($whereNotInKey, array $whereNotIn = array(), $with = array(), $orderBy = NULL, $order = 'desc', $limit = 0)
-    {
+    public function getNotIn(
+        $whereNotInKey,
+        array $whereNotIn = [],
+        $with = [],
+        $orderBy = null,
+        $order = 'desc',
+        $limit = 0
+    ) {
         $query = $this->make($with);
 
         $query = $query->whereNotIn($whereNotInKey, $whereNotIn);
 
-        if($orderBy) {
+        if ($orderBy) {
             $query = $query->orderBy($orderBy, $order);
         }
 
-        if($limit) {
+        if ($limit) {
             $query = $query->take($limit);
         }
 
@@ -143,16 +149,16 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     /**
      * Return all results that have a required relationship
      *
-     * @param  string  $relation
-     * @param  array  $where
-     * @param  array  $with
-     * @param  int   $hasAtLeast = 1
+     * @param  string $relation
+     * @param  array $where
+     * @param  array $with
+     * @param  int $hasAtLeast = 1
      *
      * @deprecated
      *
      * @return Collection
      */
-    public function has($relation, array $where = array(), array $with = array(), $hasAtLeast = 1)
+    public function has($relation, array $where = [], array $with = [], $hasAtLeast = 1)
     {
         return $this->getHas($relation, $where, $with, $hasAtLeast);
     }
@@ -160,14 +166,14 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     /**
      * Return all results that have a required relationship
      *
-     * @param  string  $relation
-     * @param  array  $where
-     * @param  array  $with
-     * @param  int   $hasAtLeast = 1
+     * @param  string $relation
+     * @param  array $where
+     * @param  array $with
+     * @param  int $hasAtLeast = 1
      *
      * @return Collection
      */
-    public function getHas($relation, array $where = array(), array $with = array(), $hasAtLeast = 1)
+    public function getHas($relation, array $where = [], array $with = [], $hasAtLeast = 1)
     {
         $query = $this->make($with);
 
@@ -179,14 +185,14 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     /**
      * Return first results that have a required relationship
      *
-     * @param  string  $relation
-     * @param  array  $where
-     * @param  array  $with
-     * @param  int   $hasAtLeast = 1
+     * @param  string $relation
+     * @param  array $where
+     * @param  array $with
+     * @param  int $hasAtLeast = 1
      *
      * @return Collection
      */
-    public function hasFirst($relation, array $where = array(), array $with = array(), $hasAtLeast = 1)
+    public function hasFirst($relation, array $where = [], array $with = [], $hasAtLeast = 1)
     {
         $query = $this->make($with);
 
@@ -198,14 +204,14 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     /**
      * Return firstOrFail result that have a required relationship
      *
-     * @param  string  $relation
-     * @param  array  $where
-     * @param  array  $with
-     * @param  int   $hasAtLeast = 1
+     * @param  string $relation
+     * @param  array $where
+     * @param  array $with
+     * @param  int $hasAtLeast = 1
      *
      * @return Collection
      */
-    public function hasFirstOrFail($relation, array $where = array(), array $with = array(), $hasAtLeast = 1)
+    public function hasFirstOrFail($relation, array $where = [], array $with = [], $hasAtLeast = 1)
     {
         $query = $this->make($with);
 
@@ -217,21 +223,20 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     /**
      * Return all results that have a required relationship with input constraints
      *
-     * @param  string  $relation
-     * @param  array  $where
-     * @param  array  $whereHas
-     * @param  array  $with
+     * @param  string $relation
+     * @param  array $where
+     * @param  array $whereHas
+     * @param  array $with
      *
      * @return Collection
      */
-    public function whereHas($relation, array $where = array(), array $whereHas = array(), array $with = array())
+    public function whereHas($relation, array $where = [], array $whereHas = [], array $with = [])
     {
         $query = $this->make($with);
 
         $query = $this->applyWhere($query, $where);
 
-        $query = $query->whereHas($relation, function($q) use($whereHas)
-        {
+        $query = $query->whereHas($relation, function ($q) use ($whereHas) {
             $this->applyWhere($q, $whereHas);
         });
 
@@ -241,22 +246,22 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     /**
      * Get Results by Page.
      *
-     * @param  int  $page
-     * @param  int  $limit
-     * @param  array  $where
-     * @param  array  $with
-     * @param  string|null  $orderBy
-     * @param  string  $order
+     * @param  int $page
+     * @param  int $limit
+     * @param  array $where
+     * @param  array $with
+     * @param  string|null $orderBy
+     * @param  string $order
      *
      * @return Collection
      */
-    public function getByPage($page = 1, $limit = 10, array $where = array(), $with = array(), $orderBy = NULL, $order = 'desc')
+    public function getByPage($page = 1, $limit = 10, array $where = [], $with = [], $orderBy = null, $order = 'desc')
     {
         $query = $this->make($with);
 
         $query = $this->applyWhere($query, $where);
 
-        if($orderBy) {
+        if ($orderBy) {
             $query = $query->orderBy($orderBy, $order);
         }
 
@@ -271,7 +276,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
 
     public function insert(array $collection)
     {
-        foreach($collection as $key => $inputs) {
+        foreach ($collection as $key => $inputs) {
             $collection[$key] = $this->purifyInputs($inputs);
         }
 
@@ -322,12 +327,11 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
 
         $model = $query->first();
 
-        if($model) {
+        if ($model) {
             $model->update($inputs);
 
             return $model;
-        }
-        else {
+        } else {
             return $this->model->create($inputs);
         }
     }
@@ -369,7 +373,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $this->model->count();
     }
 
-    public function countBy(array $where = array())
+    public function countBy(array $where = [])
     {
         $query = $this->make();
 
@@ -381,20 +385,19 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     /**
      * Count all results that have a required relationship with input constraints
      *
-     * @param  string  $relation
-     * @param  array  $where
-     * @param  array  $whereHas
+     * @param  string $relation
+     * @param  array $where
+     * @param  array $whereHas
      *
      * @return int
      */
-    public function countWhereHas($relation, array $where = array(), array $whereHas = array())
+    public function countWhereHas($relation, array $where = [], array $whereHas = [])
     {
         $query = $this->make();
 
         $query = $this->applyWhere($query, $where);
 
-        $query = $query->whereHas($relation, function($q) use($whereHas)
-        {
+        $query = $query->whereHas($relation, function ($q) use ($whereHas) {
             $this->applyWhere($q, $whereHas);
         });
 
@@ -407,18 +410,17 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     /**
      * Apply the where clauses to input query.
      *
-     * @param  Builder  $query
-     * @param  array  $where
+     * @param  Builder $query
+     * @param  array $where
      *
      * @return Builder
      */
     protected function applyWhere(Builder $query, array $where)
     {
-        foreach($where as $key => $value) {
-            if(is_null($value)) {
+        foreach ($where as $key => $value) {
+            if (is_null($value)) {
                 $query = $query->whereNull($key);
-            }
-            else {
+            } else {
                 $query = $query->where($key, '=', $value);
             }
         }
@@ -429,12 +431,13 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     /**
      * Remove keys from the $inputs array beginning with '_' .
      *
-     * @param  array  $inputs
+     * @param  array $inputs
+     *
      * @return array
      */
     protected function purifyInputs(array $inputs)
     {
-        foreach($inputs as $key => $input) {
+        foreach ($inputs as $key => $input) {
             if ($key[0] === '_') {
                 unset($inputs[$key]);
             }

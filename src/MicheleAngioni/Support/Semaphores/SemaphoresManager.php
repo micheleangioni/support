@@ -3,7 +3,8 @@
 use MicheleAngioni\Support\Cache\CacheInterface;
 use MicheleAngioni\Support\Cache\KeyManagerInterface;
 
-class SemaphoresManager {
+class SemaphoresManager
+{
 
     /**
      * @var CacheInterface
@@ -27,8 +28,8 @@ class SemaphoresManager {
     /**
      * Construct
      *
-     * @param  CacheInterface  $cache
-     * @param  KeyManagerInterface  $keyManager
+     * @param  CacheInterface $cache
+     * @param  KeyManagerInterface $keyManager
      */
     public function __construct(CacheInterface $cache, KeyManagerInterface $keyManager)
     {
@@ -49,7 +50,8 @@ class SemaphoresManager {
     /**
      * Set the locking time.
      *
-     * @param  int  $minutes
+     * @param  int $minutes
+     *
      * @return int
      */
     public function setLockingTime($minutes)
@@ -60,8 +62,9 @@ class SemaphoresManager {
     /**
      * Return the key of the semaphore connected with input $id and $section.
      *
-     * @param  string|bool  $id
-     * @param  string  $section
+     * @param  string|bool $id
+     * @param  string $section
+     *
      * @return string
      */
     public function getSemaphoreKey($id, $section)
@@ -72,15 +75,16 @@ class SemaphoresManager {
     /**
      * Check if a semaphore is locked or free. Return 1 if locked or 0 if unlocked.
      *
-     * @param  string  $id
-     * @param  string  $section
+     * @param  string $id
+     * @param  string $section
+     *
      * @return int
      */
     public function checkIfSemaphoreIsLocked($id, $section)
     {
         $key = $this->getSemaphoreKey($id, $section);
 
-        if(!$this->cache->has($key, ['semaphore', $section])) {
+        if (!$this->cache->has($key, ['semaphore', $section])) {
             return 0;
         }
 
@@ -90,8 +94,8 @@ class SemaphoresManager {
     /**
      * Lock the semaphore with input key and section.
      *
-     * @param  string  $id
-     * @param  string  $section
+     * @param  string $id
+     * @param  string $section
      */
     public function lockSemaphore($id, $section)
     {
@@ -103,8 +107,8 @@ class SemaphoresManager {
     /**
      * Unlock the semaphore with input key and section.
      *
-     * @param  string  $id
-     * @param  string  $section
+     * @param  string $id
+     * @param  string $section
      */
     public function unlockSemaphore($id, $section)
     {

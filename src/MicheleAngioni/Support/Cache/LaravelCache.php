@@ -2,7 +2,8 @@
 
 use Illuminate\Cache\CacheManager;
 
-class LaravelCache implements CacheInterface {
+class LaravelCache implements CacheInterface
+{
 
     /**
      * @var CacheManager
@@ -17,7 +18,7 @@ class LaravelCache implements CacheInterface {
     /**
      * Construct
      *
-     * @param CacheManager  $cache
+     * @param CacheManager $cache
      */
     public function __construct(CacheManager $cache)
     {
@@ -28,8 +29,9 @@ class LaravelCache implements CacheInterface {
     /**
      * Get
      *
-     * @param   string  $key
-     * @param   array  $tags
+     * @param   string $key
+     * @param   array $tags
+     *
      * @return  mixed
      */
     public function get($key, array $tags)
@@ -40,17 +42,16 @@ class LaravelCache implements CacheInterface {
     /**
      * Put
      *
-     * @param  string  $key
-     * @param  mixed   $value
-     * @param  array  $tags
-     * @param  int  $minutes
+     * @param  string $key
+     * @param  mixed $value
+     * @param  array $tags
+     * @param  int $minutes
      *
      * @return mixed
      */
     public function put($key, $value, array $tags, $minutes = null)
     {
-        if( is_null($minutes) )
-        {
+        if (is_null($minutes)) {
             $minutes = $this->minutes;
         }
 
@@ -60,9 +61,9 @@ class LaravelCache implements CacheInterface {
     /**
      * Has
      *
-     * @param  string  $key
-     * @param  array  $tags
-     * 
+     * @param  string $key
+     * @param  array $tags
+     *
      * @return bool
      */
     public function has($key, array $tags)

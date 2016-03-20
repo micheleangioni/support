@@ -3,8 +3,12 @@
 use Illuminate\Support\Facades\Facade;
 
 
-class Helpers extends Facade {
+class Helpers extends Facade
+{
 
-	protected static function getFacadeAccessor() { return 'helpers'; }
+    protected static function getFacadeAccessor()
+    {
+        return 'helpers';
+    }
 
 }
