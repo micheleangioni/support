@@ -1,14 +1,15 @@
 # SUPPORT
 
-[![Build Status](https://travis-ci.org/micheleangioni/support.svg)](https://travis-ci.org/micheleangioni/support)
 [![License](https://poser.pugx.org/michele-angioni/support/license.svg)](https://packagist.org/packages/michele-angioni/support)
+[![Latest Stable Version](https://poser.pugx.org/michele-angioni/support/v/stable)](https://packagist.org/packages/michele-angioni/support)
+[![Build Status](https://travis-ci.org/micheleangioni/support.svg)](https://travis-ci.org/micheleangioni/support)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/8af14b44-cf82-4028-8a89-438fcb133ba6/small.png)](https://insight.sensiolabs.com/projects/8af14b44-cf82-4028-8a89-438fcb133ba6)
 
 ## Introduction
 
 Support consists of a series of useful classes to ease development and the use of best practices and design patterns with [Laravel 5](http://laravel.com).
 
-Part of this package has been highly inspired by the [culttt.com](http://culttt.com/) blog, which I highly recommend to both new and experienced developers since it focuses on a wide range of aspects with always interesting point of views and discussions. I have personally learned much from it.
+Part of this package has been highly inspired by the [culttt.com](http://culttt.com/) blog, which I highly recommend to both new and experienced developers since it focuses on a wide range of topics with always interesting point of views and discussions. I have personally learned much from it.
 
 ## Installation
 
@@ -18,8 +19,8 @@ If you are looking for the Laravel 4 version, check the [1.0 branch](https://git
 
 ## Modules summary
 
-Support consists of the following features: Repositories, Cache, Presenters, Semaphores, an Helpers class and new custom validators.
-In addition Support comes with several new custom exceptions.
+Support comes bundled of the following features: Repositories, Cache, Presenters, Semaphores, an Helpers class and new custom validators.
+In addition Support provides several new custom exceptions.
 
 ## Configuration
 
@@ -30,11 +31,11 @@ In order to access to the file keys in your code, you can use `config('ma_suppor
 
 ## Repositories Usage
 
-The abstract class `AbstractEloquentRepository` consists for a model wrapper with a series of useful standard queries to be performed over the Laravel models.
+The abstract class `AbstractEloquentRepository` consists of a model wrapper with numerous useful queries to be performed over the Laravel models.
 This way implementing the repository pattern becomes straightforward.
 
 As an example let's take a `Post` model. First of all we shall create a repository interface which will be injected in the constructor of the classes we need.
-First of all we must define the `PostRepositoryInterface` as
+Let's define the `PostRepositoryInterface` as
 
      <?php
 
@@ -70,7 +71,8 @@ to an existing Laravel Service Provider. Or we can create a brand new one
 
     use Illuminate\Support\ServiceProvider;
 
-    class RepositoryServiceProvider extends ServiceProvider {
+    class RepositoryServiceProvider extends ServiceProvider 
+    {
 
         public function register()
         {
@@ -81,7 +83,7 @@ to an existing Laravel Service Provider. Or we can create a brand new one
         }
     }
 
-and add it to the config/app.php in the providers array
+and add it to the `config/app.php` file in the providers array
 
     'RepositoryServiceProvider',
 
@@ -91,7 +93,8 @@ Suppose that now we need the Post repo in our PostController. We simply inject o
 
     use PostRepositoryInterface as PostRepo;
 
-    class PostController extends BaseController {
+    class PostController extends BaseController 
+    {
 
         private $postRepo;
 
@@ -145,7 +148,7 @@ Decrecated methods:
 - has($relation, array $where = array(), array $with = array(), $hasAtLeast = 1) (synonym of getHas())
 
 
-The Repos module also supports xml repositories. Suppose we have a staff.xml file. We need to define a `StaffXMLRepositoryInterface`
+The Repository module also supports xml repositories. Suppose we have a staff.xml file. We need to define a `StaffXMLRepositoryInterface`
 
     <?php
 
@@ -171,13 +174,14 @@ The `AbstractSimpleXMLRepository` contains the methods we need:
 - loadFile() : load the xml file for later use
 - getFile() : load the xml file if not previously loaded and return it as an SimpleXMLElement instance
 
-As done with "standard" repos, we need to instruct the IoC Container and we can achieve that by defining the following XMLRepositoryServiceProvider
+As done with "standard" repositories, we need to instruct the IoC Container. We can achieve that by defining the following XMLRepositoryServiceProvider
 
     <?php
 
     use Illuminate\Support\ServiceProvider;
 
-    class XMLRepositoryServiceProvider extends ServiceProvider {
+    class XMLRepositoryServiceProvider extends ServiceProvider 
+    {
 
         public function register()
         {
@@ -188,7 +192,7 @@ As done with "standard" repos, we need to instruct the IoC Container and we can 
         }
     }
 
-We can than inject the repo in the class we need or simply call it through the Laravel application instance / facade
+We can then inject the repo in the class we need or simply call it through the Laravel application instance / facade
 
     $xmlStaffRepo = App::make('StaffXMLRepositoryInterface');
 
@@ -198,7 +202,7 @@ The `AbstractEloquentRepository` and `AbstractSimpleXMLRepository` classes do NO
 
 ## Cache Usage
 
-The Cache module can be used to give Cache capabilities to our repos, through the use of the [decorator pattern](http://en.wikipedia.org/wiki/Decorator_pattern).
+The Cache module can be used to give Cache capabilities to our repositories, through the use of the [decorator pattern](http://en.wikipedia.org/wiki/Decorator_pattern).
 We can then continue our previous example of a Post model and its repo. We define a `CachePostRepoDecorator` as follows
 
     <?php
@@ -208,7 +212,8 @@ We can then continue our previous example of a Post model and its repo. We defin
     use MicheleAngioni\Support\Cache\AbstractCacheRepositoryDecorator;
     use MicheleAngioni\Support\Repos\RepositoryCacheableQueriesInterface;
 
-    class CachePostRepoDecorator extends AbstractCacheRepositoryDecorator implements PostRepositoryInterface {
+    class CachePostRepoDecorator extends AbstractCacheRepositoryDecorator implements PostRepositoryInterface 
+    {
 
         /**
          * Section of the Cache the repo belongs to.
@@ -232,8 +237,10 @@ We can then continue our previous example of a Post model and its repo. We defin
     }
 
 The section property can be used to define a Cache section and it is used when generating the Cache keys.
+
 This class implements the `PostRepositoryInterface`, so that it is recognized as the Post repo, of which it is nothing but a wrapper. It also extends the `AbstractCacheRepositoryDecorator` where all magic happens.
 The AbstractCacheRepositoryDecorator implements the `RepositoryCacheableQueriesInterface`, which is a very basic interface which instructs our system which repo methods are going to be cached.
+
 Default methods are all(), find() and findOrFail(), but you can define your own interface and abstract cache decorator with more methods.
 
 The `AbstractCacheRepositoryDecorator` constructor needs a repository implementing the `RepositoryCacheableQueriesInterface`, a Cache manager implementing the `CacheInterface` and a Key Manager implementing the `KeyManagerInterface`.
@@ -263,7 +270,7 @@ In fact, all you need to use the Cache is to edit your RepositoryServiceProvider
         }
     }
 
-Now you can use the Post repo as before, but when calling the all(), find() or findOrFail() methods the result will be cached (default time: 10 minutes It can be modified in the configuration file).
+Now you can use the Post repository as before, but when calling the all(), find() or findOrFail() methods the result will be cached (default time: 10 minutes It can be modified in the configuration file).
 
 ### Hint
 
@@ -332,10 +339,11 @@ and update the `XMLRepositoryServiceProvider`
 
 ## Presenters Usage
 
-A Presenter is a particular kind of [decorator](http://en.wikipedia.org/wiki/Decorator_pattern), used decorate an object before sending it to the view. 
+A Presenter is a particular kind of [decorator](http://en.wikipedia.org/wiki/Decorator_pattern), used to decorate an object before sending it to the view. 
 The most common uses include date and numbers formatting, text validation and formatting, obscuration of sensible data.
 
-Support provide an easy way to decorate Eloquent models. Let's continue to use our `Post` model and suppose we want to escape its `text` attribute before passing the model to the view. 
+Support provides an easy way to decorate Eloquent models. Let's continue to use our `Post` model and suppose we want to escape its `text` attribute before passing the model to the view.
+ 
 First of all define the PostDecorator by extending `MicheleAngioni\Support\Presenters\AbstractPresenter` and implementing `MicheleAngioni\Support\Presenters\PresentableInterface`.
 The AbstractPresenter will allow to access al model's attributes through the use of PHP magic method __GET. 
 It also implements ArrayAccess interface so that we can keep to access our attributes both as an object and as array.  
@@ -345,7 +353,8 @@ It also implements ArrayAccess interface so that we can keep to access our attri
     use MicheleAngioni\Support\Presenters\AbstractPresenter;
     use MicheleAngioni\Support\Presenters\PresentableInterface;
     
-    class PostPresenter extends AbstractPresenter implements PresentableInterface {
+    class PostPresenter extends AbstractPresenter implements PresentableInterface 
+    {
         
         public function text()
         {
@@ -416,8 +425,8 @@ The Support package provides both of them, so we can bind them to the Semaphores
     use MicheleAngioni\Support\Cache\LaravelCache;
     use MicheleAngioni\Support\Semaphores\SemaphoresManager;
 
-    class SemaphoresServiceProviders extends ServiceProvider {
-
+    class SemaphoresServiceProviders extends ServiceProvider 
+    {
         $this->app->bind(
             'MicheleAngioni\Support\Semaphores\SemaphoresManager', function($app)
             {
@@ -440,7 +449,7 @@ The helpers class provides several useful methods which simplify php development
 
     'Helpers' => 'MicheleAngioni\Support\Facades\Helpers'
 
-The main available methods are:
+The available methods are:
 
 - isInt($int, $min = false, $max = false) : check if input $int is an integer. Examples:
 int(4), string '4', float(4), 0x7FFFFFFF return true.
@@ -484,9 +493,9 @@ You can browse the Support [API Documentation](http://micheleangioni.github.io/s
 
 ## Contribution guidelines
 
-Support follows PSR-1 and PSR-4 PHP coding standards, and semantic versioning.
+Support follows PSR-1, PSR-2 and PSR-4 PHP coding standards, and semantic versioning.
 
-Pull requests are welcome. More unit tests are welcome as well.
+Pull requests are welcome.
 
 ## License
 
