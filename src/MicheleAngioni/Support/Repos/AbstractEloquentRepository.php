@@ -6,6 +6,12 @@ use Illuminate\Support\Collection;
 class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
 {
 
+    /**
+     * Return all records.
+     *
+     * @param array $with
+     * @return Collection
+     */
     public function all(array $with = [])
     {
         $query = $this->make($with);
@@ -14,7 +20,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     }
 
     /**
-     * Make a new instance of the entity to query on
+     * Make a new instance of the entity to query on.
      *
      * @param array $with
      */
@@ -26,7 +32,15 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
 
     // <--- QUERYING METHODS --->
 
-
+    /**
+     * Find a specific record.
+     * Return null if not found.
+     *
+     * @param int $id
+     * @param array $with
+     *
+     * @return mixed
+     */
     public function find($id, array $with = [])
     {
         $query = $this->make($with);
@@ -34,6 +48,16 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $query->find($id);
     }
 
+    /**
+     * Find a specific record.
+     * Throws exception if not found.
+     *
+     * @param $id
+     * @param array $with
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     *
+     * @return mixed
+     */
     public function findOrFail($id, array $with = [])
     {
         $query = $this->make($with);
@@ -41,6 +65,12 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $query->findOrFail($id);
     }
 
+    /**
+     * Return the first record of the table.
+     * Return null if no record is found.
+     *
+     * @return mixed
+     */
     public function first()
     {
         $query = $this->make();
@@ -48,6 +78,13 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $query->first();
     }
 
+    /**
+     * Return the first record.
+     * Throws exception if no record is found.
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     * @return mixed
+     */
     public function firstOrFail()
     {
         $query = $this->make();
@@ -55,6 +92,15 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $query->firstOrFail();
     }
 
+    /**
+     * Return the first record querying input parameters.
+     * Return null if no record is found.
+     *
+     * @param array $where
+     * @param array $with
+     *
+     * @return mixed
+     */
     public function firstBy(array $where = [], array $with = [])
     {
         $query = $this->make($with);
@@ -64,6 +110,16 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $query->first();
     }
 
+    /**
+     * Return the first record querying input parameters.
+     * Throws exception if no record is found.
+     *
+     * @param array $where
+     * @param array $with
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     *
+     * @return mixed
+     */
     public function firstOrFailBy(array $where = [], array $with = [])
     {
         $query = $this->make($with);
@@ -73,6 +129,14 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $query->firstOrFail();
     }
 
+    /**
+     * Return records querying input parameters.
+     *
+     * @param array $where
+     * @param array $with
+     *
+     * @return Collection
+     */
     public function getBy(array $where = [], array $with = [])
     {
         $query = $this->make($with);
@@ -82,6 +146,15 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $query->get();
     }
 
+    /**
+     * Return the first $limit records querying input parameters.
+     *
+     * @param int  $limit
+     * @param array $where
+     * @param array $with
+     *
+     * @return Collection
+     */
     public function getByLimit($limit, array $where = [], array $with = [])
     {
         $query = $this->make($with);
@@ -91,6 +164,18 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $query->take($limit)->get();
     }
 
+    /**
+     * Return the first ordered $limit records querying input parameters.
+     * $limit = 0 means no limits.
+     *
+     * @param $orderBy
+     * @param array $where
+     * @param array $with
+     * @param string $order
+     * @param int $limit
+     *
+     * @return Collection
+     */
     public function getByOrder($orderBy, array $where = [], array $with = [], $order = 'desc', $limit = 0)
     {
         $query = $this->make($with);
@@ -106,6 +191,19 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $query->get();
     }
 
+    /**
+     * Return the first ordered $limit records querying input parameters.
+     * $limit = 0 means no limits.
+     *
+     * @param string|int $whereInKey
+     * @param array $whereIn
+     * @param array $with
+     * @param string|null $orderBy
+     * @param string $order
+     * @param int $limit
+     *
+     * @return Collection
+     */
     public function getIn($whereInKey, array $whereIn = [], $with = [], $orderBy = null, $order = 'desc', $limit = 0)
     {
         $query = $this->make($with);
@@ -123,6 +221,19 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $query->get();
     }
 
+    /**
+     * Return the first ordered $limit records querying input parameters.
+     * $limit = 0 means no limits.
+     *
+     * @param string|int $whereNotInKey
+     * @param array $whereNotIn
+     * @param array $with
+     * @param string|null $orderBy
+     * @param string $order
+     * @param int $limit
+     *
+     * @return Collection
+     */
     public function getNotIn(
         $whereNotInKey,
         array $whereNotIn = [],
@@ -147,7 +258,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     }
 
     /**
-     * Return all results that have a required relationship
+     * Return all results that have a required relationship.
      *
      * @param  string $relation
      * @param  array $where
@@ -164,7 +275,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     }
 
     /**
-     * Return all results that have a required relationship
+     * Return all results that have a required relationship.
      *
      * @param  string $relation
      * @param  array $where
@@ -183,7 +294,8 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     }
 
     /**
-     * Return first results that have a required relationship
+     * Return the first result that has a required relationship.
+     * Return null if no record is found.
      *
      * @param  string $relation
      * @param  array $where
@@ -202,12 +314,14 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     }
 
     /**
-     * Return firstOrFail result that have a required relationship
+     * Return the first result that have a required relationship.
+     * Throws exception if no record is found.
      *
      * @param  string $relation
      * @param  array $where
      * @param  array $with
      * @param  int $hasAtLeast = 1
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      *
      * @return Collection
      */
@@ -221,7 +335,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     }
 
     /**
-     * Return all results that have a required relationship with input constraints
+     * Return all results that have a required relationship with input constraints.
      *
      * @param  string $relation
      * @param  array $where
@@ -244,7 +358,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     }
 
     /**
-     * Get Results by Page.
+     * Get ordered results by Page.
      *
      * @param  int $page
      * @param  int $limit
@@ -273,7 +387,12 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
 
     // <--- CREATING / UPDATING / DELETING METHODS --->
 
-
+    /**
+     * Create a collection of new records.
+     *
+     * @param array $collection
+     * @return mixed
+     */
     public function insert(array $collection)
     {
         foreach ($collection as $key => $inputs) {
@@ -283,6 +402,12 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $this->model->insert($collection);
     }
 
+    /**
+     * Create a new record.
+     *
+     * @param array $inputs
+     * @return mixed
+     */
     public function create(array $inputs = [])
     {
         $inputs = $this->purifyInputs($inputs);
@@ -290,6 +415,12 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $this->model->create($inputs);
     }
 
+    /**
+     * Update all records.
+     *
+     * @param array $inputs
+     * @return mixed
+     */
     public function update(array $inputs)
     {
         $inputs = $this->purifyInputs($inputs);
@@ -297,6 +428,14 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $this->model->update($inputs);
     }
 
+    /**
+     * Update an existing record, retrieved by id.
+     *
+     * @param int $id
+     * @param array $inputs
+     *
+     * @return mixed
+     */
     public function updateById($id, array $inputs)
     {
         $inputs = $this->purifyInputs($inputs);
@@ -306,6 +445,14 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $model->update($inputs);
     }
 
+    /**
+     * Update all records matching input parameters.
+     *
+     * @param array $where
+     * @param array $inputs
+     *
+     * @return mixed
+     */
     public function updateBy(array $where, array $inputs)
     {
         $inputs = $this->purifyInputs($inputs);
@@ -317,6 +464,15 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $query->update($inputs);
     }
 
+    /**
+     * Update the record matching input parameters.
+     * If no record is found, create a new one.
+     *
+     * @param array $where
+     * @param array $inputs
+     *
+     * @return mixed
+     */
     public function updateOrCreateBy(array $where, array $inputs = [])
     {
         $inputs = $this->purifyInputs($inputs);
@@ -336,6 +492,12 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         }
     }
 
+    /**
+     * Delete input record.
+     *
+     * @param int $id
+     * @return mixed
+     */
     public function destroy($id)
     {
         $model = $this->model->findOrFail($id);
@@ -343,6 +505,15 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $model->delete();
     }
 
+    /**
+     * Retrieve and delete the first record matching input parameters.
+     * Throws exception if no record is found.
+     *
+     * @param array $where
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     *
+     * @return mixed
+     */
     public function destroyFirstBy(array $where)
     {
         $model = $this->firstOrFailBy($where);
@@ -350,6 +521,12 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $model->delete();
     }
 
+    /**
+     * Retrieve and delete the all records matching input parameters.
+     *
+     * @param array $where
+     * @return mixed
+     */
     public function destroyBy(array $where)
     {
         $query = $this->make();
@@ -359,6 +536,11 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
         return $query->delete();
     }
 
+    /**
+     * Truncate the table.
+     *
+     * @return mixed
+     */
     public function truncate()
     {
         return $this->model->truncate();
@@ -367,12 +549,21 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
 
     // <--- COUNT METHODS --->
 
-
+    /**
+     * Count the number of records.
+     *
+     * @return int
+     */
     public function count()
     {
         return $this->model->count();
     }
 
+    /**
+     * Count the number of records matching input parameters.
+     *
+     * @return int
+     */
     public function countBy(array $where = [])
     {
         $query = $this->make();
@@ -383,7 +574,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     }
 
     /**
-     * Count all results that have a required relationship with input constraints
+     * Count all records that have a required relationship and matching input parameters..
      *
      * @param  string $relation
      * @param  array $where
