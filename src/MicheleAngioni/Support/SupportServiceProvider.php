@@ -68,6 +68,8 @@ class SupportServiceProvider extends ServiceProvider
 				'alpha_complete' => 'Only the following characters are allowed: alphabetic, numbers, spaces, slashes and several punctuation characters.',
 				'alpha_space' => 'Only the following characters are allowed: alphabetic, numbers and spaces.',
 				'alpha_underscore' => 'Only the following characters are allowed: alphabetic, numbers and underscores.',
+				'alphanumeric_names' => 'Only the following characters are allowed: letters, numbers, menus, apostrophes, underscores and spaces.',
+				'alphanumeric_dotted_names' => 'Only the following characters are allowed: letters, numbers, menus, apostrophes, underscores, dots and spaces.',
 				'alpha_names' => 'Only the following characters are allowed: alphabetic, menus, apostrophes, underscores and spaces.',
 			];
 
