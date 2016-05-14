@@ -1,7 +1,6 @@
 <?php namespace MicheleAngioni\Support;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Validation\Factory as ValidationFactory;
 
 class SupportServiceProvider extends ServiceProvider
 {
