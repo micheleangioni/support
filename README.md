@@ -15,6 +15,14 @@ Part of this package has been highly inspired by the [culttt.com](http://culttt.
 
 Support can be installed through Composer, just include `"michele-angioni/support": "~2.0"` to your composer.json and run `composer update` or `composer install`.
 
+Then add the Support Service Provider in the Laravel `app.php` config file, under the providers array
+
+    'MicheleAngioni\Support\SupportServiceProvider'
+
+and the Helpers facade in the aliases array
+
+    'Helpers' => 'MicheleAngioni\Support\Facades\Helpers'
+
 If you are looking for the Laravel 4 version, check the [1.0 branch](https://github.com/micheleangioni/support/tree/1.0) and its documentation.
 
 ## Modules summary
@@ -445,7 +453,7 @@ We can them simply inject the SemaphoresManager in a constructor to be resolver 
 
 ## Helpers Usage
 
-The helpers class provides several useful methods which simplify php development. Support has also an Helpers facade which can be registered in the app.php file under the aliases array as
+The helpers class provides several useful methods which simplify php development. Support has also an Helpers facade which can be registered in the `app.php` file under the aliases array as
 
     'Helpers' => 'MicheleAngioni\Support\Facades\Helpers'
 
