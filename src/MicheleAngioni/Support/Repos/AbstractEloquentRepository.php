@@ -10,6 +10,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
      * Return all records.
      *
      * @param array $with
+     *
      * @return Collection
      */
     public function all(array $with = [])
@@ -54,6 +55,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
      *
      * @param $id
      * @param array $with
+     *
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      *
      * @return mixed
@@ -116,6 +118,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
      *
      * @param array $where
      * @param array $with
+     *
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      *
      * @return mixed
@@ -149,7 +152,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
     /**
      * Return the first $limit records querying input parameters.
      *
-     * @param int  $limit
+     * @param int $limit
      * @param array $where
      * @param array $with
      *
@@ -321,6 +324,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
      * @param  array $where
      * @param  array $with
      * @param  int $hasAtLeast = 1
+     *
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      *
      * @return Collection
@@ -391,6 +395,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
      * Create a collection of new records.
      *
      * @param array $collection
+     *
      * @return mixed
      */
     public function insert(array $collection)
@@ -406,6 +411,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
      * Create a new record.
      *
      * @param array $inputs
+     *
      * @return mixed
      */
     public function create(array $inputs = [])
@@ -419,6 +425,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
      * Update all records.
      *
      * @param array $inputs
+     *
      * @return mixed
      */
     public function update(array $inputs)
@@ -496,6 +503,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
      * Delete input record.
      *
      * @param int $id
+     *
      * @return mixed
      */
     public function destroy($id)
@@ -510,6 +518,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
      * Throws exception if no record is found.
      *
      * @param array $where
+     *
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      *
      * @return mixed
@@ -525,6 +534,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
      * Retrieve and delete the all records matching input parameters.
      *
      * @param array $where
+     *
      * @return mixed
      */
     public function destroyBy(array $where)

@@ -1,15 +1,17 @@
 <?php
 
-class SemaphoreTest extends PHPUnit_Framework_TestCase {
+class SemaphoreTest extends PHPUnit_Framework_TestCase
+{
 
-	public function testLockingTime()
-	{
+    public function testLockingTime()
+    {
         $lockingTime = 12;
 
         $cacheInterface = $this->mock('MicheleAngioni\Support\Cache\CacheInterface');
         $keyManagerInterface = $this->mock('MicheleAngioni\Support\Cache\KeyManagerInterface');
 
-        $semaphoreManager = new MicheleAngioni\Support\Semaphores\SemaphoresManager($cacheInterface, $keyManagerInterface);
+        $semaphoreManager = new MicheleAngioni\Support\Semaphores\SemaphoresManager($cacheInterface,
+            $keyManagerInterface);
 
         $semaphoreManager->setLockingTime($lockingTime);
 
@@ -24,7 +26,8 @@ class SemaphoreTest extends PHPUnit_Framework_TestCase {
         $keyManagerInterface->shouldReceive('getKey')
             ->andReturn(true);
 
-        $semaphoreManager = new MicheleAngioni\Support\Semaphores\SemaphoresManager($cacheInterface, $keyManagerInterface);
+        $semaphoreManager = new MicheleAngioni\Support\Semaphores\SemaphoresManager($cacheInterface,
+            $keyManagerInterface);
 
         $semaphoreManager->getSemaphoreKey('id', 'section');
     }
@@ -34,13 +37,14 @@ class SemaphoreTest extends PHPUnit_Framework_TestCase {
         $cacheInterface = $this->mock('MicheleAngioni\Support\Cache\CacheInterface');
         $keyManagerInterface = $this->mock('MicheleAngioni\Support\Cache\KeyManagerInterface');
 
-        $semaphoreManager = Mockery::mock('MicheleAngioni\Support\Semaphores\SemaphoresManager[getSemaphoreKey]', array($cacheInterface, $keyManagerInterface));
+        $semaphoreManager = Mockery::mock('MicheleAngioni\Support\Semaphores\SemaphoresManager[getSemaphoreKey]',
+            [$cacheInterface, $keyManagerInterface]);
 
         $semaphoreManager->shouldReceive('getSemaphoreKey')
-                         ->andReturn('string');
+            ->andReturn('string');
 
         $cacheInterface->shouldReceive('put')
-                       ->andReturn(true);
+            ->andReturn(true);
 
         $semaphoreManager->lockSemaphore('id', 'section');
     }
@@ -50,7 +54,8 @@ class SemaphoreTest extends PHPUnit_Framework_TestCase {
         $cacheInterface = $this->mock('MicheleAngioni\Support\Cache\CacheInterface');
         $keyManagerInterface = $this->mock('MicheleAngioni\Support\Cache\KeyManagerInterface');
 
-        $semaphoreManager = Mockery::mock('MicheleAngioni\Support\Semaphores\SemaphoresManager[getSemaphoreKey]', array($cacheInterface, $keyManagerInterface));
+        $semaphoreManager = Mockery::mock('MicheleAngioni\Support\Semaphores\SemaphoresManager[getSemaphoreKey]',
+            [$cacheInterface, $keyManagerInterface]);
 
         $semaphoreManager->shouldReceive('getSemaphoreKey')
             ->andReturn('string');

@@ -2,9 +2,10 @@
 
 use MicheleAngioni\Support\Helpers as H;
 
-class HelpersTest extends PHPUnit_Framework_TestCase {
+class HelpersTest extends PHPUnit_Framework_TestCase
+{
 
-	public function testIsInt()
+    public function testIsInt()
     {
         $object = new stdClass();
 
