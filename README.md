@@ -17,13 +17,35 @@ Support can be installed through Composer, just include `"michele-angioni/suppor
 
 Then add the Support Service Provider in the Laravel `app.php` config file, under the providers array
 
-    'MicheleAngioni\Support\SupportServiceProvider'
+```php
+'MicheleAngioni\Support\SupportServiceProvider'
+```
 
 and the Helpers facade in the aliases array
 
-    'Helpers' => 'MicheleAngioni\Support\Facades\Helpers'
+```php
+'Helpers' => 'MicheleAngioni\Support\Facades\Helpers'
+```
+
+#### Laravel 4
 
 If you are looking for the Laravel 4 version, check the [1.0 branch](https://github.com/micheleangioni/support/tree/1.0) and its documentation.
+
+#### Lumen
+
+At the moment, only partial and **unstable** support for Lumen is guaranteed.
+
+First of all load the Service Provider in your bootstrap file
+
+```php
+$app->register('MicheleAngioni\Support\SupportServiceProvider');
+```
+
+and set the needed config key
+
+```php
+config(['ma_support.cache_time' => 10]); // Default number of minutes the repositories will be cached
+```
 
 ## Modules summary
 
@@ -45,79 +67,91 @@ This way implementing the repository pattern becomes straightforward.
 As an example let's take a `Post` model. First of all we shall create a repository interface which will be injected in the constructor of the classes we need.
 Let's define the `PostRepositoryInterface` as
 
-     <?php
+```php
+ <?php
 
-     interface PostRepositoryInterface {}
+ interface PostRepositoryInterface {}
+ ```
 
 We need now an implementation. The easiest way to create a Post repository is to define a class as such
 
-    <?php
+```php
+<?php
 
-    use MicheleAngioni\Support\Repos\AbstractEloquentRepository;
-    use Post;
+use MicheleAngioni\Support\Repos\AbstractEloquentRepository;
+use Post;
 
-    class EloquentPostRepository extends AbstractEloquentRepository implements PostRepositoryInterface
+class EloquentPostRepository extends AbstractEloquentRepository implements PostRepositoryInterface
+{
+    protected $model;
+
+    public function __construct(Post $model)
     {
-        protected $model;
-
-        public function __construct(Post $model)
-        {
-            $this->model = $model;
-        }
+        $this->model = $model;
     }
+}
+```
 
 Now we need to bind the implementation to the interface, which can be done by adding
 
-    $this->app->bind(
-        'PostRepositoryInterface',
-        'EloquentPostRepository'
-    );
+```php
+$this->app->bind(
+    'PostRepositoryInterface',
+    'EloquentPostRepository'
+);
+```
 
 to an existing Laravel Service Provider. Or we can create a brand new one
 
-    <?php
+```php
+<?php
 
-    use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\ServiceProvider;
 
-    class RepositoryServiceProvider extends ServiceProvider 
+class RepositoryServiceProvider extends ServiceProvider 
+{
+
+    public function register()
     {
-
-        public function register()
-        {
-            $this->app->bind(
-                'PostRepositoryInterface',
-                'EloquentPostRepository'
-            );
-        }
+        $this->app->bind(
+            'PostRepositoryInterface',
+            'EloquentPostRepository'
+        );
     }
+}
+```
 
 and add it to the `config/app.php` file in the providers array
 
-    'RepositoryServiceProvider',
+```php
+'RepositoryServiceProvider',
+```
 
 Suppose that now we need the Post repo in our PostController. We simply inject our `PostRepositoryInterface` in the controller which gets resolved thanks to the Laravel IoC Container
 
-    <?php
+```php
+<?php
 
-    use PostRepositoryInterface as PostRepo;
+use PostRepositoryInterface as PostRepo;
 
-    class PostController extends BaseController 
+class PostController extends BaseController 
+{
+
+    private $postRepo;
+
+    function __construct(PostRepo $postRepo)
     {
-
-        private $postRepo;
-
-        function __construct(PostRepo $postRepo)
-        {
-            $this->postRepo = $postRepo;
-        }
-
-        public function show($idPost)
-        {
-            $post = $this->postRepo->find($idPost);
-
-            // Use the retrieved post
-        }
+        $this->postRepo = $postRepo;
     }
+
+    public function show($idPost)
+    {
+        $post = $this->postRepo->find($idPost);
+
+        // Use the retrieved post
+    }
+}
+```
 
 The `AbstractEloquentRepository` empowers automatically our repositories of the following public methods:
 
@@ -158,22 +192,26 @@ Decrecated methods:
 
 The Repository module also supports xml repositories. Suppose we have a staff.xml file. We need to define a `StaffXMLRepositoryInterface`
 
-    <?php
+```php
+<?php
 
-    interface StaffXMLRepositoryInterface {}
+interface StaffXMLRepositoryInterface {}
+```
 
 then we can create our xml repository as follows
 
-    <?php
+```php
+<?php
 
-    use MicheleAngioni\Support\Repos\AbstractSimpleXMLRepository;
+use MicheleAngioni\Support\Repos\AbstractSimpleXMLRepository;
 
-    class SimpleXMLStaffRepository extends AbstractSimpleXMLRepository implements StaffXMLRepositoryInterface
-    {
-        protected $autoload = false;
+class SimpleXMLStaffRepository extends AbstractSimpleXMLRepository implements StaffXMLRepositoryInterface
+{
+    protected $autoload = false;
 
-        protected $xmlPath = '/assets/xml/staff.xml';
-    }
+    protected $xmlPath = '/assets/xml/staff.xml';
+}
+```
 
 the $xmlPath property defines the path to the xml file (base path is the /app folder) while the $autoload property defines whether the xml file is automatically loaded when instantiating the class.
 The `AbstractSimpleXMLRepository` contains the methods we need:
@@ -184,25 +222,29 @@ The `AbstractSimpleXMLRepository` contains the methods we need:
 
 As done with "standard" repositories, we need to instruct the IoC Container. We can achieve that by defining the following XMLRepositoryServiceProvider
 
-    <?php
+```php
+<?php
 
-    use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\ServiceProvider;
 
-    class XMLRepositoryServiceProvider extends ServiceProvider 
+class XMLRepositoryServiceProvider extends ServiceProvider 
+{
+
+    public function register()
     {
-
-        public function register()
-        {
-            $this->app->bind(
-                'StaffXMLRepositoryInterface',
-                'SimpleXMLStaffRepository'
-             );
-        }
+        $this->app->bind(
+            'StaffXMLRepositoryInterface',
+            'SimpleXMLStaffRepository'
+         );
     }
+}
+```
 
 We can then inject the repo in the class we need or simply call it through the Laravel application instance / facade
 
-    $xmlStaffRepo = App::make('StaffXMLRepositoryInterface');
+```php
+$xmlStaffRepo = App::make('StaffXMLRepositoryInterface');
+```
 
 ### !!Warning!!
 
@@ -213,36 +255,36 @@ The `AbstractEloquentRepository` and `AbstractSimpleXMLRepository` classes do NO
 The Cache module can be used to give Cache capabilities to our repositories, through the use of the [decorator pattern](http://en.wikipedia.org/wiki/Decorator_pattern).
 We can then continue our previous example of a Post model and its repo. We define a `CachePostRepoDecorator` as follows
 
-    <?php
+```php
+<?php
 
-    use MicheleAngioni\Support\Cache\CacheInterface;
-    use MicheleAngioni\Support\Cache\KeyManager;
-    use MicheleAngioni\Support\Cache\AbstractCacheRepositoryDecorator;
-    use MicheleAngioni\Support\Repos\RepositoryCacheableQueriesInterface;
+use MicheleAngioni\Support\Cache\CacheInterface;
+use MicheleAngioni\Support\Cache\KeyManager;
+use MicheleAngioni\Support\Cache\AbstractCacheRepositoryDecorator;
+use MicheleAngioni\Support\Repos\RepositoryCacheableQueriesInterface;
 
-    class CachePostRepoDecorator extends AbstractCacheRepositoryDecorator implements PostRepositoryInterface 
+class CachePostRepoDecorator extends AbstractCacheRepositoryDecorator implements PostRepositoryInterface 
+{
+    /**
+     * Section of the Cache the repo belongs to.
+     *
+     * @var string
+     */
+    protected $section = 'Forum';
+
+    /**
+     * Construct
+     *
+     * @param  RepositoryCacheableQueriesInterface $repo
+     * @param  CacheInterface  $cache
+     * @param  KeyManager      $keyManager
+     */
+    public function __construct(RepositoryCacheableQueriesInterface $repo, CacheInterface $cache, KeyManager $keyManager)
     {
-
-        /**
-         * Section of the Cache the repo belongs to.
-         *
-         * @var string
-         */
-        protected $section = 'Forum';
-
-        /**
-         * Construct
-         *
-         * @param  RepositoryCacheableQueriesInterface $repo
-         * @param  CacheInterface  $cache
-         * @param  KeyManager      $keyManager
-         */
-        public function __construct(RepositoryCacheableQueriesInterface $repo, CacheInterface $cache, KeyManager $keyManager)
-        {
-            parent::__construct($repo, $cache, $keyManager);
-        }
-
+        parent::__construct($repo, $cache, $keyManager);
     }
+}
+```
 
 The section property can be used to define a Cache section and it is used when generating the Cache keys.
 
@@ -257,26 +299,28 @@ This package comes with a `KeyManager` class as the default Key Manager. It supp
 
 In fact, all you need to use the Cache is to edit your RepositoryServiceProvider instructing the Laravel IoC Container to use the caching repo
 
-    <?php
+```php
+<?php
 
-    use Illuminate\Support\ServiceProvider;
-    use MicheleAngioni\Support\Cache\KeyManager;
-    use MicheleAngioni\Support\Cache\LaravelCache;
+use Illuminate\Support\ServiceProvider;
+use MicheleAngioni\Support\Cache\KeyManager;
+use MicheleAngioni\Support\Cache\LaravelCache;
 
-    class RepositoryServiceProvider extends ServiceProvider {
+class RepositoryServiceProvider extends ServiceProvider {
 
-        public function register()
-        {
-            $this->app->bind(
-                'PostRepositoryInterface', function($app)
-                {
-                    $repo = $app->make('EloquentPostRepository');
+    public function register()
+    {
+        $this->app->bind(
+            'PostRepositoryInterface', function($app)
+            {
+                $repo = $app->make('EloquentPostRepository');
 
-                    return new CachePostRepoDecorator($repo, new LaravelCache($app['cache']), new KeyManager);
-                }
-            );
-        }
+                return new CachePostRepoDecorator($repo, new LaravelCache($app['cache']), new KeyManager);
+            }
+        );
     }
+}
+```
 
 Now you can use the Post repository as before, but when calling the all(), find() or findOrFail() methods the result will be cached (default time: 10 minutes It can be modified in the configuration file).
 
@@ -285,65 +329,71 @@ Now you can use the Post repository as before, but when calling the all(), find(
 Want to manually delete a cache result?
 In your Post model define a flush() method as follows
 
-    public function flush()
-    {
-        Cache::tags(get_called_class().'id'.$this->{$this->primaryKey})->flush();
-    }
+```php
+public function flush()
+{
+    Cache::tags(get_called_class().'id'.$this->{$this->primaryKey})->flush();
+}
+```
 
 You can then call it when editing or deleting a Post model you that your clients don't get outdated results.
 
 The Cache module comes with xml handlers too. Let's take the staff.xml class we used before. All we need to provide cache is to define the caching xml repo as follows
 
-    <?php
+```php
+<?php
 
-    use MicheleAngioni\Support\Cache\CacheInterface;
-    use MicheleAngioni\Support\Cache\AbstractCacheSimpleXMLRepositoryDecorator;
-    use MicheleAngioni\Support\Repos\XMLRepositoryInterface;
-    use StaffXMLRepositoryInterface;
+use MicheleAngioni\Support\Cache\CacheInterface;
+use MicheleAngioni\Support\Cache\AbstractCacheSimpleXMLRepositoryDecorator;
+use MicheleAngioni\Support\Repos\XMLRepositoryInterface;
+use StaffXMLRepositoryInterface;
 
-    class CacheSimpleXMLStaffRepoDecorator extends AbstractCacheSimpleXMLRepositoryDecorator implements StaffXMLRepositoryInterface {
+class CacheSimpleXMLStaffRepoDecorator extends AbstractCacheSimpleXMLRepositoryDecorator implements StaffXMLRepositoryInterface {
 
-        /**
-         * Section of the Cache the repo belongs to.
-         *
-         * @var string
-         */
-        protected $section = 'Forum';
+    /**
+     * Section of the Cache the repo belongs to.
+     *
+     * @var string
+     */
+    protected $section = 'Forum';
 
-        /**
-         * Construct
-         *
-         * @param XMLRepositoryInterface  $repo
-         * @param CacheInterface          $cache
-         */
-        public function __construct(XMLRepositoryInterface $repo, CacheInterface $cache)
-        {
-            parent::__construct($repo, $cache);
-        }
+    /**
+     * Construct
+     *
+     * @param XMLRepositoryInterface  $repo
+     * @param CacheInterface          $cache
+     */
+    public function __construct(XMLRepositoryInterface $repo, CacheInterface $cache)
+    {
+        parent::__construct($repo, $cache);
     }
+}
+```
 
 and update the `XMLRepositoryServiceProvider`
 
-    <?php
+```php
+<?php
 
-    use Illuminate\Support\ServiceProvider;
-    use CacheSimpleXMLStaffRepoDecorator;
-    use MicheleAngioni\Support\Cache\LaravelCache;
+use Illuminate\Support\ServiceProvider;
+use CacheSimpleXMLStaffRepoDecorator;
+use MicheleAngioni\Support\Cache\LaravelCache;
 
-    class XMLRepositoryServiceProvider extends ServiceProvider {
+class XMLRepositoryServiceProvider extends ServiceProvider {
 
-        public function register()
+    public function register()
+    {
+        $this->app->bind(
+            'StaffXMLRepositoryInterface', function($app)
         {
-            $this->app->bind(
-                'StaffXMLRepositoryInterface', function($app)
-            {
-                $repo = $app->make('SimpleXMLStaffRepository');
+            $repo = $app->make('SimpleXMLStaffRepository');
 
-                return new CacheSimpleXMLStaffRepoDecorator($repo, new LaravelCache($app['cache'])
-                );
-            });
-        }
+            return new CacheSimpleXMLStaffRepoDecorator($repo, new LaravelCache($app['cache'])
+            );
+        });
     }
+}
+```
 
 ## Presenters Usage
 
@@ -356,65 +406,69 @@ First of all define the PostDecorator by extending `MicheleAngioni\Support\Prese
 The AbstractPresenter will allow to access al model's attributes through the use of PHP magic method __GET. 
 It also implements ArrayAccess interface so that we can keep to access our attributes both as an object and as array.  
  
-    <?php
+```php
+<?php
+
+use MicheleAngioni\Support\Presenters\AbstractPresenter;
+use MicheleAngioni\Support\Presenters\PresentableInterface;
+
+class PostPresenter extends AbstractPresenter implements PresentableInterface 
+{
     
-    use MicheleAngioni\Support\Presenters\AbstractPresenter;
-    use MicheleAngioni\Support\Presenters\PresentableInterface;
-    
-    class PostPresenter extends AbstractPresenter implements PresentableInterface 
+    public function text()
     {
-        
-        public function text()
-        {
-            return e($this->object->text);
-        }
-    
-        public function capitalText()
-        {
-            return e(strtoupper($this->object->text));
-        }
+        return e($this->object->text);
     }
+
+    public function capitalText()
+    {
+        return e(strtoupper($this->object->text));
+    }
+}
+```
 
 Now we have to couple our presenter to the Post model with the help of the `MicheleAngioni\Support\Presenters\Presenter` class, for example directly in the PostController
 
-    <?php
+```php
+<?php
 
-    use MicheleAngioni\Support\Presenters\Presenter;
-    use PostRepositoryInterface as PostRepo;
+use MicheleAngioni\Support\Presenters\Presenter;
+use PostRepositoryInterface as PostRepo;
 
-    class PostController extends BaseController {
+class PostController extends BaseController {
 
-        private $postRepo;
-        private $presenter;
+    private $postRepo;
+    private $presenter;
 
-        function __construct(PostRepo $postRepo, Presenter $presenter)
-        {
-            $this->postRepo = $postRepo;
-            $this->presenter = $presenter
-        }
-
-        public function index()
-        {
-            $posts = $this->postRepo->all();
-            
-            // Pass the post collection to the presenter
-            $posts = $this->presenter->collection($posts, new PostPresenter();
-
-            // Pass the post collection to the view
-            return View::make('forum')->with('posts', $posts)
-        }
-
-        public function show($idPost)
-        {
-            $post = $this->postRepo->find($idPost);
-            
-            // Pass the post to the presenter
-            $post = $this->presenter->model($post, new PostPresenter();
-
-            // Pass the post to the view
-            return View::make('forum')->with('post', $post)
-        }
+    function __construct(PostRepo $postRepo, Presenter $presenter)
+    {
+        $this->postRepo = $postRepo;
+        $this->presenter = $presenter
     }
+
+    public function index()
+    {
+        $posts = $this->postRepo->all();
+        
+        // Pass the post collection to the presenter
+        $posts = $this->presenter->collection($posts, new PostPresenter();
+
+        // Pass the post collection to the view
+        return View::make('forum')->with('posts', $posts)
+    }
+
+    public function show($idPost)
+    {
+        $post = $this->postRepo->find($idPost);
+        
+        // Pass the post to the presenter
+        $post = $this->presenter->model($post, new PostPresenter();
+
+        // Pass the post to the view
+        return View::make('forum')->with('post', $post)
+    }
+}
+```
 
 In the above Controller we have decorated a single model in the show method and an entire collection in the index method, thus passed them to the view.
 
@@ -426,22 +480,24 @@ Through the presenter we can also add brand new functionality to our models: in 
 The semaphores module consists of a single class, the `SemaphoresManager`. Its constructor needs a Cache Manager and a Key Manager.
 The Support package provides both of them, so we can bind them to the SemaphoresManager in a service provider
 
-    <?php
-    
-    use Illuminate\Support\ServiceProvider;
-    use MicheleAngioni\Support\Cache\KeyManager;
-    use MicheleAngioni\Support\Cache\LaravelCache;
-    use MicheleAngioni\Support\Semaphores\SemaphoresManager;
+```php
+<?php
 
-    class SemaphoresServiceProviders extends ServiceProvider 
-    {
-        $this->app->bind(
-            'MicheleAngioni\Support\Semaphores\SemaphoresManager', function($app)
-            {
-                return new SemaphoresManager(new LaravelCache($app['cache']), new KeyManager);
-            });
-        }
+use Illuminate\Support\ServiceProvider;
+use MicheleAngioni\Support\Cache\KeyManager;
+use MicheleAngioni\Support\Cache\LaravelCache;
+use MicheleAngioni\Support\Semaphores\SemaphoresManager;
+
+class SemaphoresServiceProviders extends ServiceProvider 
+{
+    $this->app->bind(
+        'MicheleAngioni\Support\Semaphores\SemaphoresManager', function($app)
+        {
+            return new SemaphoresManager(new LaravelCache($app['cache']), new KeyManager);
+        });
     }
+}
+```
 
 We can them simply inject the SemaphoresManager in a constructor to be resolver by the IoC Container and it is ready to use through the following methods:
 
@@ -455,7 +511,9 @@ We can them simply inject the SemaphoresManager in a constructor to be resolver 
 
 The helpers class provides several useful methods which simplify php development. Support has also an Helpers facade which can be registered in the `app.php` file under the aliases array as
 
-    'Helpers' => 'MicheleAngioni\Support\Facades\Helpers'
+```php
+'Helpers' => 'MicheleAngioni\Support\Facades\Helpers'
+```
 
 The available methods are:
 
