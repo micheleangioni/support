@@ -60,8 +60,10 @@ class SupportServiceProvider extends ServiceProvider
 		});
 	}
 
-	public function registerCustomValidators(ValidationFactory $validator)
+	public function registerCustomValidators()
 	{
+		$validator = $this->app->make('Illuminate\Validation\Factory');
+
 		$validator->resolver(function ($translator, $data, $rules, $messages) {
 			$messages = [
 				'alpha_complete' => 'Only the following characters are allowed: alphabetic, numbers, spaces, slashes and several punctuation characters.',
