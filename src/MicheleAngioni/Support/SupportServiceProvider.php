@@ -1,8 +1,7 @@
 <?php namespace MicheleAngioni\Support;
 
 use Illuminate\Support\ServiceProvider;
-use App;
-use Validator;
+use Illuminate\Validation\Factory as ValidationFactory;
 
 class SupportServiceProvider extends ServiceProvider
 {
@@ -56,14 +55,14 @@ class SupportServiceProvider extends ServiceProvider
 
 	public function registerHelpers()
 	{
-		App::bind('helpers', function () {
+		$this->app->bind('helpers', function () {
 			return new Helpers;
 		});
 	}
 
-	public function registerCustomValidators()
+	public function registerCustomValidators(ValidationFactory $validator)
 	{
-		Validator::resolver(function ($translator, $data, $rules, $messages) {
+		$validator->resolver(function ($translator, $data, $rules, $messages) {
 			$messages = [
 				'alpha_complete' => 'Only the following characters are allowed: alphabetic, numbers, spaces, slashes and several punctuation characters.',
 				'alpha_space' => 'Only the following characters are allowed: alphabetic, numbers and spaces.',
