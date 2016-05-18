@@ -61,7 +61,7 @@ class SupportServiceProvider extends ServiceProvider
 
     public function registerCustomValidators()
     {
-        $validator = $this->app->make('Illuminate\Validation\Factory');
+        $validator = $this->app->make('validator');
 
         $validator->resolver(function ($translator, $data, $rules, $messages) {
             $messages = [
