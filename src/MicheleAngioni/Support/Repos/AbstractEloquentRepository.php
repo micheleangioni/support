@@ -610,6 +610,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
 
     /**
      * Apply the where clauses to input query.
+     * $where can have the format ['key' => 'value'] or ['key' => [<operator>, 'value']]
      *
      * @param  Builder $query
      * @param  array $where
@@ -622,7 +623,11 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
             if (is_null($value)) {
                 $query = $query->whereNull($key);
             } else {
-                $query = $query->where($key, '=', $value);
+                if (is_array($value)) {
+                    $query = $query->where($key, $value[0], $value[1]);
+                } else {
+                    $query = $query->where($key, '=', $value);
+                }
             }
         }
 
