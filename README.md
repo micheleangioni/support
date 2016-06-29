@@ -155,23 +155,23 @@ class PostController extends BaseController
 
 The `AbstractEloquentRepository` empowers automatically our repositories of the following public methods:
 
-- all(array $with = array())
+- all(array $with = [])
 - find($id, array $array)
-- findOrFail($id, array $with = array())
+- findOrFail($id, array $with = [])
 - first()
 - firstOrFail()
-- firstBy(array $where = array(), array $with = array())
-- firstOrFailBy(array $where = array(), array $with = array())
-- getBy(array $where = array(), array $with = array())
-- getByLimit($limit, array $where = array(), array $with = array())
-- getByOrder($orderBy, array $where = array(), array $with = array(), $order = 'desc', $limit = 0)
-- getIn($whereInKey, array $whereIn = array(), $with = array(), $orderBy = NULL, $order = 'desc', $limit = 0)
-- getNotIn($whereNotInKey, array $whereNotIn = array(), $with = array(), $orderBy = NULL, $order = 'desc', $limit = 0)
-- getHas($relation, array $where = array(), array $with = array(), $hasAtLeast = 1)
-- hasFirst($relation, array $where = array(), array $with = array(), $hasAtLeast = 1)
-- hasFirstOrFail($relation, array $where = array(), array $with = array(), $hasAtLeast = 1)
-- whereHas($relation, array $where = array(), array $whereHas = array(), array $with = array())
-- getByPage($page = 1, $limit = 10, array $where = array(), $with = array(), $orderBy = NULL, $order = 'desc')
+- firstBy(array $where = [], array $with = [])
+- firstOrFailBy(array $where = [], array $with = [])
+- getBy(array $where = [], array $with = [])
+- getByLimit($limit, array $where = [], array $with = [])
+- getByOrder($orderBy, array $where = [], array $with = [], $order = 'desc', $limit = 0)
+- getIn($whereInKey, array $whereIn = [], $with = [], $orderBy = NULL, $order = 'desc', $limit = 0)
+- getNotIn($whereNotInKey, array $whereNotIn = [], $with = [], $orderBy = NULL, $order = 'desc', $limit = 0)
+- getHas($relation, array $where = [], array $with = [], $hasAtLeast = 1)
+- hasFirst($relation, array $where = [], array $with = [], $hasAtLeast = 1)
+- hasFirstOrFail($relation, array $where = [], array $with = [], $hasAtLeast = 1)
+- whereHas($relation, array $where = [], array $whereHas = [], array $with = [])
+- getByPage($page = 1, $limit = 10, array $where = [], $with = [], $orderBy = NULL, $order = 'desc')
 - insert(array $collection)
 - create(array $inputs = [])
 - update(array $inputs)
@@ -183,12 +183,13 @@ The `AbstractEloquentRepository` empowers automatically our repositories of the 
 - destroyBy(array $where)
 - truncate()
 - count()
-- countBy(array $where = array())
-- countWhereHas($relation, array $where = array(), array $whereHas = array())
+- countBy(array $where = [])
+- countWhereHas($relation, array $where = [], array $whereHas = [])
 
 Decrecated methods:
-- has($relation, array $where = array(), array $with = array(), $hasAtLeast = 1) (synonym of getHas())
+- has($relation, array $where = [], array $with = [], $hasAtLeast = 1) (synonym of getHas())
 
+The `$where` array can have both format `['key' => 'value']` and `['key' => [<operator>, 'value']]`, where `<operator>` can be `=`, `<` or `>`.
 
 The Repository module also supports xml repositories. Suppose we have a staff.xml file. We need to define a `StaffXMLRepositoryInterface`
 
@@ -443,7 +444,7 @@ class PostController extends BaseController {
     function __construct(PostRepo $postRepo, Presenter $presenter)
     {
         $this->postRepo = $postRepo;
-        $this->presenter = $presenter
+        $this->presenter = $presenter;
     }
 
     public function index()
@@ -451,10 +452,10 @@ class PostController extends BaseController {
         $posts = $this->postRepo->all();
         
         // Pass the post collection to the presenter
-        $posts = $this->presenter->collection($posts, new PostPresenter();
+        $posts = $this->presenter->collection($posts, new PostPresenter());
 
         // Pass the post collection to the view
-        return View::make('forum')->with('posts', $posts)
+        return View::make('forum')->with('posts', $posts);
     }
 
     public function show($idPost)
@@ -462,10 +463,10 @@ class PostController extends BaseController {
         $post = $this->postRepo->find($idPost);
         
         // Pass the post to the presenter
-        $post = $this->presenter->model($post, new PostPresenter();
+        $post = $this->presenter->model($post, new PostPresenter());
 
         // Pass the post to the view
-        return View::make('forum')->with('post', $post)
+        return View::make('forum')->with('post', $post);
     }
 }
 ```
@@ -490,11 +491,13 @@ use MicheleAngioni\Support\Semaphores\SemaphoresManager;
 
 class SemaphoresServiceProviders extends ServiceProvider 
 {
-    $this->app->bind(
-        'MicheleAngioni\Support\Semaphores\SemaphoresManager', function($app)
-        {
-            return new SemaphoresManager(new LaravelCache($app['cache']), new KeyManager);
-        });
+    public function register()
+    {
+        $this->app->bind(
+            'MicheleAngioni\Support\Semaphores\SemaphoresManager', function($app)
+            {
+                return new SemaphoresManager(new LaravelCache($app['cache']), new KeyManager);
+            });
     }
 }
 ```
