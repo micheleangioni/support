@@ -19,7 +19,7 @@ class Helpers
      *
      * @return bool
      */
-    static function isInt($int, $min = false, $max = false)
+    static public function isInt($int, $min = false, $max = false)
     {
         if (is_object($int) || is_array($int)) {
             return false;
@@ -55,7 +55,7 @@ class Helpers
      *
      * @return mixed
      */
-    static function randInArray(array $array)
+    static public function randInArray(array $array)
     {
         return $array[mt_rand(0, count($array) - 1)];
     }
@@ -68,7 +68,7 @@ class Helpers
      *
      * @return bool
      */
-    static function checkDate($date, $format = 'Y-m-d')
+    static public function checkDate($date, $format = 'Y-m-d')
     {
         $d = DateTime::createFromFormat($format, $date);
 
@@ -82,7 +82,7 @@ class Helpers
      *
      * @return bool
      */
-    static function checkDatetime($datetime)
+    static public function checkDatetime($datetime)
     {
         $format = 'Y-m-d H:i:s';
 
@@ -100,9 +100,9 @@ class Helpers
      * @param  string $secondDate
      * @param  int $maxDifference = 0
      *
-     * @return array
+     * @return array|false
      */
-    static function splitDates($firstDate, $secondDate, $maxDifference = 0)
+    static public function splitDates($firstDate, $secondDate, $maxDifference = 0)
     {
         if (!self::checkDate($firstDate) || !self::checkDate($secondDate)) {
             return false;
@@ -151,7 +151,7 @@ class Helpers
      *
      * @return int
      */
-    static function daysBetweenDates($date1, $date2)
+    static public function daysBetweenDates($date1, $date2)
     {
         // If input dates have datetime 'Y-m-d X' format, take only the date part
         list($d1) = array_pad(explode(' ', $date1), 1, 0);
@@ -176,7 +176,7 @@ class Helpers
      *
      * @return bool
      */
-    static function compareDates($date, $referenceDate)
+    static public function compareDates($date, $referenceDate)
     {
         $dateTimestamp = strtotime($date);
         $referenceDateTimestamp = strtotime($referenceDate);
@@ -196,9 +196,9 @@ class Helpers
      *
      * @throws InvalidArgumentException
      *
-     * @return array
+     * @return Collection|false
      */
-    static function divideCollectionIntoGroups(Collection $collection, $groupsNumber = 2)
+    static public function divideCollectionIntoGroups(Collection $collection, $groupsNumber = 2)
     {
         if (!(Helpers::isInt($groupsNumber, 2) && !($groupsNumber % 2))) {
             return false;
@@ -227,7 +227,7 @@ class Helpers
      *
      * @return string
      */
-    function getTodayDay()
+    public function getTodayDay()
     {
         $datetime = new \DateTime("now");
 
@@ -243,7 +243,7 @@ class Helpers
      *
      * @return string
      */
-    function getDate($offset = 0, $format = 'Y-m-d')
+    public function getDate($offset = 0, $format = 'Y-m-d')
     {
         return date($format, strtotime($offset . ' day'));
     }
@@ -257,7 +257,7 @@ class Helpers
      *
      * @return string
      */
-    function getTime($offset = 0, $format = 'H:i:s')
+    public function getTime($offset = 0, $format = 'H:i:s')
     {
         return date($format, strtotime($offset . ' minutes'));
     }
@@ -275,7 +275,7 @@ class Helpers
      *
      * @return int
      */
-    static function getRandomValueUrandom($min = 0, $max = 0x7FFFFFFF)
+    static public function getRandomValueUrandom($min = 0, $max = 0x7FFFFFFF)
     {
         if (!self::isInt($min) || !self::isInt($max) || $max < $min || ($max - $min) > 0x7FFFFFFF) {
             return false;
@@ -304,9 +304,9 @@ class Helpers
      * @param  int $max
      * @param  int $quantity = 1
      *
-     * @return array
+     * @return array|false
      */
-    function getUniqueRandomValues($min = 0, $max, $quantity = 1)
+    public function getUniqueRandomValues($min = 0, $max, $quantity = 1)
     {
         if (!self::isInt($min) || !self::isInt($max) || !self::isInt($quantity) || $quantity < 1) {
             return false;
