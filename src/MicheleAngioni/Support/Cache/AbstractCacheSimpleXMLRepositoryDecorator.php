@@ -1,11 +1,12 @@
-<?php namespace MicheleAngioni\Support\Cache;
+<?php
+
+namespace MicheleAngioni\Support\Cache;
 
 use MicheleAngioni\Support\Repos\XMLRepositoryInterface;
 use BadMethodCallException;
 
 abstract class AbstractCacheSimpleXMLRepositoryDecorator
 {
-
     /**
      * @var CacheInterface
      */
@@ -179,5 +180,4 @@ abstract class AbstractCacheSimpleXMLRepositoryDecorator
 
         return $tags;
     }
-
 }

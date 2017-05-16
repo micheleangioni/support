@@ -1,4 +1,6 @@
-<?php namespace MicheleAngioni\Support\Presenters;
+<?php
+
+namespace MicheleAngioni\Support\Presenters;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -6,7 +8,6 @@ use Illuminate\Pagination\Paginator;
 
 class Presenter
 {
-
     /**
      * Return an instance of a Model wrapped in a presenter object
      *
@@ -61,5 +62,4 @@ class Presenter
 
         return $paginator;
     }
-
 }

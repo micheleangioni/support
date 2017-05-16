@@ -1,11 +1,12 @@
-<?php namespace MicheleAngioni\Support\Repos;
+<?php
+
+namespace MicheleAngioni\Support\Repos;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
 {
-
     /**
      * Return all records.
      *
@@ -651,5 +652,4 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
 
         return $inputs;
     }
-
 }

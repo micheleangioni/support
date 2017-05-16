@@ -1,11 +1,12 @@
-<?php namespace MicheleAngioni\Support\Cache;
+<?php
+
+namespace MicheleAngioni\Support\Cache;
 
 use MicheleAngioni\Support\Repos\RepositoryCacheableQueriesInterface;
 use BadMethodCallException;
 
 abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQueriesInterface
 {
-
     /**
      * @var CacheInterface
      */
@@ -196,5 +197,4 @@ abstract class AbstractCacheRepositoryDecorator implements RepositoryCacheableQu
     {
         return $this->keyManager->getCustomMethodTags($customName, $id, $array, $this->section, $this->modelClass);
     }
-
 }

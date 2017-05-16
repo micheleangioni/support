@@ -1,4 +1,6 @@
-<?php namespace MicheleAngioni\Support;
+<?php
+
+namespace MicheleAngioni\Support;
 
 use DateTime;
 use Illuminate\Support\Collection;
@@ -6,7 +8,6 @@ use InvalidArgumentException;
 
 class Helpers
 {
-
     /**
      *  Check if input value is integer: return true on success, false otherwise.
      *  int(4), string '4', float(4), 0x7FFFFFFF return true
@@ -323,5 +324,4 @@ class Helpers
 
         return $rand;
     }
-
 }

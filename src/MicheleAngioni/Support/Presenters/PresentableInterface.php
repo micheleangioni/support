@@ -1,4 +1,6 @@
-<?php namespace MicheleAngioni\Support\Presenters;
+<?php
+
+namespace MicheleAngioni\Support\Presenters;
 
 interface PresentableInterface
 {

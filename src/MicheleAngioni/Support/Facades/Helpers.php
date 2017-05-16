@@ -1,4 +1,6 @@
-<?php namespace MicheleAngioni\Support\Facades;
+<?php
+
+namespace MicheleAngioni\Support\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

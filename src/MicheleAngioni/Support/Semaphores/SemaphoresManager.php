@@ -1,11 +1,12 @@
-<?php namespace MicheleAngioni\Support\Semaphores;
+<?php
+
+namespace MicheleAngioni\Support\Semaphores;
 
 use MicheleAngioni\Support\Cache\CacheInterface;
 use MicheleAngioni\Support\Cache\KeyManagerInterface;
 
 class SemaphoresManager
 {
-
     /**
      * @var CacheInterface
      */
@@ -116,5 +117,4 @@ class SemaphoresManager
 
         $this->cache->put($key, 0, ['semaphore', $section], $this->lockingTime);
     }
-
 }

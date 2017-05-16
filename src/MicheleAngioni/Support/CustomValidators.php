@@ -2,7 +2,6 @@
 
 class CustomValidators extends \Illuminate\Validation\Validator
 {
-
     /**
      * alpha_complete permits the following UNICODE characters: alphabetic, numbers, spaces, slashes, pipes ed some punctuation characters
      * N.B. In order to add the '?' the \\ must be used
@@ -82,5 +81,4 @@ class CustomValidators extends \Illuminate\Validation\Validator
     {
         return preg_match('/^([-\p{L}\'_\s])+$/u', $value);
     }
-
 }

@@ -1,8 +1,9 @@
-<?php namespace MicheleAngioni\Support\Cache;
+<?php
+
+namespace MicheleAngioni\Support\Cache;
 
 interface CacheInterface
 {
-
     /**
      * Get
      *
@@ -34,5 +35,4 @@ interface CacheInterface
      * @return bool
      */
     public function has($key, array $tags);
-
 }

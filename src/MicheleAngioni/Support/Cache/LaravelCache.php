@@ -1,10 +1,11 @@
-<?php namespace MicheleAngioni\Support\Cache;
+<?php
+
+namespace MicheleAngioni\Support\Cache;
 
 use Illuminate\Cache\CacheManager;
 
 class LaravelCache implements CacheInterface
 {
-
     /**
      * @var CacheManager
      */
@@ -70,5 +71,4 @@ class LaravelCache implements CacheInterface
     {
         return $this->cache->tags($tags)->has($key);
     }
-
 }

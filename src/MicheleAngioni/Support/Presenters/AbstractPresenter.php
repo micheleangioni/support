@@ -1,10 +1,11 @@
-<?php namespace MicheleAngioni\Support\Presenters;
+<?php
+
+namespace MicheleAngioni\Support\Presenters;
 
 use ArrayAccess;
 
 abstract class AbstractPresenter implements ArrayAccess
 {
-
     /**
      * The object to present
      *
@@ -80,5 +81,4 @@ abstract class AbstractPresenter implements ArrayAccess
 
         return $this->object->$key;
     }
-
 }

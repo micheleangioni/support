@@ -1,4 +1,6 @@
-<?php namespace MicheleAngioni\Support\Repos;
+<?php
+
+namespace MicheleAngioni\Support\Repos;
 
 use UnexpectedValueException;
 
@@ -64,5 +66,4 @@ class AbstractSimpleXMLRepository implements XMLRepositoryInterface
             $this->xmlFile = simplexml_load_file($this->xmlPath);
         }
     }
-
 }

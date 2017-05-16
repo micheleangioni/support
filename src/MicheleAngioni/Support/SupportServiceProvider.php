@@ -1,10 +1,11 @@
-<?php namespace MicheleAngioni\Support;
+<?php
+
+namespace MicheleAngioni\Support;
 
 use Illuminate\Support\ServiceProvider;
 
 class SupportServiceProvider extends ServiceProvider
 {
-
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -76,5 +77,4 @@ class SupportServiceProvider extends ServiceProvider
             return new CustomValidators($translator, $data, $rules, $messages);
         });
     }
-
 }
