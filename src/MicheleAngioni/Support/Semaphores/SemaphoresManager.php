@@ -43,7 +43,7 @@ class SemaphoresManager
      *
      * @return int
      */
-    public function getLockingTime()
+    public function getLockingTime(): int
     {
         return $this->lockingTime;
     }
@@ -55,9 +55,9 @@ class SemaphoresManager
      *
      * @return int
      */
-    public function setLockingTime($minutes)
+    public function setLockingTime(int $minutes): int
     {
-        return $this->lockingTime = (int)$minutes;
+        return $this->lockingTime = $minutes;
     }
 
     /**
@@ -68,7 +68,7 @@ class SemaphoresManager
      *
      * @return string
      */
-    public function getSemaphoreKey($id, $section)
+    public function getSemaphoreKey($id, string $section)
     {
         return $this->keyManager->getKey($id, [], $section);
     }
@@ -81,7 +81,7 @@ class SemaphoresManager
      *
      * @return int
      */
-    public function checkIfSemaphoreIsLocked($id, $section)
+    public function checkIfSemaphoreIsLocked($id, string $section): int
     {
         $key = $this->getSemaphoreKey($id, $section);
 
@@ -98,7 +98,7 @@ class SemaphoresManager
      * @param  string $id
      * @param  string $section
      */
-    public function lockSemaphore($id, $section)
+    public function lockSemaphore($id, string $section)
     {
         $key = $this->getSemaphoreKey($id, $section);
 
@@ -111,7 +111,7 @@ class SemaphoresManager
      * @param  string $id
      * @param  string $section
      */
-    public function unlockSemaphore($id, $section)
+    public function unlockSemaphore($id, string $section)
     {
         $key = $this->getSemaphoreKey($id, $section);
 
