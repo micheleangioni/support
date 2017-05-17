@@ -9,6 +9,11 @@ class HelpersTest extends PHPUnit_Framework_TestCase
     {
         $object = new stdClass();
 
+        $callable = function () {
+            echo 'I am a Callable';
+        };
+
+        $this->assertFalse(H::isInt($callable));
         $this->assertFalse(H::isInt($object));
         $this->assertFalse(H::isInt(['value']));
         $this->assertFalse(H::isInt(['key' => 'value']));
@@ -76,28 +81,6 @@ class HelpersTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(0, H::daysBetweenDates('2014-12-24', '2014-12-24'));
         $this->assertFalse(H::daysBetweenDates('2014-12-24', '2014-12-23'));
         $this->assertFalse(H::daysBetweenDates('2014-12-23', '2014-12-24x'));
-    }
-
-    public function testCompareDates()
-    {
-        date_default_timezone_set('UTC');
-        $this->assertTrue(H::compareDates('2014-12-24', '2014-12-22'));
-        $this->assertFalse(H::compareDates('2014-12-22', '2014-12-24'));
-        $this->assertFalse(H::compareDates('2014-12-24', '2014-12-24'));
-    }
-
-    public function testDivideCollectionIntoGroups()
-    {
-        $collection = new \Illuminate\Support\Collection;
-        $collection->push(1);
-        $collection->push(2);
-        $collection->push(3);
-        $collection->push(4);
-
-        $newCollection = H::divideCollectionIntoGroups($collection);
-        $this->assertEquals(2, $newCollection->count());
-
-        $this->assertFalse(H::divideCollectionIntoGroups($collection, 3));
     }
 
     public function testGetUniqueRandomValues()

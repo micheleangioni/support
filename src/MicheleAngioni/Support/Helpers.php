@@ -3,8 +3,6 @@
 namespace MicheleAngioni\Support;
 
 use DateTime;
-use Illuminate\Support\Collection;
-use InvalidArgumentException;
 
 class Helpers
 {
@@ -20,9 +18,9 @@ class Helpers
      *
      * @return bool
      */
-    static public function isInt($int, $min = false, $max = false)
+    static public function isInt($int, $min = false, $max = false): bool
     {
-        if (is_object($int) || is_array($int)) {
+        if (is_object($int) || is_array($int) || is_callable($int)) {
             return false;
         }
 
@@ -69,7 +67,7 @@ class Helpers
      *
      * @return bool
      */
-    static public function checkDate($date, $format = 'Y-m-d')
+    static public function checkDate($date, $format = 'Y-m-d'): bool
     {
         $d = DateTime::createFromFormat($format, $date);
 
@@ -83,18 +81,14 @@ class Helpers
      *
      * @return bool
      */
-    static public function checkDatetime($datetime)
+    static public function checkDatetime($datetime): bool
     {
-        $format = 'Y-m-d H:i:s';
-
-        $d = DateTime::createFromFormat($format, $datetime);
-
-        return $d && $d->format($format) == $datetime;
+        return self::checkDate($datetime, 'Y-m-d H:i:s');
     }
 
     /**
      *  Split two 'Y-m-d'-format dates into an array of dates. Returns false on failure.
-     *  $first_date must be < than $second_date
+     *  $firstDate must be < than $secondDate
      *  Third optional parameter indicates max days difference allowed (0 = no limits).
      *
      * @param  string $firstDate
@@ -169,103 +163,8 @@ class Helpers
         return (count($dates) - 1);
     }
 
-    /**
-     * Compare $date with $referenceDate. Return true if $date is more recent, false otherwise (included if the two dates are identical).
-     *
-     * @param  string $date
-     * @param  string $referenceDate
-     *
-     * @return bool
-     */
-    static public function compareDates($date, $referenceDate)
-    {
-        $dateTimestamp = strtotime($date);
-        $referenceDateTimestamp = strtotime($referenceDate);
-
-        if ($dateTimestamp > $referenceDateTimestamp) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Split a Collection into groups of equal numbers. $groupsNumber must be a multiplier of 2.
-     *
-     * @param  Collection $collection
-     * @param  int $groupsNumber = 2
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return Collection|false
-     */
-    static public function divideCollectionIntoGroups(Collection $collection, $groupsNumber = 2)
-    {
-        if (!(Helpers::isInt($groupsNumber, 2) && !($groupsNumber % 2))) {
-            return false;
-        }
-
-        $elementsPerGroup = (int)ceil(count($collection) / $groupsNumber);
-
-        $newCollection = new Collection([]);
-
-        for ($i = 0; $i <= $groupsNumber - 1; $i++) {
-            $newCollection[$i] = $collection->slice($i * $elementsPerGroup, $elementsPerGroup);
-        }
-
-        return $newCollection;
-    }
-
-
-    // <<<--- DATE TIME METHODS --->>>
-
-    /*
-     * These DateTime methods are thought in order to allow Date / Time mocking in tests and other useful uses.
-     */
-
-    /**
-     * Return today's day.
-     *
-     * @return string
-     */
-    public function getTodayDay()
-    {
-        $datetime = new \DateTime("now");
-
-        return $datetime->format("D");
-    }
-
-    /**
-     * Return today's day in format Y-m-d. Offset in days.
-     * Customize $format to receive the wanted date format.
-     *
-     * @param  int $offset = 0
-     * @param  string $format = 'Y-m-d'
-     *
-     * @return string
-     */
-    public function getDate($offset = 0, $format = 'Y-m-d')
-    {
-        return date($format, strtotime($offset . ' day'));
-    }
-
-    /**
-     * Return today's time in format H:i:s. Offset in minutes.
-     * Customize $format to receive the wanted time format.
-     *
-     * @param  int $offset = 0
-     * @param  string $format = 'H:i:s'
-     *
-     * @return string
-     */
-    public function getTime($offset = 0, $format = 'H:i:s')
-    {
-        return date($format, strtotime($offset . ' minutes'));
-    }
-
-
+    
     // <<<--- PSEUDO-RANDOM NUMBERS METHODS --->>>
-
 
     /**
      * Return a random value between input $min and $max values by using the MCRYPT_DEV_URANDOM source.
