@@ -70,13 +70,22 @@ In order to access to the file keys in your code, you can use `config('ma_suppor
 The abstract class `AbstractEloquentRepository` consists of a model wrapper with numerous useful queries to be performed over the Laravel models.
 This way implementing the repository pattern becomes straightforward.
 
-As an example let's take a `Post` model. First of all we shall create a repository interface which will be injected in the constructor of the classes we need.
+As an example let's take a `Post` model.
+First of all we shall create a common Repository Interface for all models of our application that extends the package `RepositoryInterface`
+
+```php
+ <?php
+
+ interface RepositoryInterface extends \MicheleAngioni\Support\Repos\RepositoryInterface {}
+ ```
+
+Then let's define a Post Repository Interface which will be injected in the constructor of the classes we need and that extends the common RepositoryInterface we have just created.
 Let's define the `PostRepositoryInterface` as
 
 ```php
  <?php
 
- interface PostRepositoryInterface {}
+ interface PostRepositoryInterface extends RepositoryInterface {}
  ```
 
 We need now an implementation. The easiest way to create a Post repository is to define a class as such
@@ -102,8 +111,8 @@ Now we need to bind the implementation to the interface, which can be done by ad
 
 ```php
 $this->app->bind(
-    'PostRepositoryInterface',
-    'EloquentPostRepository'
+    PostRepositoryInterface::class,
+    EloquentPostRepository::class
 );
 ```
 
@@ -120,8 +129,8 @@ class RepositoryServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            'PostRepositoryInterface',
-            'EloquentPostRepository'
+            PostRepositoryInterface::class,
+            EloquentPostRepository::class
         );
     }
 }
@@ -130,7 +139,7 @@ class RepositoryServiceProvider extends ServiceProvider
 and add it to the `config/app.php` file in the providers array
 
 ```php
-'RepositoryServiceProvider',
+RepositoryServiceProvider::class,
 ```
 
 Suppose that now we need the Post repo in our PostController. We simply inject our `PostRepositoryInterface` in the controller which gets resolved thanks to the Laravel IoC Container
@@ -192,9 +201,6 @@ The `AbstractEloquentRepository` empowers automatically our repositories of the 
 - countBy(array $where = [])
 - countWhereHas($relation, array $where = [], array $whereHas = [])
 
-Decrecated methods:
-- has($relation, array $where = [], array $with = [], $hasAtLeast = 1) (synonym of getHas())
-
 The `$where` array can have both format `['key' => 'value']` and `['key' => [<operator>, 'value']]`, where `<operator>` can be `=`, `<` or `>`.
 
 The Repository module also supports xml repositories. Suppose we have a staff.xml file. We need to define a `StaffXMLRepositoryInterface`
@@ -223,9 +229,9 @@ class SimpleXMLStaffRepository extends AbstractSimpleXMLRepository implements St
 the $xmlPath property defines the path to the xml file (base path is the /app folder) while the $autoload property defines whether the xml file is automatically loaded when instantiating the class.
 The `AbstractSimpleXMLRepository` contains the methods we need:
 
-- getFilePath() : return the xml file path
-- loadFile() : load the xml file for later use
-- getFile() : load the xml file if not previously loaded and return it as an SimpleXMLElement instance
+- `getFilePath()` : return the xml file path
+- `loadFile()` : load the xml file for later use
+- `getFile()` : load the xml file if not previously loaded and return it as an SimpleXMLElement instance
 
 As done with "standard" repositories, we need to instruct the IoC Container. We can achieve that by defining the following XMLRepositoryServiceProvider
 
