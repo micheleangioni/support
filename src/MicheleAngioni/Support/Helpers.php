@@ -13,18 +13,18 @@ class Helpers
      *  min and max allowed values can be inserted
      *
      * @param  int $int
-     * @param  bool|int $min = false
-     * @param  bool|int $max = false
+     * @param  int|null $min
+     * @param  int|null $max
      *
      * @return bool
      */
-    static public function isInt($int, $min = false, $max = false): bool
+    static public function isInt($int, int $min = null, int $max = null): bool
     {
         if (is_object($int) || is_array($int) || is_callable($int)) {
             return false;
         }
 
-        if ($min !== false) {
+        if ($min !== null) {
             if (is_numeric($min) && (int)$min == $min) {
                 if ($int < $min) {
                     return false;
@@ -34,7 +34,7 @@ class Helpers
             }
         }
 
-        if ($max !== false) {
+        if ($max !== null) {
             if (is_numeric($max) && (int)$max == $max) {
                 if ($int > $max) {
                     return false;
@@ -67,7 +67,7 @@ class Helpers
      *
      * @return bool
      */
-    static public function checkDate($date, $format = 'Y-m-d'): bool
+    static public function checkDate(string $date, string $format = 'Y-m-d'): bool
     {
         $d = DateTime::createFromFormat($format, $date);
 
@@ -81,13 +81,13 @@ class Helpers
      *
      * @return bool
      */
-    static public function checkDatetime($datetime): bool
+    static public function checkDatetime(string $datetime): bool
     {
         return self::checkDate($datetime, 'Y-m-d H:i:s');
     }
 
     /**
-     *  Split two 'Y-m-d'-format dates into an array of dates. Returns false on failure.
+     *  Split two 'Y-m-d'-format dates into an array of dates. Returns null on failure.
      *  $firstDate must be < than $secondDate
      *  Third optional parameter indicates max days difference allowed (0 = no limits).
      *
@@ -95,16 +95,16 @@ class Helpers
      * @param  string $secondDate
      * @param  int $maxDifference = 0
      *
-     * @return array|false
+     * @return array
      */
-    static public function splitDates($firstDate, $secondDate, $maxDifference = 0)
+    static public function splitDates(string $firstDate, string $secondDate, int $maxDifference = 0):? array
     {
         if (!self::checkDate($firstDate) || !self::checkDate($secondDate)) {
-            return false;
+            return null;
         }
 
         if (!self::isInt($maxDifference, 0)) {
-            return false;
+            return null;
         }
 
         $date1 = new DateTime($firstDate);
@@ -112,12 +112,12 @@ class Helpers
         $interval = $date1->diff($date2, false);
 
         if ((int)$interval->format('%R%a') < 0) {
-            return false;
+            return null;
         }
 
         if ($maxDifference != 0) {
             if ((int)$interval->format('%R%a') > $maxDifference) {
-                return false;
+                return null;
             }
         }
 
@@ -139,25 +139,25 @@ class Helpers
     /**
      * Return the number of days between the two input 'Y-m-d' or 'Y-m-d X' (X is some text) dates.
      * $date2 must be >= than $date1.
-     * Returns false on failure.
+     * Returns null on failure.
      *
      * @param  string $date1
      * @param  string $date2
      *
-     * @return int
+     * @return int|null
      */
-    static public function daysBetweenDates($date1, $date2)
+    static public function daysBetweenDates(string $date1, string $date2):? int
     {
         // If input dates have datetime 'Y-m-d X' format, take only the date part
         list($d1) = array_pad(explode(' ', $date1), 1, 0);
         list($d2) = array_pad(explode(' ', $date2), 1, 0);
 
         if (!self::checkDate($d1) || !self::checkDate($d2)) {
-            return false;
+            return null;
         }
 
         if (!($dates = self::splitDates($d1, $d2))) {
-            return false;
+            return null;
         }
 
         return (count($dates) - 1);
@@ -175,9 +175,9 @@ class Helpers
      *
      * @return int
      */
-    static public function getRandomValueUrandom($min = 0, $max = 0x7FFFFFFF)
+    static public function getRandomValueUrandom(int $min = 0, int $max = 0x7FFFFFFF): int
     {
-        if (!self::isInt($min) || !self::isInt($max) || $max < $min || ($max - $min) > 0x7FFFFFFF) {
+        if ($max < $min || ($max - $min) > 0x7FFFFFFF) {
             return false;
         }
 
@@ -198,18 +198,18 @@ class Helpers
 
     /**
      * Return $quantity UNIQUE random value between $min and $max.
-     * Return false on failure.
+     * Return null on failure.
      *
      * @param  int $min = 0
      * @param  int $max
      * @param  int $quantity = 1
      *
-     * @return array|false
+     * @return array|null
      */
-    public function getUniqueRandomValues($min = 0, $max, $quantity = 1)
+    public function getUniqueRandomValues(int $min = 0, int $max, int $quantity = 1):? array
     {
-        if (!self::isInt($min) || !self::isInt($max) || !self::isInt($quantity) || $quantity < 1) {
-            return false;
+        if ($min > $max || $quantity < 0) {
+            return null;
         }
 
         $rand = [];

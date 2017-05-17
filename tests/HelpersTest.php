@@ -69,9 +69,9 @@ class HelpersTest extends PHPUnit_Framework_TestCase
         $dates = H::splitDates('2014-12-24', '2014-12-24');
         $this->assertEquals(1, count($dates));
 
-        $this->assertFalse(H::splitDates('2014-12-26', '2014-12-24', 1));
-        $this->assertFalse(H::splitDates('2014-12-24', '2014-12-26', 1));
-        $this->assertFalse(H::splitDates('2014-12-24', '2014-12-26x'));
+        $this->assertNull(H::splitDates('2014-12-26', '2014-12-24', 1));
+        $this->assertNull(H::splitDates('2014-12-24', '2014-12-26', 1));
+        $this->assertNull(H::splitDates('2014-12-24', '2014-12-26x'));
     }
 
     public function testDaysBetweenDates()
@@ -79,8 +79,8 @@ class HelpersTest extends PHPUnit_Framework_TestCase
         date_default_timezone_set('UTC');
         $this->assertEquals(2, H::daysBetweenDates('2014-12-24', '2014-12-26'));
         $this->assertEquals(0, H::daysBetweenDates('2014-12-24', '2014-12-24'));
-        $this->assertFalse(H::daysBetweenDates('2014-12-24', '2014-12-23'));
-        $this->assertFalse(H::daysBetweenDates('2014-12-23', '2014-12-24x'));
+        $this->assertNull(H::daysBetweenDates('2014-12-24', '2014-12-23'));
+        $this->assertNull(H::daysBetweenDates('2014-12-23', '2014-12-24x'));
     }
 
     public function testGetUniqueRandomValues()
