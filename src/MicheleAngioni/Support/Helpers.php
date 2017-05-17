@@ -167,36 +167,6 @@ class Helpers
     // <<<--- PSEUDO-RANDOM NUMBERS METHODS --->>>
 
     /**
-     * Return a random value between input $min and $max values by using the MCRYPT_DEV_URANDOM source.
-     * N.B. Use only on *nix servers!
-     *
-     * @param  int $min = 0
-     * @param  int $max
-     *
-     * @return int
-     */
-    static public function getRandomValueUrandom(int $min = 0, int $max = 0x7FFFFFFF): int
-    {
-        if ($max < $min || ($max - $min) > 0x7FFFFFFF) {
-            return false;
-        }
-
-        $diff = $max - $min;
-
-        $bytes = mcrypt_create_iv(4, MCRYPT_DEV_URANDOM);
-
-        if ($bytes === false || strlen($bytes) != 4) {
-            return false;
-        }
-
-        $ary = unpack("Nint", $bytes);
-        $val = $ary['int'] & 0x7FFFFFFF;   // 32-bit safe
-        $fp = (float)$val / 2147483647.0; // convert to [0,1]
-
-        return round($fp * $diff) + $min;
-    }
-
-    /**
      * Return $quantity UNIQUE random value between $min and $max.
      * Return null on failure.
      *
@@ -204,9 +174,9 @@ class Helpers
      * @param  int $max
      * @param  int $quantity = 1
      *
-     * @return array|null
+     * @return int[]|null
      */
-    public function getUniqueRandomValues(int $min = 0, int $max, int $quantity = 1):? array
+    static public function getUniqueRandomValues(int $min = 0, int $max, int $quantity = 1):? array
     {
         if ($min > $max || $quantity < 0) {
             return null;
@@ -215,7 +185,8 @@ class Helpers
         $rand = [];
 
         while (count($rand) < $quantity) {
-            $r = mt_rand($min, $max);
+            $r = random_int($min, $max);
+
             if (!in_array($r, $rand)) {
                 $rand[] = $r;
             }

@@ -85,9 +85,7 @@ class HelpersTest extends PHPUnit_Framework_TestCase
 
     public function testGetUniqueRandomValues()
     {
-        $helpers = new H;
-
-        $numbers = $helpers->getUniqueRandomValues(1, 100, 4);
+        $numbers = H::getUniqueRandomValues(1, 100, 4);
         $this->assertEquals(4, count($numbers));
 
         $this->assertNotEquals($numbers[0], $numbers[1]);
@@ -96,6 +94,10 @@ class HelpersTest extends PHPUnit_Framework_TestCase
         $this->assertNotEquals($numbers[1], $numbers[2]);
         $this->assertNotEquals($numbers[1], $numbers[3]);
         $this->assertNotEquals($numbers[2], $numbers[3]);
+        $this->assertInternalType('int', $numbers[0]);
+        $this->assertInternalType('int', $numbers[1]);
+        $this->assertInternalType('int', $numbers[2]);
+        $this->assertInternalType('int', $numbers[3]);
     }
 
     public function tearDown()
