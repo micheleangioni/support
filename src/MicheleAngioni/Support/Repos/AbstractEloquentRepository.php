@@ -5,7 +5,7 @@ namespace MicheleAngioni\Support\Repos;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
-class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface
+class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface, RepositoryInterface
 {
     /**
      * Return all records.
