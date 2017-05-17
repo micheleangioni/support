@@ -11,21 +11,27 @@ Support consists of a series of useful classes to ease development and the use o
 
 Part of this package has been highly inspired by the [culttt.com](http://culttt.com/) blog, which I highly recommend to both new and experienced developers since it focuses on a wide range of topics with always interesting point of views and discussions. I have personally learned much from it.
 
+Support requires PHP 7.1+ and several 5.4+ Illuminate components in order to work.
+
 ## Installation
 
-Support can be installed through Composer, just include `"michele-angioni/support": "~2.0"` to your composer.json and run `composer update` or `composer install`.
+Support can be installed through Composer, just include `"michele-angioni/support": "~3.0"` to your composer.json and run `composer update` or `composer install`.
 
 Then add the Support Service Provider in the Laravel `app.php` config file, under the providers array
 
 ```php
-'MicheleAngioni\Support\SupportServiceProvider'
+MicheleAngioni\Support\SupportServiceProvider::class
 ```
 
 and the Helpers facade in the aliases array
 
 ```php
-'Helpers' => 'MicheleAngioni\Support\Facades\Helpers'
+'Helpers' => MicheleAngioni\Support\Facades\Helpers::class
 ```
+
+#### Laravel 5.0 - 5.3
+
+If you are looking for the Laravel 5.0 - 5.3 compatible version, check the [2.0 branch](https://github.com/micheleangioni/support/tree/2.0) and its documentation.
 
 #### Laravel 4
 
@@ -504,38 +510,42 @@ class SemaphoresServiceProviders extends ServiceProvider
 
 We can them simply inject the SemaphoresManager in a constructor to be resolver by the IoC Container and it is ready to use through the following methods:
 
-- setLockingTime($minutes) : set the semaphores locking time in minutes
-- lockSemaphore($id, $section) : lock a semaphore with input id belonging to input section
-- unlockSemaphore($id, $section) : unlock the semaphore with input id belonging to input section
-- checkIfSemaphoreIsLocked($id, $section) : check if the semaphore with input id belonging to input section is actually locked
-- getSemaphoreKey($id, $section) : return the cache key used by the semaphore with input id belonging to input section is actually locked
+- `setLockingTime(int $minutes)` : set the semaphores locking time in minutes
+- `lockSemaphore($id, string $section)` : lock a semaphore with input id belonging to input section
+- `unlockSemaphore($id, string $section)` : unlock the semaphore with input id belonging to input section
+- `checkIfSemaphoreIsLocked($id, string $section)` : check if the semaphore with input id belonging to input section is actually locked
+- `getSemaphoreKey($id, string $section)` : return the cache key used by the semaphore with input id belonging to input section is actually locked
 
 ## Helpers Usage
 
 The helpers class provides several useful methods which simplify php development. Support has also an Helpers facade which can be registered in the `app.php` file under the aliases array as
 
 ```php
-'Helpers' => 'MicheleAngioni\Support\Facades\Helpers'
+'Helpers' => MicheleAngioni\Support\Facades\Helpers::class
 ```
 
 The available methods are:
 
-- isInt($int, $min = false, $max = false) : check if input $int is an integer. Examples:
-int(4), string '4', float(4), 0x7FFFFFFF return true.
-int(4.1), string '1.2', string '0x8', float(1.2) return false.
+- `isInt($int, int $min = null, int $max = null)` : check if input $int is an integer. Examples:
+int(4), string '4', float(4), 0x7FFFFFFF will return true.
+int(4.1), string '1.2', string '0x8', float(1.2) will return false.
 min and max allowed values can be inserted.
-- randInArray(array $array) : return a random value out of an array
-- checkDate($date, $format = 'Y-m-d') : check if input date is a valid date based of input format
-- checkDatetime($datetime) : check if input datetime is a valid 'Y-m-d H:m:s' datetime
-- splitDates($first_date, $second_date, $max_difference = 0) : split two 'Y-m-d'-format dates into an array of dates
-- daysBetweenDates($date1, $date2) : return the number of days between the two input 'Y-m-d' or 'Y-m-d X' (X is some text) dates
-- compareDates($date, $referenceDate) : compare $date with $referenceDate. Return true if $date is more recent, false otherwise (included if the two dates are identical)
-- divideCollectionIntoGroups(Collection $collection, $groupsNumber = 2) : split a Collection into groups of equal numbers. $groupsNumber must be a multiplier of 2
-- getTodayDay() : get today day (format("D"))
-- getDate($offset = 0, $format = 'Y-m-d') : return today's day in format Y-m-d. Offset in days. Customize $format to receive the wanted date format.
-- getTime($offset = 0, $format = 'H:i:s') : return today's time in format H:i:s. Offset in minutes. Customize $format to receive the wanted time format.
-- getRandomValueUrandom($min = 0, $max = 0x7FFFFFFF) : return a random value between input $min and $max values by using the MCRYPT_DEV_URANDOM source
-- getUniqueRandomValues($min = 0, $max, $quantity = 1) : return $quantity UNIQUE random value between $min and $max
+- `randInArray(array $array)` : return a random value out of an array
+- `checkDate(string $date, string $format = 'Y-m-d')` : check if input date is a valid date based of input format
+- `checkDatetime(string $datetime)` : check if input datetime is a valid 'Y-m-d H:m:s' datetime
+- `splitDates(string $firstDate, string $second_Date, int $maxDifference = 0)` : split two 'Y-m-d'-format dates into an array of dates
+- `daysBetweenDates(string $date1, string $date2)` : return the number of days between the two input 'Y-m-d' or 'Y-m-d X' (X is some text) dates
+- `getRandomValueUrandom(int $min = 0, int $max = 0x7FFFFFFF)` : return a random value between input $min and $max values by using the MCRYPT_DEV_URANDOM source
+- `getUniqueRandomValues(int $min = 0, int $max, int $quantity = 1)` : return $quantity UNIQUE random value between $min and $max
+
+### Removed in 3.0 version
+
+- `divideCollectionIntoGroups()`: use Collection's [split method](https://laravel.com/docs/5.4/collections#method-split) instead
+- `compareDates()`: use [Carbon](http://carbon.nesbot.com/docs/) instead
+- `getTodayDay()`: use [Carbon](http://carbon.nesbot.com/docs/) instead
+- `getDate()`: use [Carbon](http://carbon.nesbot.com/docs/) instead
+- `getTime()`: use [Carbon](http://carbon.nesbot.com/docs/) instead
+- `getRandomValueUrandom()`: use PHP's [random_int](http://php.net/manual/en/function.random-int.php) instead
 
 ## Custom validators
 
@@ -552,9 +562,9 @@ Just after registering the SupportServiceProvider, the following new custom vali
 
 The following new custom exceptions will be available:
 
-- DatabaseException : thought to be used where a query error arises
-- DbClientRequestException : can be thrown when an entity required by a client is not available
-- PermissionsException : a general permission exception
+- `DatabaseException` : thought to be used where a query error arises
+- `DbClientRequestException` : can be thrown when an entity required by a client is not available
+- `PermissionsException` : a general permission exception
 
 ## API Docs
 
@@ -569,7 +579,3 @@ Pull requests are welcome.
 ## License
 
 Support is free software distributed under the terms of the MIT license.
-
-## Contacts
-
-Feel free to contact me.
