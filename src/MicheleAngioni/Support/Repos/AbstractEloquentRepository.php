@@ -269,23 +269,6 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface,
      * @param  array $with
      * @param  int $hasAtLeast = 1
      *
-     * @deprecated
-     *
-     * @return Collection
-     */
-    public function has($relation, array $where = [], array $with = [], $hasAtLeast = 1)
-    {
-        return $this->getHas($relation, $where, $with, $hasAtLeast);
-    }
-
-    /**
-     * Return all results that have a required relationship.
-     *
-     * @param  string $relation
-     * @param  array $where
-     * @param  array $with
-     * @param  int $hasAtLeast = 1
-     *
      * @return Collection
      */
     public function getHas($relation, array $where = [], array $with = [], $hasAtLeast = 1)
