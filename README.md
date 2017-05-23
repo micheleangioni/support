@@ -31,7 +31,7 @@ and the Helpers facade in the aliases array
 
 #### Laravel 5.0 - 5.3
 
-If you are looking for the Laravel 5.0 - 5.3 compatible version, check the [2.0 branch](https://github.com/micheleangioni/support/tree/2.0) and its documentation.
+If you are looking for the Laravel 5.0 - 5.3 compatible version, check the [2.x branch](https://github.com/micheleangioni/support/tree/2.x) and its documentation.
 
 #### Laravel 4
 
