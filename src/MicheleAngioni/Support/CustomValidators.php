@@ -14,7 +14,7 @@ class CustomValidators extends \Illuminate\Validation\Validator
      */
     public function validateAlphaComplete($attribute, $value)
     {
-        return preg_match('/^([|=#-\p{L}*0-9_+!.,:\/;\\?&\(\)\[\]\{\}\'\"\s])+$/u', $value);
+        return preg_match('/^([|=#\-\p{L}*0-9_+!.,:\/;\\?&\(\)\[\]\{\}\'\"\s])+$/u', $value);
     }
 
     /**
