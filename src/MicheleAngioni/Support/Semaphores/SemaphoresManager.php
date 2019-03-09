@@ -20,17 +20,17 @@ class SemaphoresManager
     protected $keyManager;
 
     /**
-     * Minutes the semaphore remains locked before getting automatically unlocked.
+     * Seconds the semaphore remains locked before getting automatically unlocked.
      *
      * @var int
      */
-    protected $lockingTime = 2;
+    protected $lockingTime = 120;
 
     /**
      * Construct
      *
-     * @param  CacheInterface $cache
-     * @param  KeyManagerInterface $keyManager
+     * @param CacheInterface $cache
+     * @param KeyManagerInterface $keyManager
      */
     public function __construct(CacheInterface $cache, KeyManagerInterface $keyManager)
     {
@@ -51,20 +51,19 @@ class SemaphoresManager
     /**
      * Set the locking time.
      *
-     * @param  int $minutes
-     *
+     * @param int $seconds
      * @return int
      */
-    public function setLockingTime(int $minutes): int
+    public function setLockingTime(int $seconds): int
     {
-        return $this->lockingTime = $minutes;
+        return $this->lockingTime = $seconds;
     }
 
     /**
      * Return the key of the semaphore connected with input $id and $section.
      *
-     * @param  string|bool $id
-     * @param  string $section
+     * @param string|bool $id
+     * @param string $section
      *
      * @return string
      */
@@ -76,8 +75,8 @@ class SemaphoresManager
     /**
      * Check if a semaphore is locked or free. Return 1 if locked or 0 if unlocked.
      *
-     * @param  string $id
-     * @param  string $section
+     * @param string $id
+     * @param string $section
      *
      * @return int
      */
@@ -95,8 +94,8 @@ class SemaphoresManager
     /**
      * Lock the semaphore with input key and section.
      *
-     * @param  string $id
-     * @param  string $section
+     * @param string $id
+     * @param string $section
      */
     public function lockSemaphore($id, string $section)
     {
@@ -108,8 +107,8 @@ class SemaphoresManager
     /**
      * Unlock the semaphore with input key and section.
      *
-     * @param  string $id
-     * @param  string $section
+     * @param string $id
+     * @param string $section
      */
     public function unlockSemaphore($id, string $section)
     {
