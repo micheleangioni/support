@@ -7,10 +7,10 @@ return [
     | Cache time
     |--------------------------------------------------------------------------
     |
-    | Default number of minutes the repositories will be cached
+    | Default number of seconds the repositories will be cached
     |
     */
 
-    'cache_time' => 10,
+    'cache_time' => 600, // 10 minutes
 
 ];

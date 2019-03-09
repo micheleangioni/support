@@ -13,11 +13,11 @@ abstract class AbstractCacheSimpleXMLRepositoryDecorator
     protected $cache;
 
     /**
-     * Caching minutes.
+     * Caching seconds.
      *
      * @var int
      */
-    protected $minutes = 120;
+    protected $seconds = 7200; // 120 minutes / 2 hours
 
     /**
      * Section of the Cache the repo belongs to.
@@ -101,7 +101,7 @@ abstract class AbstractCacheSimpleXMLRepositoryDecorator
 
             $XMLFile = $this->xmlRepo->getFile()->asXML();
 
-            $this->cache->put($key, $XMLFile, $tags, $this->minutes);
+            $this->cache->put($key, $XMLFile, $tags, $this->seconds);
         }
     }
 

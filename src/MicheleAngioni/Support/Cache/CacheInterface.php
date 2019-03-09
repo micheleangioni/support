@@ -7,32 +7,32 @@ interface CacheInterface
     /**
      * Get
      *
-     * @param  string $key
-     * @param  array $tags
+     * @param string $key
+     * @param array $tags
      *
      * @return mixed
      */
-    public function get($key, array $tags);
+    public function get(string $key, array $tags);
 
     /**
      * Put
      *
-     * @param  string $key
-     * @param  mixed $value
-     * @param  array $tags
-     * @param  int $minutes
+     * @param string $key
+     * @param mixed $value
+     * @param array $tags
+     * @param int $seconds
      *
      * @return mixed
      */
-    public function put($key, $value, array $tags, $minutes = null);
+    public function put(string $key, $value, array $tags, int $seconds = null);
 
     /**
      * Has
      *
-     * @param  string $key
-     * @param  array $tags
+     * @param string $key
+     * @param array $tags
      *
      * @return bool
      */
-    public function has($key, array $tags);
+    public function has(string $key, array $tags): bool;
 }
