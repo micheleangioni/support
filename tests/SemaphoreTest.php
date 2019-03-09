@@ -1,6 +1,12 @@
 <?php
 
-class SemaphoreTest extends PHPUnit_Framework_TestCase
+namespace MicheleAngioni\Support;
+
+use MicheleAngioni\Support\Semaphores\SemaphoresManager;
+use PHPUnit\Framework\TestCase;
+use Mockery;
+
+class SemaphoreTest extends TestCase
 {
 
     public function testLockingTime()
@@ -10,7 +16,7 @@ class SemaphoreTest extends PHPUnit_Framework_TestCase
         $cacheInterface = $this->mock('MicheleAngioni\Support\Cache\CacheInterface');
         $keyManagerInterface = $this->mock('MicheleAngioni\Support\Cache\KeyManagerInterface');
 
-        $semaphoreManager = new MicheleAngioni\Support\Semaphores\SemaphoresManager($cacheInterface,
+        $semaphoreManager = new SemaphoresManager($cacheInterface,
             $keyManagerInterface);
 
         $semaphoreManager->setLockingTime($lockingTime);
@@ -26,7 +32,7 @@ class SemaphoreTest extends PHPUnit_Framework_TestCase
         $keyManagerInterface->shouldReceive('getKey')
             ->andReturn(true);
 
-        $semaphoreManager = new MicheleAngioni\Support\Semaphores\SemaphoresManager($cacheInterface,
+        $semaphoreManager = new SemaphoresManager($cacheInterface,
             $keyManagerInterface);
 
         $semaphoreManager->getSemaphoreKey('id', 'section');

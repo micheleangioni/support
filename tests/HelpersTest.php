@@ -1,13 +1,17 @@
 <?php
 
-use MicheleAngioni\Support\Helpers as H;
+namespace MicheleAngioni\Support;
 
-class HelpersTest extends PHPUnit_Framework_TestCase
+use MicheleAngioni\Support\Helpers as H;
+use PHPUnit\Framework\TestCase;
+use Mockery;
+
+class HelpersTest extends TestCase
 {
 
     public function testIsInt()
     {
-        $object = new stdClass();
+        $object = new \stdClass();
 
         $callable = function () {
             echo 'I am a Callable';
