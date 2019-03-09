@@ -12,9 +12,9 @@ class Helpers
      *  int(4.1), string '1.2', string '0x8', float(1.2) return false.
      *  min and max allowed values can be inserted
      *
-     * @param  int $int
-     * @param  int|null $min
-     * @param  int|null $max
+     * @param mixed $int
+     * @param int|null $min
+     * @param int|null $max
      *
      * @return bool
      */
@@ -50,8 +50,7 @@ class Helpers
     /**
      * Return a random value out of an array
      *
-     * @param  array $array
-     *
+     * @param array $array
      * @return mixed
      */
     static public function randInArray(array $array)
@@ -62,8 +61,8 @@ class Helpers
     /**
      *  Check date validity. Return true on success or false on failure.
      *
-     * @param  string $date
-     * @param  string $format = 'Y-m-d'
+     * @param string $date
+     * @param string $format = 'Y-m-d'
      *
      * @return bool
      */
@@ -77,8 +76,7 @@ class Helpers
     /**
      *  Check datetime 'Y-m-d H:i:s' validity. Returns true if ok or false if it fails.
      *
-     * @param  string $datetime
-     *
+     * @param string $datetime
      * @return bool
      */
     static public function checkDatetime(string $datetime): bool
@@ -91,9 +89,9 @@ class Helpers
      *  $firstDate must be < than $secondDate
      *  Third optional parameter indicates max days difference allowed (0 = no limits).
      *
-     * @param  string $firstDate
-     * @param  string $secondDate
-     * @param  int $maxDifference = 0
+     * @param string $firstDate
+     * @param string $secondDate
+     * @param int $maxDifference = 0
      *
      * @return array
      */
@@ -141,8 +139,8 @@ class Helpers
      * $date2 must be >= than $date1.
      * Returns null on failure.
      *
-     * @param  string $date1
-     * @param  string $date2
+     * @param string $date1
+     * @param string $date2
      *
      * @return int|null
      */
@@ -170,9 +168,10 @@ class Helpers
      * Return $quantity UNIQUE random value between $min and $max.
      * Return null on failure.
      *
-     * @param  int $min = 0
-     * @param  int $max
-     * @param  int $quantity = 1
+     * @param int $min = 0
+     * @param int $max
+     * @param int $quantity = 1
+     * @throws \Exception
      *
      * @return int[]|null
      */

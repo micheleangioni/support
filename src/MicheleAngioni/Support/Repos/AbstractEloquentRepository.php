@@ -159,7 +159,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface,
      *
      * @return Collection
      */
-    public function getByLimit($limit, array $where = [], array $with = [])
+    public function getByLimit(int $limit, array $where = [], array $with = [])
     {
         $query = $this->make($with);
 
@@ -172,7 +172,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface,
      * Return the first ordered $limit records querying input parameters.
      * $limit = 0 means no limits.
      *
-     * @param $orderBy
+     * @param string $orderBy
      * @param array $where
      * @param array $with
      * @param string $order
@@ -180,7 +180,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface,
      *
      * @return Collection
      */
-    public function getByOrder($orderBy, array $where = [], array $with = [], $order = 'desc', $limit = 0)
+    public function getByOrder(string $orderBy, array $where = [], array $with = [], string $order = 'desc', int $limit = 0)
     {
         $query = $this->make($with);
 
@@ -208,8 +208,14 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface,
      *
      * @return Collection
      */
-    public function getIn($whereInKey, array $whereIn = [], $with = [], $orderBy = null, $order = 'desc', $limit = 0)
-    {
+    public function getIn(
+        $whereInKey,
+        array $whereIn = [],
+        array $with = [],
+        string $orderBy = null,
+        string $order = 'desc',
+        int $limit = 0
+    ) {
         $query = $this->make($with);
 
         $query = $query->whereIn($whereInKey, $whereIn);
@@ -241,10 +247,10 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface,
     public function getNotIn(
         $whereNotInKey,
         array $whereNotIn = [],
-        $with = [],
-        $orderBy = null,
-        $order = 'desc',
-        $limit = 0
+        array $with = [],
+        string $orderBy = null,
+        string $order = 'desc',
+        int $limit = 0
     ) {
         $query = $this->make($with);
 
@@ -264,14 +270,14 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface,
     /**
      * Return all results that have a required relationship.
      *
-     * @param  string $relation
-     * @param  array $where
-     * @param  array $with
-     * @param  int $hasAtLeast = 1
+     * @param string $relation
+     * @param array $where
+     * @param array $with
+     * @param int $hasAtLeast = 1
      *
      * @return Collection
      */
-    public function getHas($relation, array $where = [], array $with = [], $hasAtLeast = 1)
+    public function getHas(string $relation, array $where = [], array $with = [], int $hasAtLeast = 1)
     {
         $query = $this->make($with);
 
@@ -284,14 +290,14 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface,
      * Return the first result that has a required relationship.
      * Return null if no record is found.
      *
-     * @param  string $relation
-     * @param  array $where
-     * @param  array $with
-     * @param  int $hasAtLeast = 1
+     * @param string $relation
+     * @param array $where
+     * @param array $with
+     * @param int $hasAtLeast = 1
      *
-     * @return Collection
+     * @return mixed
      */
-    public function hasFirst($relation, array $where = [], array $with = [], $hasAtLeast = 1)
+    public function hasFirst(string $relation, array $where = [], array $with = [], int $hasAtLeast = 1)
     {
         $query = $this->make($with);
 
@@ -304,16 +310,16 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface,
      * Return the first result that have a required relationship.
      * Throws exception if no record is found.
      *
-     * @param  string $relation
-     * @param  array $where
-     * @param  array $with
-     * @param  int $hasAtLeast = 1
+     * @param string $relation
+     * @param array $where
+     * @param array $with
+     * @param int $hasAtLeast = 1
      *
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      *
      * @return Collection
      */
-    public function hasFirstOrFail($relation, array $where = [], array $with = [], $hasAtLeast = 1)
+    public function hasFirstOrFail(string $relation, array $where = [], array $with = [], int $hasAtLeast = 1)
     {
         $query = $this->make($with);
 
@@ -325,10 +331,10 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface,
     /**
      * Return all results that have a required relationship with input constraints.
      *
-     * @param  string $relation
-     * @param  array $where
-     * @param  array $whereHas
-     * @param  array $with
+     * @param string $relation
+     * @param array $where
+     * @param array $whereHas
+     * @param array $with
      *
      * @return Collection
      */
@@ -348,17 +354,23 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface,
     /**
      * Get ordered results by Page.
      *
-     * @param  int $page
-     * @param  int $limit
-     * @param  array $where
-     * @param  array $with
-     * @param  string|null $orderBy
-     * @param  string $order
+     * @param int $page
+     * @param int $limit
+     * @param array $where
+     * @param array $with
+     * @param string|null $orderBy
+     * @param string $order
      *
      * @return Collection
      */
-    public function getByPage($page = 1, $limit = 10, array $where = [], $with = [], $orderBy = null, $order = 'desc')
-    {
+    public function getByPage(
+        int $page = 1,
+        int $limit = 10,
+        array $where = [],
+        array $with = [],
+        string $orderBy = null,
+        string $order = 'desc'
+    ) {
         $query = $this->make($with);
 
         $query = $this->applyWhere($query, $where);
@@ -556,6 +568,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface,
     /**
      * Count the number of records matching input parameters.
      *
+     * @param array $where
      * @return int
      */
     public function countBy(array $where = [])
@@ -570,9 +583,9 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface,
     /**
      * Count all records that have a required relationship and matching input parameters..
      *
-     * @param  string $relation
-     * @param  array $where
-     * @param  array $whereHas
+     * @param string $relation
+     * @param array $where
+     * @param array $whereHas
      *
      * @return int
      */
@@ -596,8 +609,8 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface,
      * Apply the where clauses to input query.
      * $where can have the format ['key' => 'value'] or ['key' => [<operator>, 'value']]
      *
-     * @param  Builder $query
-     * @param  array $where
+     * @param Builder $query
+     * @param array $where
      *
      * @return Builder
      */
@@ -621,7 +634,7 @@ class AbstractEloquentRepository implements RepositoryCacheableQueriesInterface,
     /**
      * Remove keys from the $inputs array beginning with '_' .
      *
-     * @param  array $inputs
+     * @param array $inputs
      *
      * @return array
      */

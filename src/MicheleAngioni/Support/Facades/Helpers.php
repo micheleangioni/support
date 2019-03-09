@@ -4,7 +4,6 @@ namespace MicheleAngioni\Support\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-
 class Helpers extends Facade
 {
 
@@ -12,5 +11,4 @@ class Helpers extends Facade
     {
         return 'helpers';
     }
-
 }

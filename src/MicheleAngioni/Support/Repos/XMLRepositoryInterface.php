@@ -4,7 +4,7 @@ namespace MicheleAngioni\Support\Repos;
 
 interface XMLRepositoryInterface
 {
-    public function getFilePath();
+    public function getFilePath(): string;
 
     public function getFile();
 

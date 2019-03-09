@@ -10,7 +10,6 @@ interface RepositoryInterface
      * Return all records.
      *
      * @param array $with
-     *
      * @return Collection
      */
     public function all(array $with = []);
@@ -39,7 +38,6 @@ interface RepositoryInterface
      *
      * @param $id
      * @param array $with
-     *
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      *
      * @return mixed
@@ -80,7 +78,6 @@ interface RepositoryInterface
      *
      * @param array $where
      * @param array $with
-     *
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      *
      * @return mixed
@@ -106,13 +103,13 @@ interface RepositoryInterface
      *
      * @return Collection
      */
-    public function getByLimit($limit, array $where = [], array $with = []);
+    public function getByLimit(int $limit, array $where = [], array $with = []);
 
     /**
      * Return the first ordered $limit records querying input parameters.
      * $limit = 0 means no limits.
      *
-     * @param $orderBy
+     * @param string $orderBy
      * @param array $where
      * @param array $with
      * @param string $order
@@ -120,7 +117,7 @@ interface RepositoryInterface
      *
      * @return Collection
      */
-    public function getByOrder($orderBy, array $where = [], array $with = [], $order = 'desc', $limit = 0);
+    public function getByOrder(string $orderBy, array $where = [], array $with = [], string $order = 'desc', int $limit = 0);
 
     /**
      * Return the first ordered $limit records querying input parameters.
@@ -135,7 +132,14 @@ interface RepositoryInterface
      *
      * @return Collection
      */
-    public function getIn($whereInKey, array $whereIn = [], $with = [], $orderBy = null, $order = 'desc', $limit = 0);
+    public function getIn(
+        $whereInKey,
+        array $whereIn = [],
+        array $with = [],
+        string $orderBy = null,
+        string $order = 'desc',
+        int $limit = 0
+    );
 
     /**
      * Return the first ordered $limit records querying input parameters.
@@ -150,7 +154,14 @@ interface RepositoryInterface
      *
      * @return Collection
      */
-    public function getNotIn($whereNotInKey, array $whereNotIn = [], $with = [], $orderBy = null, $order = 'desc', $limit = 0);
+    public function getNotIn(
+        $whereNotInKey,
+        array $whereNotIn = [],
+        array $with = [],
+        string $orderBy = null,
+        string $order = 'desc',
+        int $limit = 0
+    );
 
     /**
      * Return all results that have a required relationship.
@@ -162,7 +173,7 @@ interface RepositoryInterface
      *
      * @return Collection
      */
-    public function getHas($relation, array $where = [], array $with = [], $hasAtLeast = 1);
+    public function getHas(string $relation, array $where = [], array $with = [], int $hasAtLeast = 1);
 
     /**
      * Return the first result that has a required relationship.
@@ -175,7 +186,7 @@ interface RepositoryInterface
      *
      * @return Collection
      */
-    public function hasFirst($relation, array $where = [], array $with = [], $hasAtLeast = 1);
+    public function hasFirst(string $relation, array $where = [], array $with = [], int $hasAtLeast = 1);
 
     /**
      * Return the first result that have a required relationship.
@@ -190,7 +201,7 @@ interface RepositoryInterface
      *
      * @return Collection
      */
-    public function hasFirstOrFail($relation, array $where = [], array $with = [], $hasAtLeast = 1);
+    public function hasFirstOrFail(string  $relation, array $where = [], array $with = [], int $hasAtLeast = 1);
 
     /**
      * Return all results that have a required relationship with input constraints.
@@ -200,7 +211,7 @@ interface RepositoryInterface
      * @param  array $whereHas
      * @param  array $with
      *
-     * @return Collection
+     * @return mixed
      */
     public function whereHas($relation, array $where = [], array $whereHas = [], array $with = []);
 
@@ -216,7 +227,14 @@ interface RepositoryInterface
      *
      * @return Collection
      */
-    public function getByPage($page = 1, $limit = 10, array $where = [], $with = [], $orderBy = null, $order = 'desc');
+    public function getByPage(
+        int $page = 1,
+        int $limit = 10,
+        array $where = [],
+        array $with = [],
+        string $orderBy = null,
+        string $order = 'desc'
+    );
 
     /**
      * Create a collection of new records.
@@ -323,6 +341,7 @@ interface RepositoryInterface
     /**
      * Count the number of records matching input parameters.
      *
+     * @param array $where
      * @return int
      */
     public function countBy(array $where = []);
