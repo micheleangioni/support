@@ -11,11 +11,13 @@ Support consists of a series of useful classes to ease development and the use o
 
 Part of this package has been highly inspired by the [culttt.com](http://culttt.com/) blog, which I highly recommend to both new and experienced developers since it focuses on a wide range of topics with always interesting point of views and discussions. I have personally learned much from it.
 
-Support requires PHP 7.1+ and several 5.4+ Illuminate components in order to work.
+Support requires PHP 7.1.3+ and several 5.8 Illuminate components in order to work.
+
+In order to use Support with Laravel or Lumen 5.4 - 5.7, [check version 3.x](https://github.com/micheleangioni/support/tree/3.x/).
 
 ## Installation
 
-Support can be installed through Composer, just include `"michele-angioni/support": "~3.0"` to your composer.json and run `composer update` or `composer install`.
+Support can be installed through Composer, just include `"michele-angioni/support": "^4.0"` to your composer.json and run `composer update` or `composer install`.
 
 Then add the Support Service Provider in the Laravel `app.php` config file, under the providers array
 
@@ -28,6 +30,10 @@ and the Helpers facade in the aliases array
 ```php
 'Helpers' => MicheleAngioni\Support\Facades\Helpers::class
 ```
+
+#### Laravel 5.4 - 5.7
+
+If you are looking for the Laravel 5.3 - 5.7 compatible version, check the [3.x branch](https://github.com/micheleangioni/support/tree/3.x) and its documentation.
 
 #### Laravel 5.0 - 5.3
 
